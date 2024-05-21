@@ -12,8 +12,8 @@ export const InfoLinks = ({ expanded }: { expanded?: boolean }) => {
         <>
             {expanded && (
                 <div className="mb-3 mt-2 flex items-end gap-1">
-                    <span className="text-sm text-[#D2CFCF]">{t('information')}</span>
-                    <Separator className="mb-0.5 bg-[#2B394A]" />
+                    <span className="text-sm text-caption">{t('information')}</span>
+                    <Separator className="mb-0.5 bg-accent-sidebar" />
                 </div>
             )}
             {expanded ? (
@@ -29,7 +29,7 @@ export const InfoLinks = ({ expanded }: { expanded?: boolean }) => {
                                                 <span>{title}</span>
                                             </div>
                                         </AccordionTrigger>
-                                        <AccordionContent className="nav-links-accordion rounded-lg bg-[#2B394A] p-5 text-base text-white">
+                                        <AccordionContent className="nav-links-accordion rounded-lg bg-accent-sidebar p-5 text-base text-white">
                                             {subLinks && (
                                                 <ul className="flex list-disc flex-col gap-2 pl-7">
                                                     {subLinks?.map((subLink) => (
@@ -66,7 +66,7 @@ export const InfoLinks = ({ expanded }: { expanded?: boolean }) => {
             )}
             {expanded && (
                 <>
-                    <Separator className="mb-8 mt-4 bg-[#2B394A]" />
+                    <Separator className="mb-8 mt-4 bg-accent-sidebar" />
                     <Copyright />
                 </>
             )}

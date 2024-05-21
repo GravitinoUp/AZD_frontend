@@ -27,12 +27,12 @@ export const UserCard = ({ expanded }: UserCardProps) => {
             <UserAvatar />
             <div>
                 <p className="text-sm text-white">Иванов Иван Иванович</p>
-                <p className="text-xs text-[#D2CFCF]">Администратор</p>
+                <p className="text-xs text-caption">Администратор</p>
             </div>
             <div className="flex items-center gap-1">
                 <Link
                     to={SETTINGS}
-                    className="flex h-7 w-7 items-center justify-center rounded-full border border-[#2F4054] hover:opacity-60"
+                    className="flex-center h-7 w-7 rounded-full border border-[#2F4054] hover:opacity-60"
                 >
                     <SettingsIcon />
                 </Link>

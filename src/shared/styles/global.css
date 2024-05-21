@@ -89,3 +89,7 @@ ul li::marker {
 .nav-link {
     @apply flex gap-3 py-4 text-base font-normal text-white hover:opacity-60;
 }
+
+.flex-center {
+    @apply flex justify-center items-center
+}

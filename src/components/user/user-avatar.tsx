@@ -6,10 +6,7 @@ export const UserAvatar = () => {
     const userAvatar = false // брать с сервера
 
     return (
-        <Link
-            to={PROFILE}
-            className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white hover:opacity-60"
-        >
+        <Link to={PROFILE} className="flex-center h-11 w-11 rounded-full border-2 border-white hover:opacity-60">
             {userAvatar ? (
                 userAvatar
             ) : (

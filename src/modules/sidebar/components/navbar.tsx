@@ -7,7 +7,7 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ expanded }: NavbarProps) => (
-    <nav className={cn('w-full pl-[10px]', !expanded && 'flex flex-col items-center')}>
+    <nav className={cn('w-full', expanded ? 'pl-[10px]' : 'flex flex-col items-center')}>
         <NavLinks expanded={expanded} />
         <InfoLinks expanded={expanded} />
     </nav>

@@ -12,8 +12,8 @@ export const NavLinks = ({ expanded }: { expanded?: boolean }) => {
         <>
             {expanded && (
                 <div className="mt-2 flex items-end gap-1">
-                    <span className="text-sm text-[#D2CFCF]">{t('navigation')}</span>
-                    <Separator className="mb-0.5 bg-[#2B394A]" />
+                    <span className="text-sm text-caption">{t('navigation')}</span>
+                    <Separator className="mb-0.5 bg-accent-sidebar" />
                 </div>
             )}
             {expanded ? (
@@ -26,7 +26,7 @@ export const NavLinks = ({ expanded }: { expanded?: boolean }) => {
                                     <span>{title}</span>
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent className="nav-links-accordion rounded-lg bg-[#2B394A] p-5 text-base text-white">
+                            <AccordionContent className="nav-links-accordion rounded-lg bg-accent-sidebar p-5 text-base text-white">
                                 {content.map((navLink) => (
                                     <div key={navLink.id}>
                                         <Link to={navLink.link.href} className="hover:opacity-60">
@@ -43,7 +43,7 @@ export const NavLinks = ({ expanded }: { expanded?: boolean }) => {
                                                             {subLink.isHighlighted && (
                                                                 <Link
                                                                     to="/"
-                                                                    className="flex h-6 w-6 items-center justify-center rounded-full bg-white hover:opacity-60"
+                                                                    className="flex-center h-6 w-6 rounded-full bg-white hover:opacity-60"
                                                                 >
                                                                     <PlusIcon />
                                                                 </Link>
@@ -53,7 +53,7 @@ export const NavLinks = ({ expanded }: { expanded?: boolean }) => {
                                                 ))}
                                             </ul>
                                         )}
-                                        {navLink.link.subLinks && <Separator className="mt-3 bg-[#222E3C]" />}
+                                        {navLink.link.subLinks && <Separator className="mt-3 bg-primary" />}
                                     </div>
                                 ))}
                             </AccordionContent>
@@ -75,7 +75,7 @@ export const NavLinks = ({ expanded }: { expanded?: boolean }) => {
                     {expanded && <span>{title}</span>}
                 </Link>
             ))}
-            <Separator className="mt-4 bg-[#2B394A]" />
+            <Separator className="mt-4 bg-accent-sidebar" />
         </>
     )
 }

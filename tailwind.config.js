@@ -37,6 +37,7 @@ module.exports = {
                 accent: {
                     DEFAULT: 'hsl(var(--accent))',
                     foreground: 'hsl(var(--accent-foreground))',
+                    sidebar: '#2B394A',
                 },
                 popover: {
                     DEFAULT: 'hsl(var(--popover))',
@@ -46,6 +47,7 @@ module.exports = {
                     DEFAULT: 'hsl(var(--card))',
                     foreground: 'hsl(var(--card-foreground))',
                 },
+                caption: '#D2CFCF',
             },
             boxShadow: {
                 custom: '0px 2px 5px 0px #00000033',

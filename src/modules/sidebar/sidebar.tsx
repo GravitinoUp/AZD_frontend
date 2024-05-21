@@ -33,7 +33,7 @@ export const SideBar = () => {
                         <DashboardIcon />
                         {expanded && <span className="text-base text-white">{t('dashboard')}</span>}
                     </Link>
-                    <Separator className={cn('mt-8 bg-[#2B394A]', expanded && 'ml-[10px]')} />
+                    <Separator className={cn('mt-8 bg-accent-sidebar', expanded && 'ml-[10px]')} />
                     <Navbar expanded={expanded} />
                 </div>
             </WithScrollArea>
@@ -44,7 +44,7 @@ export const SideBar = () => {
             >
                 <span
                     className={cn(
-                        'flex h-6 w-6 items-center justify-center rounded-full hover:opacity-60',
+                        'flex-center h-6 w-6 rounded-full hover:opacity-60',
                         expanded ? 'bg-white' : 'bg-primary'
                     )}
                 >
