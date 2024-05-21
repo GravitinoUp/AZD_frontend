@@ -31,7 +31,7 @@ export const InfoLinks = ({ expanded }: { expanded?: boolean }) => {
                                         </AccordionTrigger>
                                         <AccordionContent className="nav-links-accordion rounded-lg bg-[#2B394A] p-5 text-base text-white">
                                             {subLinks && (
-                                                <ul className="mt-2 flex list-disc flex-col gap-2 pl-7">
+                                                <ul className="flex list-disc flex-col gap-2 pl-7">
                                                     {subLinks?.map((subLink) => (
                                                         <li key={subLink.id}>
                                                             <div className="flex justify-between">
