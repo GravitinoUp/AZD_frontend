@@ -1,5 +1,5 @@
-import { Copyright } from '@/modules/sidebar/components/copyright.tsx'
-import { infoLinks } from '@/modules/sidebar/components/navbar/info-links-data.ts'
+import { Copyright } from '@/components/copyright'
+import { infoLinks } from '@/modules/sidebar/constants/info-links-data.ts'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/ui/accordion.tsx'
 import { Separator } from '@/ui/separator.tsx'
 import { useTranslation } from 'react-i18next'

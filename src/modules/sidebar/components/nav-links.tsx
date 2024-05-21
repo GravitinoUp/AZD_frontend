@@ -1,5 +1,5 @@
 import PlusIcon from '@/assets/icons/navigation/plus-icon.svg'
-import { multiLinks, singleLinks } from '@/modules/sidebar/components/navbar/nav-links-data.ts'
+import { multiLinks, singleLinks } from '@/modules/sidebar/constants/nav-links-data.ts'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/ui/accordion.tsx'
 import { Separator } from '@/ui/separator.tsx'
 import { useTranslation } from 'react-i18next'

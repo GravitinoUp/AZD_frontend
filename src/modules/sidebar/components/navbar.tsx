@@ -1,5 +1,5 @@
-import { InfoLinks } from '@/modules/sidebar/components/navbar/info-links.tsx'
-import { NavLinks } from '@/modules/sidebar/components/navbar/nav-links.tsx'
+import { InfoLinks } from '@/modules/sidebar/components/info-links.tsx'
+import { NavLinks } from '@/modules/sidebar/components/nav-links.tsx'
 import { cn } from '@/shared/lib/cn.ts'
 
 interface NavbarProps {

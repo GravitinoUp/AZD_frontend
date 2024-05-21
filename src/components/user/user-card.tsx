@@ -1,6 +1,6 @@
 import LogoutIcon from '@/assets/icons/navigation/logout.svg'
 import SettingsIcon from '@/assets/icons/navigation/settings.svg'
-import { UserAvatar } from '@/modules/sidebar/components/user-avatar.tsx'
+import { UserAvatar } from '@/components/user/user-avatar.tsx'
 
 import { SETTINGS } from '@/shared/router/routes.ts'
 import { Link } from 'react-router-dom'

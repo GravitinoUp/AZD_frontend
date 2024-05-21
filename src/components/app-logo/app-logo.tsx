@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import Logo from '../../../assets/icons/navigation/logo.svg'
+import Logo from '../../assets/icons/navigation/logo.svg'
 
 interface AppLogoProps {
     expanded?: boolean
