@@ -75,3 +75,17 @@
         @apply bg-background text-foreground;
     }
 }
+
+ul li::marker {
+    color: #7C7C7C;
+    width: 3px;
+    height: 3px;
+}
+
+.nav-links-accordion div:not(:first-of-type) {
+    margin-top: 12px;
+}
+
+.nav-link {
+    @apply flex gap-3 py-4 text-base font-normal text-white hover:opacity-60;
+}
