@@ -1,15 +1,18 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { Layout } from '@/components/layout'
+import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
-import { ExamplePage } from '@/pages/example'
-import { EXAMPLE } from '@/shared/router/routes.ts'
+import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <HomePage />,
-    },
-    {
-        path: EXAMPLE,
-        element: <ExamplePage />,
+        element: <Layout />,
+        errorElement: <ErrorPage />,
+        children: [
+            {
+                path: '',
+                element: <HomePage />,
+            },
+        ],
     },
 ])
