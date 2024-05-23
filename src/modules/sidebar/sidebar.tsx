@@ -18,9 +18,9 @@ export const SideBar = () => {
     const [expanded, setExpanded] = useState(false)
 
     return (
-        <div
+        <aside
             className={cn(
-                'relative h-screen w-full bg-primary duration-300 ease-in-out',
+                'relative h-screen w-full bg-primary duration-150 ease-in-out',
                 expanded ? 'max-w-[380px]' : 'max-w-[120px]',
                 expanded ? 'pl-[10px]' : 'flex flex-col items-center'
             )}
@@ -39,7 +39,7 @@ export const SideBar = () => {
             </WithScrollArea>
             <Button
                 variant="ghost"
-                className={cn('absolute right-[-70px] top-0 h-[64px] w-[70px] rounded-none bg-[#F3F3F3]')}
+                className={cn('absolute right-[-70px] top-0 h-[70px] w-[70px] rounded-none bg-[#F3F3F3]')}
                 onClick={() => setExpanded(!expanded)}
             >
                 <span
@@ -51,6 +51,6 @@ export const SideBar = () => {
                     {expanded ? <ChevronLeft /> : <ChevronRight />}
                 </span>
             </Button>
-        </div>
+        </aside>
     )
 }
