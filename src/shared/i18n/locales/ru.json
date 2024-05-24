@@ -35,5 +35,12 @@
   "help": "Помощь",
   "mail": "Почта",
   "notifications": "Уведомления",
-  "copyright": "© 2024 Гравитино Закупки. All Rights Reserved."
+  "copyright": "© 2024 Гравитино Закупки. All Rights Reserved.",
+  "approval-sheet": "Лист согласования",
+  "send-to-EIS": "Отправить в ЕИС",
+  "edit": "Редактировать",
+  "delete": "Удалить",
+  "export": "Экспорт",
+  "import": "Импорт",
+  "placeholder.search": "Начните искать..."
 }

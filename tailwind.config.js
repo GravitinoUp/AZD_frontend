@@ -23,8 +23,9 @@ module.exports = {
                     foreground: 'hsl(var(--primary-foreground))',
                 },
                 secondary: {
-                    DEFAULT: 'hsl(var(--secondary))',
+                    DEFAULT: '#EEF0F6',
                     foreground: 'hsl(var(--secondary-foreground))',
+                    border: '#DADADB',
                 },
                 destructive: {
                     DEFAULT: 'hsl(var(--destructive))',
@@ -48,6 +49,7 @@ module.exports = {
                     foreground: 'hsl(var(--card-foreground))',
                 },
                 caption: '#D2CFCF',
+                tabs: '#183028',
             },
             boxShadow: {
                 custom: '0px 2px 5px 0px #00000033',

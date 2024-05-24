@@ -69,6 +69,7 @@
 @layer base {
     * {
         @apply border-border;
+        font-family: system-ui, sans-serif;
     }
 
     body {
@@ -92,4 +93,8 @@ ul li::marker {
 
 .flex-center {
     @apply flex justify-center items-center
+}
+
+.page-title {
+    @apply text-[32px] font-bold leading-9 text-[#333333];
 }
