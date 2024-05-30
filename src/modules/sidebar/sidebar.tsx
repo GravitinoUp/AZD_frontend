@@ -9,18 +9,22 @@ import { cn } from '@/shared/lib/cn.ts'
 import { DASHBOARD } from '@/shared/router/routes.ts'
 import { Button } from '@/ui/button.tsx'
 import { Separator } from '@/ui/separator.tsx'
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-export const SideBar = () => {
+interface SideBarProps {
+    expanded: boolean
+    setExpanded: Dispatch<SetStateAction<boolean>>
+}
+
+export const SideBar = ({ expanded, setExpanded }: SideBarProps) => {
     const { t } = useTranslation()
-    const [expanded, setExpanded] = useState(false)
 
     return (
         <aside
             className={cn(
-                'relative h-screen w-full bg-primary duration-150 ease-in-out',
+                'fixed left-0 top-0 z-10 h-full w-full bg-primary duration-150 ease-in-out',
                 expanded ? 'max-w-[380px]' : 'max-w-[120px]',
                 expanded ? 'pl-[10px]' : 'flex flex-col items-center'
             )}

@@ -1,11 +1,17 @@
 import { SideBar } from '@/modules/sidebar'
+import { cn } from '@/shared/lib/cn.ts'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
-export const Layout = () => (
-    <div className="flex">
-        <SideBar />
-        <main className="w-full bg-[#F5F7FB] text-center">
-            <Outlet />
-        </main>
-    </div>
-)
+export const Layout = () => {
+    const [sidebarExpanded, setSidebarExpanded] = useState(false)
+
+    return (
+        <>
+            <SideBar expanded={sidebarExpanded} setExpanded={setSidebarExpanded} />
+            <main className={cn('w-full pb-10 text-center', sidebarExpanded ? 'pl-[380px]' : 'pl-[120px]')}>
+                <Outlet />
+            </main>
+        </>
+    )
+}

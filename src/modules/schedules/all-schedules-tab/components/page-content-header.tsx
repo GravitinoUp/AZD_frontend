@@ -10,9 +10,8 @@ export const PageContentHeader = () => {
     const { t } = useTranslation()
 
     return (
-        <div className="flex items-center justify-between">
-            <div>Breadcrumbs placeholder</div>
-            <div className="flex gap-3">
+        <div>
+            <div className="flex justify-center gap-3">
                 <Button className="rounded-[10px]" onClick={() => void 0}>
                     <ArrowRightCircle />
                     <span className="ml-3">{t('send-to-EIS')}</span>
@@ -26,15 +25,18 @@ export const PageContentHeader = () => {
                     <DeleteIcon />
                 </Button>
             </div>
-            <div className="flex gap-3">
-                <Button variant="secondary" onClick={() => void 0}>
-                    <span className="mr-3">{t('export')}</span>
-                    <ExportIcon />
-                </Button>
-                <Button variant="secondary" onClick={() => void 0}>
-                    <span className="mr-3">{t('import')}</span>
-                    <ImportIcon />
-                </Button>
+            <div className="mt-10 flex items-center justify-between">
+                <div>Breadcrumbs placeholder</div>
+                <div className="flex gap-3">
+                    <Button variant="secondary" onClick={() => void 0}>
+                        <span className="mr-3">{t('export')}</span>
+                        <ExportIcon />
+                    </Button>
+                    <Button variant="secondary" onClick={() => void 0}>
+                        <span className="mr-3">{t('import')}</span>
+                        <ImportIcon />
+                    </Button>
+                </div>
             </div>
         </div>
     )

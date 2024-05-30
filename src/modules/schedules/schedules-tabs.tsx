@@ -4,7 +4,6 @@ import SchedulesIcon from '@/assets/icons/tabs/schedules.svg'
 import SummaryScheduleIcon from '@/assets/icons/tabs/summary-schedule.svg'
 import { AllSchedulesTab } from '@/modules/schedules/all-schedules-tab/all-schedules-tab.tsx'
 import i18next from '@/shared/i18n/i18n.ts'
-import { cn } from '@/shared/lib/cn.ts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs.tsx'
 
 const tabsData = [
@@ -44,14 +43,14 @@ export const SchedulesTabs = () => (
                         value={value}
                         className={value === 'all-schedules' ? 'schedules-tab-trigger' : ''}
                     >
-                        <span className={cn('mr-1.5')}>{icon}</span>
+                        <span className="mr-1.5">{icon}</span>
                         {label}
                     </TabsTrigger>
                 ))}
             </TabsList>
         </div>
         {tabsData.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value} className="mt-28">
+            <TabsContent key={tab.value} value={tab.value} className="mt-16">
                 {tab.content}
             </TabsContent>
         ))}

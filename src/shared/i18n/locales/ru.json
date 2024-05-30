@@ -42,5 +42,10 @@
   "delete": "Удалить",
   "export": "Экспорт",
   "import": "Импорт",
-  "placeholder.search": "Начните искать..."
+  "placeholder.search": "Начните искать...",
+  "creation-date": "Дата создания",
+  "last-edit-date": "Дата последнего редактирования",
+  "branch": "Филиал",
+  "status": "Статус",
+  "version": "Версия"
 }

@@ -50,6 +50,7 @@ module.exports = {
                 },
                 caption: '#D2CFCF',
                 tabs: '#183028',
+                table: '#D6D6D6',
             },
             boxShadow: {
                 custom: '0px 2px 5px 0px #00000033',
