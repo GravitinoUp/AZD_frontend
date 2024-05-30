@@ -73,7 +73,8 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply text-foreground;
+        background: #F5F7FB;
     }
 }
 
