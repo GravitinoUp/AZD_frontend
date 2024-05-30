@@ -36,14 +36,17 @@ jobs:
           cd azd-frontend/
           docker build --build-arg VITE_BASE_URL="${{ env.VITE_BASE_URL }}" -t azd_frontend_develop .
 
-      - name: Docker Login
-        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u del98 --password-stdin
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v2
+        with:
+          yc-sa-json-credentials: ${{ secrets.DOCKER_PASSWORD }} 
 
       - name: Tag Docker image
-        run: docker tag azd_frontend_develop del98/azd_frontend_develop:${{ github.sha }}
+        run: docker tag azd_frontend_develop cr.yandex/crpi5naitl8bfj04abju/azd_frontend_develop:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push del98/azd_frontend_develop:${{ github.sha }}
+        run: docker push cr.yandex/crpi5naitl8bfj04abju/azd_frontend_develop:${{ github.sha }}
 
       - name: Trigger test workflow
         uses: actions/github-script@v5
