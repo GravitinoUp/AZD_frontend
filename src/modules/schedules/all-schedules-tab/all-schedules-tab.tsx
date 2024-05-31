@@ -1,8 +1,8 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
 import { useAllSchedules } from '@/modules/schedules/all-schedules-tab/api/useAllSchedules.ts'
-import { PageContentHeader } from '@/modules/schedules/all-schedules-tab/components/page-content-header.tsx'
 import { schedulesColumns } from '@/modules/schedules/all-schedules-tab/components/schedules-columns.ts'
+import { PageContentHeader } from './components/page-content-header'
 
 export const AllSchedulesTab = () => {
     const { data: schedules = [], isLoading, isError } = useAllSchedules()
@@ -25,4 +25,3 @@ export const AllSchedulesTab = () => {
         </div>
     )
 }
-
