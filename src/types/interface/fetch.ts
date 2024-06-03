@@ -1,33 +1,33 @@
 import { RecursivePartial } from '@/shared/lib/recursive-partial'
 
-interface OffsetInterface {
+interface Offset {
     count: number
     page: number
 }
 
-interface QueryInterface {
-    offset: OffsetInterface
+interface Query {
+    offset: Offset
 }
 
-interface PeriodInterface {
+interface Period {
     date_start: string
     date_end: string
 }
 
-export interface ResultInterface<T = void> {
+export interface Result<T = void> {
     status: boolean
     data?: T
 }
 
-export interface DataInterface<T> {
+export interface Data<T> {
     count: number
     data: T
 }
 
-export interface PayloadInterface<FilterType, SortType> extends QueryInterface {
+export interface Payload<FilterType, SortType> extends Query {
     filter: RecursivePartial<FilterType>
     sorts: SortType
-    period?: PeriodInterface
+    period?: Period
 }
 
 export type SortOptionsType = 'ASC' | 'DESC' | null | undefined

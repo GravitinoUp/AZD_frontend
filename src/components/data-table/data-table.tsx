@@ -47,7 +47,7 @@ export function DataTable<TData, TValue>({
         <>
             <div className={cn(withBackground && 'rounded-[10px] border border-table py-5', className)}>
                 <ScrollArea type="always" className="w-full">
-                    <Table className="mx-auto w-[98%]">
+                    <Table className="mx-4 w-[calc(100%-2rem)]">
                         <TableHeader className="border border-secondary-border bg-secondary">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
