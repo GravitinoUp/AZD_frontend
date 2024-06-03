@@ -6,6 +6,7 @@ import { useGetAllUsers } from './api/useGetAllUsers'
 import { Button } from '@/ui/button'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
 import { USERS } from '@/shared/router/routes'
+import { DebouncedInput } from '@/components/debounced-input'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -29,6 +30,7 @@ export const UsersModule = () => {
                 </Button>
             </div>
             <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
+            <DebouncedInput className="my-6" value="" onChange={() => void 0} />
             <DataTable
                 className="mb-10 mt-7"
                 columns={userColumns}
