@@ -2,8 +2,14 @@ import ArrowRightCircle from '@/assets/icons/arrow-right-circle.svg'
 import EditIcon from '@/assets/icons/pen-square.svg'
 import DeleteIcon from '@/assets/icons/red-recycle-bin.svg'
 import { TableActions } from '@/components/table-actions'
+import { SCHEDULES } from '@/shared/router/routes'
 import { Button } from '@/ui/button.tsx'
 import { useTranslation } from 'react-i18next'
+
+const routes = [
+    { route: '/', label: 'Главная' },
+    { route: SCHEDULES, label: 'Планы-графики' },
+]
 
 export const PageContentHeader = () => {
     const { t } = useTranslation()
@@ -24,7 +30,7 @@ export const PageContentHeader = () => {
                     <DeleteIcon />
                 </Button>
             </div>
-            <TableActions onExportClick={() => void 0} onImportClick={() => void 0} />
+            <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
         </div>
     )
 }

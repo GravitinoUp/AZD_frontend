@@ -5,6 +5,12 @@ import { TableActions } from '@/components/table-actions'
 import { useGetAllUsers } from './api/useGetAllUsers'
 import { Button } from '@/ui/button'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
+import { USERS } from '@/shared/router/routes'
+
+const routes = [
+    { route: '/', label: 'Главная' },
+    { route: USERS, label: 'Пользователи' },
+]
 
 export const UsersModule = () => {
     const { t } = useTranslation()
@@ -22,7 +28,7 @@ export const UsersModule = () => {
                     <PlusRoundedIcon />
                 </Button>
             </div>
-            <TableActions onExportClick={() => void 0} onImportClick={() => void 0} />
+            <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
             <DataTable
                 className="mb-10 mt-7"
                 columns={userColumns}
