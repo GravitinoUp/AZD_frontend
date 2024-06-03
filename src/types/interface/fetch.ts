@@ -29,3 +29,5 @@ export interface PayloadInterface<FilterType, SortType> extends QueryInterface {
     sorts: SortType
     period?: PeriodInterface
 }
+
+export type SortOptionsType = 'ASC' | 'DESC' | null | undefined
