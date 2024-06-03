@@ -1,10 +1,6 @@
 import { cn } from '@/shared/lib/cn'
+import { RouteInterface } from '@/types/common'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/ui/breadcrumb'
-
-export interface RouteInterface {
-    route: string
-    label: string
-}
 
 interface BreadcrumbsProps {
     routes: RouteInterface[]

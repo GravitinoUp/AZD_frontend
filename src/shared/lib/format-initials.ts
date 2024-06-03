@@ -1,5 +1,5 @@
-export const formatInitials = (lastName: string, firstName: string, patronymic: string | null) => {
-    const str = `${lastName} ${firstName}${patronymic !== null ? ` ${patronymic}` : ''}`
+export const formatInitials = (lastName: string, firstName: string, patronymic?: string | null) => {
+    const str = `${lastName} ${firstName}${patronymic && patronymic !== null ? ` ${patronymic}` : ''}`
 
     return str
         .split(/\s+/)

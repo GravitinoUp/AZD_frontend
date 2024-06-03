@@ -1,10 +1,10 @@
 import { formatInitials } from '@/shared/lib/format-initials'
-import { UserInterface } from '@/types/interface/user'
+import { User } from '@/types/interface/user'
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import UserSwitch from './user-switch'
 
-export const userColumns: ColumnDef<UserInterface>[] = [
+export const userColumns: ColumnDef<User>[] = [
     {
         accessorKey: 'user_uuid',
         header: 'UUID',
