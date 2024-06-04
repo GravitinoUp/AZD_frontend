@@ -30,4 +30,4 @@ export interface Payload<FilterType, SortType> extends Query {
     period?: Period
 }
 
-export type SortOptionsType = 'ASC' | 'DESC' | null | undefined
+export type SortOptions = 'ASC' | 'DESC' | null | undefined
