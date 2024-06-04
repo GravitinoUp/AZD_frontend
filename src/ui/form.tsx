@@ -4,7 +4,7 @@ import { Slot } from '@radix-ui/react-slot'
 import { Controller, ControllerProps, FieldPath, FieldValues, FormProvider, useFormContext } from 'react-hook-form'
 
 import { cn } from '@/shared/lib/cn'
-import { Label } from '/src/ui/label'
+import { Label } from './label'
 
 const Form = FormProvider
 
@@ -22,13 +22,11 @@ const FormField = <
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
     ...props
-}: ControllerProps<TFieldValues, TName>) => {
-    return (
-        <FormFieldContext.Provider value={{ name: props.name }}>
-            <Controller {...props} />
-        </FormFieldContext.Provider>
-    )
-}
+}: ControllerProps<TFieldValues, TName>) => (
+    <FormFieldContext.Provider value={{ name: props.name }}>
+        <Controller {...props} />
+    </FormFieldContext.Provider>
+)
 
 const useFormField = () => {
     const fieldContext = React.useContext(FormFieldContext)
