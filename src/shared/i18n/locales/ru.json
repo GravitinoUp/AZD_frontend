@@ -23,6 +23,8 @@
     "branches": "Филиалы",
     "purchase-initiators": "Инициаторы закупки",
     "users": "Пользователи",
+    "add.user": "Добавление пользователя",
+    "manage.user": "Управление пользователем",
     "roles-and-permissions": "Права и роли",
     "manage-properties": "Управление характеристиками",
     "information": "Информация",
@@ -48,5 +50,21 @@
     "branch": "Филиал",
     "status": "Статус",
     "version": "Версия",
-    "not.added": "Не указан"
+    "not.added": "Не указан",
+    "last.name": "Фамилия",
+    "first.name": "Имя",
+    "patronymic": "Отчество",
+    "post": "Должность",
+    "legal.basis": "Юридическое обоснование",
+    "password": "Пароль",
+    "role": "Роль",
+    "fio": "ФИО",
+    "phone": "Номер телефона",
+    "error": {
+        "password.length": "Пароль должен содержать не меньше 6 символов",
+        "email.format": "Email должен быть в формате email@example.ru"
+    },
+    "placeholder": {
+        "select": "Выберите значение из выпадающего списка"
+    }
 }

@@ -5,8 +5,9 @@ import { TableActions } from '@/components/table-actions'
 import { useGetAllUsers } from './api/useGetAllUsers'
 import { Button } from '@/ui/button'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
-import { USERS } from '@/shared/router/routes'
+import { USERS, USER_MANAGE } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
+import { useNavigate } from 'react-router-dom'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -15,6 +16,8 @@ const routes = [
 
 export const UsersModule = () => {
     const { t } = useTranslation()
+    const navigate = useNavigate()
+
     const { data: users = { count: 0, data: [] }, isLoading, isError } = useGetAllUsers()
 
     if (isError) {
@@ -25,7 +28,7 @@ export const UsersModule = () => {
         <div className="mx-auto w-[95%]">
             <div className="flex-center mt-20 gap-4">
                 <h1 className="text-3xl font-bold">{t('users')}</h1>
-                <Button className="h-7 w-7" size="icon">
+                <Button className="h-7 w-7" size="icon" onClick={() => navigate(USER_MANAGE)}>
                     <PlusRoundedIcon />
                 </Button>
             </div>
