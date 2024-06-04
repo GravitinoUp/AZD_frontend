@@ -62,9 +62,15 @@
     "phone": "Номер телефона",
     "error": {
         "password.length": "Пароль должен содержать не меньше 6 символов",
-        "email.format": "Email должен быть в формате email@example.ru"
+        "email.format": "Email должен быть в формате email@example.ru",
+        "required": "Поле должно быть заполнено"
     },
     "placeholder": {
         "select": "Выберите значение из выпадающего списка"
+    },
+    "action": {
+        "add": "Добавить",
+        "cancel": "Отменить",
+        "save": "Сохранить"
     }
 }

@@ -17,7 +17,7 @@ export const InputField = forwardRef<HTMLInputElement, InputProps>(function Inpu
         <FormItem className={cn('flex flex-45 flex-col items-start', className)}>
             {label && <FormLabel className={props.required ? 'label-required' : ''}>{label}</FormLabel>}
             <FormControl>
-                <Input className="h-12" type={type} ref={ref} {...props} />
+                <Input className="h-12" type={type} ref={ref} {...props} required={false} />
             </FormControl>
             <FormMessage />
         </FormItem>

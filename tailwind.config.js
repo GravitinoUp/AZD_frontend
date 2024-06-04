@@ -28,7 +28,7 @@ module.exports = {
                     border: '#DADADB',
                 },
                 destructive: {
-                    DEFAULT: 'hsl(var(--destructive))',
+                    DEFAULT: '#DE5A5A',
                     foreground: 'hsl(var(--destructive-foreground))',
                 },
                 muted: {
