@@ -30,6 +30,8 @@ export interface Payload<FilterType, SortType> extends Query {
     period?: Period
 }
 
+export type SortOptions = 'ASC' | 'DESC' | null | undefined
+
 export interface ErrorResponse {
     message: string
     url: string
