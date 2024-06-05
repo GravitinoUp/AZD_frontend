@@ -1,7 +1,7 @@
 import { Form, useForm } from '@/components/form'
 import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
-import { FormField, FormItem, FormLabel } from '@/ui/form'
+import { FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
@@ -129,6 +129,8 @@ export const UserManageModule = () => {
                                             items={formattedRoles}
                                         />
                                     )}
+
+                                    <FormMessage />
                                 </FormItem>
                             )}
                         />
@@ -140,8 +142,8 @@ export const UserManageModule = () => {
                                     <FormLabel>{t('legal.basis')}</FormLabel>
                                     <CommandSelect
                                         placeholder="Нет"
-                                        selectedValue={field.value ? field.value : 0}
-                                        setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
+                                        selectedValue={field.value ? field.value : ''}
+                                        setSelectedValue={(value) => field.onChange(value !== '' ? value : undefined)}
                                         items={formattedLegalBasisList}
                                     />
                                 </FormItem>

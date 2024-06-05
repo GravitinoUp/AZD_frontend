@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import i18next from 'i18next'
 import { Check, ChevronsUpDown } from 'lucide-react'
@@ -32,10 +32,6 @@ export const CommandSelect = ({
 
     const isNotEmpty = selectedValue && selectedValue !== 'undefined' && selectedValue !== '0'
 
-    useEffect(() => {
-        console.log(items)
-    }, [])
-
     return (
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
             <PopoverTrigger disabled={disabled} asChild>
@@ -58,28 +54,29 @@ export const CommandSelect = ({
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
+            <PopoverContent className="p-0">
                 <Command>
                     <CommandInput placeholder={t('placeholder.search')} />
                     <CommandEmpty>{t('nothing.found')}</CommandEmpty>
-                    <CommandGroup>
+                    <CommandGroup className="p-3">
                         <ScrollArea.Root>
                             <ScrollArea.Viewport className="max-h-[320px] max-w-[500px]">
                                 {items.map(({ value, label }) => (
                                     <CommandItem
+                                        className="m-0 flex h-10 justify-between rounded-xl pl-4 font-semibold"
                                         key={value}
                                         onSelect={() => {
                                             setSelectedValue(value === selectedValue ? '' : value)
                                             setPopoverOpen(false)
                                         }}
                                     >
+                                        {label.replaceAll('"', "'")}
                                         <Check
                                             className={cn(
-                                                'mr-2 h-4 w-4',
+                                                'ml-2 h-4 w-4 rounded-full bg-primary p-[2px] text-white',
                                                 selectedValue === value ? 'opacity-100' : 'opacity-0'
                                             )}
                                         />
-                                        {label.replaceAll('"', "'")}
                                     </CommandItem>
                                 ))}
                             </ScrollArea.Viewport>
