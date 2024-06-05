@@ -18,7 +18,7 @@ interface CommandSelectProps extends ButtonProps {
     items: { value: string | number; label: string }[]
 }
 
-const CommandSelect = ({
+export const CommandSelect = ({
     selectedValue,
     setSelectedValue,
     placeholder = i18next.t('placeholder.select'),
@@ -92,5 +92,3 @@ const CommandSelect = ({
         </Popover>
     )
 }
-
-export default CommandSelect

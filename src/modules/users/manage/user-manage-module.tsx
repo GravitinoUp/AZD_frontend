@@ -1,4 +1,3 @@
-import CommandSelect from '@/components/command/command-select'
 import Form, { useForm } from '@/components/form/form'
 import { InputField } from '@/components/input-field/input-field'
 import { Button } from '@/ui/button'
@@ -11,6 +10,11 @@ import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { useCreateUser } from './api/useCreateUser'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'
+import { useGetAllRoles } from '@/modules/roles/api/useGetAllRoles'
+import { placeholderQuery } from '@/shared/constants'
+import { CommandSelect } from '@/components/command'
+import { ErrorAlert } from '@/components/error-alert'
+import { Skeleton } from '@/ui/skeleton'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -28,6 +32,13 @@ export const UserManageModule = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
+    const {
+        data: roles = { count: 0, data: [] },
+        isFetching: rolesFetching,
+        isSuccess: rolesSuccess,
+        error: rolesError,
+    } = useGetAllRoles(placeholderQuery)
+
     const form = useForm({
         schema: userSchema,
         defaultValues: {
@@ -40,10 +51,7 @@ export const UserManageModule = () => {
         },
     })
 
-    const formattedRoles = [
-        { value: 1, label: 'Пользователь' },
-        { value: 2, label: 'Админ' },
-    ]
+    const formattedRoles = roles.data.map((value) => ({ value: value.role_id, label: value.role_name }))
 
     const formattedLegalBasisList = [
         { value: '', label: 'Нет' },
@@ -112,11 +120,15 @@ export const UserManageModule = () => {
                             render={({ field }) => (
                                 <FormItem className="flex flex-45 flex-col items-start space-y-2">
                                     <FormLabel>{t('role')}</FormLabel>
-                                    <CommandSelect
-                                        selectedValue={field.value ? field.value : 0}
-                                        setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
-                                        items={formattedRoles}
-                                    />
+                                    {rolesFetching && <Skeleton className="h-12 w-full" />}
+                                    {rolesError && <ErrorAlert />}
+                                    {rolesSuccess && (
+                                        <CommandSelect
+                                            selectedValue={field.value ? field.value : 0}
+                                            setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
+                                            items={formattedRoles}
+                                        />
+                                    )}
                                 </FormItem>
                             )}
                         />

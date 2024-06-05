@@ -18,7 +18,7 @@ interface CommandMultiSelectProps<T> extends ButtonProps {
     items: { value: T; label: string }[]
 }
 
-export default function CommandMultiSelect<T>({
+export function CommandMultiSelect<T>({
     selectedValues,
     setSelectedValues,
     placeholder = i18next.t('multiselect.placeholder.default'),
