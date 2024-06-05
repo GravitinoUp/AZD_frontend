@@ -6,7 +6,7 @@ interface BreadcrumbsProps {
     routes: Route[]
 }
 
-const Breadcrumbs = ({ routes }: BreadcrumbsProps) => (
+export const Breadcrumbs = ({ routes }: BreadcrumbsProps) => (
     <Breadcrumb>
         <BreadcrumbList>
             {routes.map((value, index) => (
@@ -26,5 +26,3 @@ const Breadcrumbs = ({ routes }: BreadcrumbsProps) => (
         </BreadcrumbList>
     </Breadcrumb>
 )
-
-export default Breadcrumbs
