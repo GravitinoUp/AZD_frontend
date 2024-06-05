@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@/components/loaders/spinner'
+import { LoadingSpinner } from '@/components/loaders'
 import { cn } from '@/shared/lib/cn.ts'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'

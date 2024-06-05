@@ -26,12 +26,10 @@ export const useForm = <T extends ZodSchema<any>>({ schema, ...formConfig }: Use
         resolver: zodResolver(schema),
     })
 
-const Form = <T extends FieldValues>({ form, onSubmit, children, className, ...props }: FormProps<T>) => (
+export const Form = <T extends FieldValues>({ form, onSubmit, children, className, ...props }: FormProps<T>) => (
     <FormProvider {...form}>
         <form className={className} onSubmit={form.handleSubmit(onSubmit)} {...props}>
             <fieldset disabled={form.formState.isSubmitting}>{children}</fieldset>
         </form>
     </FormProvider>
 )
-
-export default Form

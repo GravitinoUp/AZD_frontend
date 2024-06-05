@@ -1,5 +1,5 @@
-import Form, { useForm } from '@/components/form/form'
-import { InputField } from '@/components/input-field/input-field'
+import { Form, useForm } from '@/components/form'
+import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
 import { FormField, FormItem, FormLabel } from '@/ui/form'
 import i18next from 'i18next'

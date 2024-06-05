@@ -21,7 +21,7 @@ export const UsersModule = () => {
     const { data: users = { count: 0, data: [] }, isLoading, isError } = useGetAllUsers()
 
     if (isError) {
-        return <p>Произошла ошибка. Данные не загрузились</p>
+        return <p>{t('error.default')}</p>
     }
 
     return (
