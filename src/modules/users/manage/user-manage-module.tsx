@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { useCreateUser } from './api/useCreateUser'
+import { useErrorToast } from '@/shared/hooks/use-error-toast'
+import { useSuccessToast } from '@/shared/hooks/use-success-toast'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -53,13 +55,16 @@ export const UserManageModule = () => {
     const {
         mutate: createUser,
         isPending: userCreating,
-        isError: userCreateError,
+        error: userCreateError,
         isSuccess: userCreateSuccess,
     } = useCreateUser()
 
     const handleSubmit = (data: z.infer<typeof userSchema>) => {
-        createUser(data)
+        createUser({ ...data })
     }
+
+    useSuccessToast('', userCreateSuccess, () => navigate(-1))
+    useErrorToast(void 0, userCreateError)
 
     return (
         <div className="mx-auto w-[95%]">

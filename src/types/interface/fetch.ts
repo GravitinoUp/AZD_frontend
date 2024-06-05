@@ -29,3 +29,11 @@ export interface Payload<FilterType, SortType> extends Query {
     sorts: SortType
     period?: Period
 }
+
+export interface ErrorResponse {
+    message: string
+    url: string
+    method: string
+    error: string
+    statusCode: number
+}
