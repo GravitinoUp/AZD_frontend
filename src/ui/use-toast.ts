@@ -68,6 +68,7 @@ const addToRemoveQueue = (toastId: string) => {
     toastTimeouts.set(toastId, timeout)
 }
 
+// eslint-disable-next-line consistent-return
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'ADD_TOAST':
