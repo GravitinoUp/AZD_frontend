@@ -1,14 +1,14 @@
 import { apiRequest } from '@/shared/api'
-import { DataInterface, PayloadInterface } from '@/types/interface/fetch'
-import { RoleInterface, RoleSortInterface } from '@/types/interface/user'
+import { Data, Payload } from '@/types/interface/fetch'
+import { Role, RoleSort } from '@/types/interface/user'
 import { useQuery } from '@tanstack/react-query'
 
-const getAllRoles = async (body: PayloadInterface<RoleInterface, RoleSortInterface>) => {
+const getAllRoles = async (body: Payload<Role, RoleSort>) => {
     const response = await apiRequest.post('/roles/all', body)
-    return response.data as DataInterface<RoleInterface[]>
+    return response.data as Data<Role[]>
 }
 
-export const useGetAllRoles = (body: PayloadInterface<RoleInterface, RoleSortInterface>) =>
+export const useGetAllRoles = (body: Payload<Role, RoleSort>) =>
     useQuery({
         queryKey: ['roles', body],
         queryFn: () => getAllRoles(body),
