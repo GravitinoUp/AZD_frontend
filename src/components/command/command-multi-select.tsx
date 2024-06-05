@@ -58,37 +58,40 @@ export function CommandMultiSelect<T>({
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
+            <PopoverContent className="p-0">
                 <Command>
                     <CommandInput placeholder={t('placeholder.search')} />
                     <CommandEmpty>{t('nothing.found')}</CommandEmpty>
-                    <CommandGroup>
+                    <CommandGroup className="p-3">
                         <ScrollArea.Root>
                             <ScrollArea.Viewport className="max-h-[320px] max-w-[500px]">
                                 {selectedValues.length > 0 ? (
                                     <CommandItem
+                                        className="m-0 flex h-10 justify-between rounded-xl pl-4 font-semibold"
                                         key={`unselect-all`}
                                         onSelect={() => {
                                             setSelectedValues([])
                                         }}
                                     >
-                                        <Check className="mr-2 h-4 w-4 opacity-0" />
                                         {t('multiselect.unselect.all')}
+                                        <Check className="ml-2 h-4 w-4 opacity-0" />
                                     </CommandItem>
                                 ) : (
                                     <CommandItem
+                                        className="m-0 flex h-10 justify-between rounded-xl pl-4 font-semibold"
                                         key={`select-all`}
                                         onSelect={() => {
                                             setSelectedValues(items.map((item) => item.value))
                                         }}
                                     >
-                                        <Check className="mr-2 h-4 w-4 opacity-0" />
                                         {t('multiselect.select.all')}
+                                        <Check className="ml-2 h-4 w-4 opacity-0" />
                                     </CommandItem>
                                 )}
                                 {items.map(({ value, label }) => (
                                     <CommandItem
                                         key={`${value}`}
+                                        className="m-0 flex h-10 justify-between rounded-xl pl-4 font-semibold"
                                         onSelect={() => {
                                             if (selectedValues.includes(value)) {
                                                 setSelectedValues(selectedValues.filter((item) => item !== value))
@@ -97,13 +100,13 @@ export function CommandMultiSelect<T>({
                                             }
                                         }}
                                     >
+                                        {label.replaceAll('"', "'")}
                                         <Check
                                             className={cn(
-                                                'mr-2 h-4 w-4',
+                                                'ml-2 h-4 w-4 rounded-full bg-primary p-[2px] text-white',
                                                 selectedValues.includes(value) ? 'opacity-100' : 'opacity-0'
                                             )}
                                         />
-                                        {label.replaceAll('"', "'")}
                                     </CommandItem>
                                 ))}
                             </ScrollArea.Viewport>
