@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
+import { useCreateUser } from './api/useCreateUser'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -15,7 +16,7 @@ const userSchema = z.object({
     patronymic: z.string().optional(),
     post: z.string().min(1, i18next.t('error.required')),
     role_id: z.number().min(1, i18next.t('error.required')),
-    legal_basis_id: z.number().optional(),
+    legal_basis_uuid: z.string().optional(),
     phone: z.string().optional(),
     email: z.string().email(i18next.t('error.email.format')),
     password: z.string().min(6, i18next.t('error.password.length')),
@@ -37,15 +38,27 @@ export const UserManageModule = () => {
         },
     })
 
-    const formattedLegalBasisList = [
-        { value: '', label: 'Нет' },
-        { value: 1, label: 'Тест 1' },
-        { value: 2, label: 'Тест 2' },
-        { value: 3, label: 'Тест 3' },
+    const formattedRoles = [
+        { value: 1, label: 'Пользователь' },
+        { value: 2, label: 'Админ' },
     ]
 
-    const handleSubmit = () => {
-        // TODO create or manage
+    const formattedLegalBasisList = [
+        { value: '', label: 'Нет' },
+        { value: 'uuid-1', label: 'Тест 1' },
+        { value: 'uuid-2', label: 'Тест 2' },
+        { value: 'uuid-3', label: 'Тест 3' },
+    ]
+
+    const {
+        mutate: createUser,
+        isPending: userCreating,
+        isError: userCreateError,
+        isSuccess: userCreateSuccess,
+    } = useCreateUser()
+
+    const handleSubmit = (data: z.infer<typeof userSchema>) => {
+        createUser(data)
     }
 
     return (
@@ -53,7 +66,7 @@ export const UserManageModule = () => {
             <h1 className="mt-20 text-3xl font-bold">{t('add.user')}</h1>
             <Form form={form} onSubmit={handleSubmit}>
                 <div className="flex-center mt-16 gap-3">
-                    <Button className="h-12 w-[200px] gap-4">
+                    <Button className="h-12 w-[200px] gap-4" loading={userCreating}>
                         <PlusCircleIcon />
                         {t('action.add')}
                     </Button>
@@ -95,17 +108,16 @@ export const UserManageModule = () => {
                                 <FormItem className="flex flex-45 flex-col items-start space-y-2">
                                     <FormLabel>{t('role')}</FormLabel>
                                     <CommandSelect
-                                        placeholder="Нет"
                                         selectedValue={field.value ? field.value : 0}
                                         setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
-                                        items={formattedLegalBasisList}
+                                        items={formattedRoles}
                                     />
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
-                            name="legal_basis_id"
+                            name="legal_basis_uuid"
                             render={({ field }) => (
                                 <FormItem className="flex flex-45 flex-col items-start space-y-2">
                                     <FormLabel>{t('legal.basis')}</FormLabel>
