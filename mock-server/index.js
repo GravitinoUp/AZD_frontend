@@ -1,5 +1,6 @@
 const express = require('express')
-const allPlanSchedules = require('./jsons/plan-all.json')
+const allPlansJson = require('./jsons/plan-all.json')
+const planJson = require('./jsons/plan.json')
 const cors = require('cors')
 const app = express()
 const port = 3000
@@ -15,7 +16,12 @@ const delay = (res, data) => {
 
 // Получение всех план-графиков
 app.get('/plan/all', (req, res) => {
-    delay(res, allPlanSchedules)
+    delay(res, allPlansJson)
+})
+
+// Получение одного план-графика
+app.get('/plan/:id', (req, res) => {
+    delay(res, planJson)
 })
 
 app.listen(port, () => {

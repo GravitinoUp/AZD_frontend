@@ -1,6 +1,6 @@
 import { apiRequest } from '@/shared/api'
-import { Data } from '@/types/interface/fetch'
-import { User } from '@/types/interface/user'
+import { Data } from '@/types/fetch.ts'
+import { User } from '@/types/user.ts'
 import { useQuery } from '@tanstack/react-query'
 
 const getAllUsers = async () => {

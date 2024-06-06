@@ -1,5 +1,5 @@
 import { formatInitials } from '@/shared/lib/format-initials'
-import { User } from '@/types/interface/user'
+import { User } from '@/types/user.ts'
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import UserSwitch from './user-switch'
