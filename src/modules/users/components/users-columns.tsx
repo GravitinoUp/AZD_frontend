@@ -3,6 +3,7 @@ import { User } from '@/types/interface/user'
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import UserSwitch from './user-switch'
+import { UserActions } from './user-actions'
 
 export const userColumns: ColumnDef<User>[] = [
     {
@@ -45,5 +46,9 @@ export const userColumns: ColumnDef<User>[] = [
         accessorKey: 'is_active',
         header: i18next.t('status'),
         cell: ({ row }) => <UserSwitch user={row.original} />,
+    },
+    {
+        id: 'actions',
+        cell: ({ row }) => <UserActions user={row.original} />,
     },
 ]

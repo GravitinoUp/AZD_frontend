@@ -4,7 +4,7 @@ import { Button } from '@/ui/button'
 import { FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { useCreateUser } from './api/useCreateUser'
@@ -15,6 +15,9 @@ import { placeholderQuery } from '@/shared/constants'
 import { CommandSelect } from '@/components/command'
 import { ErrorAlert } from '@/components/error-alert'
 import { Skeleton } from '@/ui/skeleton'
+import { User } from '@/types/interface/user'
+import { useUpdateUser } from './api/useUpdateUser'
+import { useMemo } from 'react'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -31,6 +34,9 @@ const userSchema = z.object({
 export const UserManageModule = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const user = location.state.user as User
 
     const {
         data: roles = { count: 0, data: [] },
@@ -41,14 +47,23 @@ export const UserManageModule = () => {
 
     const form = useForm({
         schema: userSchema,
-        defaultValues: {
-            last_name: '',
-            first_name: '',
-            post: '',
-            role_id: 1,
-            email: '',
-            password: '',
-        },
+        defaultValues: user
+            ? {
+                  last_name: user.person.last_name,
+                  first_name: user.person.first_name,
+                  post: user.person.post,
+                  role_id: user.role.role_id,
+                  email: user.email,
+                  password: '',
+              }
+            : {
+                  last_name: '',
+                  first_name: '',
+                  post: '',
+                  role_id: 1,
+                  email: '',
+                  password: '',
+              },
     })
 
     const formattedRoles = roles.data.map((value) => ({ value: value.role_id, label: value.role_name }))
@@ -67,19 +82,34 @@ export const UserManageModule = () => {
         isSuccess: userCreateSuccess,
     } = useCreateUser()
 
+    const {
+        mutate: updateUser,
+        isPending: userUpdating,
+        error: userUpdateError,
+        isSuccess: userUpdateSuccess,
+    } = useUpdateUser()
+
     const handleSubmit = (data: z.infer<typeof userSchema>) => {
-        createUser({ ...data })
+        if (user) {
+            updateUser(data)
+        } else {
+            createUser(data)
+        }
     }
 
-    useSuccessToast('', userCreateSuccess, () => navigate(-1))
-    useErrorToast(void 0, userCreateError)
+    const createSuccessMessage = useMemo(() => t('toast.success.create.m', { entity: t('user') }), [])
+    const updateSuccessMessage = useMemo(() => t('toast.success.update.m', { entity: t('user') }), [])
+
+    useSuccessToast(createSuccessMessage, userCreateSuccess, () => navigate(-1))
+    useSuccessToast(updateSuccessMessage, userUpdateSuccess, () => navigate(-1))
+    useErrorToast(void 0, userCreateError || userUpdateError)
 
     return (
         <div className="mx-auto w-[95%]">
             <h1 className="mt-20 text-3xl font-bold">{t('add.user')}</h1>
             <Form form={form} onSubmit={handleSubmit}>
                 <div className="flex-center mt-16 gap-3">
-                    <Button className="h-12 w-[200px] gap-4" loading={userCreating}>
+                    <Button className="h-12 w-[200px] gap-4" loading={userCreating || userUpdating}>
                         <PlusCircleIcon />
                         {t('action.add')}
                     </Button>
