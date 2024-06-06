@@ -1,4 +1,4 @@
-import { User } from '@/types/interface/user'
+import { User } from '@/types/user.ts'
 import { Switch } from '@/ui/switch'
 
 export default function UserSwitch({ user }: { user: User }) {

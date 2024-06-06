@@ -1,9 +1,11 @@
 import { Layout } from '@/components/layout'
+import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
-import { SchedulesPage } from '@/pages/schedules'
+import { PlansPage } from '@/pages/plans'
 import { UsersPage } from '@/pages/users'
-import { SCHEDULES, USERS } from '@/shared/router/routes.ts'
+import { PageTitleProvider } from '@/shared/context/plans-page-title.tsx'
+import { PLANS, USERS } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
@@ -16,26 +18,26 @@ export const router = createBrowserRouter([
                 path: '',
                 element: <HomePage />,
             },
-        ],
-    },
-    {
-        path: SCHEDULES,
-        element: <Layout />,
-        errorElement: <ErrorPage />,
-        children: [
             {
-                path: '',
-                element: <SchedulesPage />,
+                path: PLANS,
+                element: (
+                    <PageTitleProvider>
+                        <PlansPage />
+                    </PageTitleProvider>
+                ),
+                children: [
+                    {
+                        path: '',
+                        element: <AllPlans />,
+                    },
+                    {
+                        path: ':id',
+                        element: <Plan />,
+                    },
+                ],
             },
-        ],
-    },
-    {
-        path: USERS,
-        element: <Layout />,
-        errorElement: <ErrorPage />,
-        children: [
             {
-                path: '',
+                path: USERS,
                 element: <UsersPage />,
             },
         ],
