@@ -4,9 +4,10 @@ import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { PlansPage } from '@/pages/plans'
 import { UsersPage } from '@/pages/users'
-import { PLANS, USERS } from '@/shared/router/routes.ts'
+import { PLANS, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
+import { UserManagePage } from '@/pages/users/manage'
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: USERS,
                 element: <UsersPage />,
+            },
+            {
+                path: USER_MANAGE,
+                element: <UserManagePage />,
             },
         ],
     },
