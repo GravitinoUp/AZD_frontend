@@ -1,9 +1,9 @@
 import i18n from '@/shared/i18n/i18n.ts'
 import { formatIsoDate } from '@/shared/lib/format-iso-date.ts'
-import { Schedule } from '@/types/schedules.ts'
+import { Plan } from '@/types/plans.ts'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const schedulesColumns: ColumnDef<Schedule>[] = [
+export const allPlansColumns: ColumnDef<Plan>[] = [
     {
         accessorKey: 'plan_uuid',
         header: '№',

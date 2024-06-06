@@ -1,14 +1,14 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
-import { useAllSchedules } from '@/modules/schedules/all-schedules/api/useAllSchedules.ts'
-import { PageContentHeader } from '@/modules/schedules/all-schedules/components/page-content-header.tsx'
-import { schedulesColumns } from '@/modules/schedules/all-schedules/components/schedules-columns.ts'
+import { useAllPlans } from '@/modules/plans/all-plans/api/useAllPlans.ts'
+import { allPlansColumns } from '@/modules/plans/all-plans/components/all-plans-columns.ts'
+import { PageContentHeader } from '@/modules/plans/all-plans/components/page-content-header.tsx'
 import { PLANS } from '@/shared/router/routes.ts'
 import { useNavigate } from 'react-router-dom'
 
-export const AllSchedules = () => {
+export const AllPlans = () => {
     const navigate = useNavigate()
-    const { data: schedules = [], isLoading, isError } = useAllSchedules()
+    const { data: plans = [], isLoading, isError } = useAllPlans()
 
     if (isError) {
         return <p>Произошлая ошибка. Данные не загрузились</p>
@@ -20,8 +20,8 @@ export const AllSchedules = () => {
             <DebouncedInput className="my-6" value="" onChange={() => void 0} />
             <DataTable
                 className="mb-10"
-                columns={schedulesColumns}
-                data={schedules}
+                columns={allPlansColumns}
+                data={plans}
                 isLoading={isLoading}
                 onRowClick={(rowData) => {
                     navigate(`${PLANS}/${rowData.plan_uuid}`)

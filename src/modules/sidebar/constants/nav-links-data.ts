@@ -47,23 +47,23 @@ const Fz44Links: NavLink[] = [
     {
         id: crypto.randomUUID(),
         link: {
-            title: i18next.t('schedules'),
+            title: i18next.t('plans'),
             href: '/',
             subLinks: [
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('init-schedule'),
+                    title: i18next.t('init-plan'),
                     href: '/',
                     isHighlighted: true,
                 },
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('all-schedules'),
+                    title: i18next.t('all-plans'),
                     href: PLANS,
                 },
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('summary-schedule'),
+                    title: i18next.t('summary-plan'),
                     href: '/',
                 },
                 {

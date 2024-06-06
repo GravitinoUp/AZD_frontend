@@ -1,11 +1,10 @@
 import { formatIsoDate } from '@/shared/lib/format-iso-date.ts'
-import { Schedule } from '@/types/schedules.ts'
+import { Plan } from '@/types/plans.ts'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const scheduleTableColumns: ColumnDef<Schedule>[] = [
+export const planTableColumns: ColumnDef<Plan>[] = [
     {
         id: 'init-info',
-        header: '',
         columns: [
             {
                 accessorKey: 'plan_uuid',
@@ -53,7 +52,6 @@ export const scheduleTableColumns: ColumnDef<Schedule>[] = [
     },
     {
         id: 'planned-year-price',
-        header: '',
         columns: [
             {
                 accessorKey: 'start_max_price',
@@ -108,7 +106,6 @@ export const scheduleTableColumns: ColumnDef<Schedule>[] = [
     },
     {
         id: 'additional-info',
-        header: '',
         columns: [
             {
                 accessorKey: 'public_purchase_discussion',
@@ -211,7 +208,6 @@ export const scheduleTableColumns: ColumnDef<Schedule>[] = [
     },
     {
         id: 'approval-letter',
-        header: '',
         columns: [
             {
                 accessorKey: 'approval_letter',

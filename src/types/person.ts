@@ -9,8 +9,8 @@ export interface ContactPerson {
     person_uuid: string
     last_name: string
     first_name: string
-    patronymic?: string
+    patronymic?: string | null
     post: string
-    legal_basis_uuid?: string
+    legal_basis_uuid?: string | null
     legal_basis: LegalBasis
 }

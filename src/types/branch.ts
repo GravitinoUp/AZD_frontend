@@ -14,13 +14,13 @@ export interface Branch {
     address: string
     mail_address: string
     phone: string
-    fax?: string
-    email?: string
+    fax?: string | null
+    email?: string | null
     ogrn: string
     inn: string
     kpp: string
     okpo: string
     region: string
-    additional_info?: string
-    web_site?: string
+    additional_info?: string | null
+    web_site?: string | null
 }

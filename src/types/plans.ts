@@ -6,18 +6,18 @@ interface Way {
     way_name: string
 }
 
-export interface Schedule {
+export interface Plan {
     created_at: string
     updated_at: string
     plan_uuid: string
-    purchase_name?: string
-    purchase_price?: number
-    purchase_date?: string
-    purchase_uuid?: string
+    purchase_name?: string | null
+    purchase_price?: number | null
+    purchase_date?: string | null
+    purchase_uuid?: string | null
     kosgu: string
     user_uuid: string
     user: User
-    purchase_offer_number?: string
+    purchase_offer_number?: string | null
     okpd_code: string
     object_name: string
     okei_code: string
@@ -38,8 +38,8 @@ export interface Schedule {
     next_years_limit: number
     start_max_price: number
     public_purchase_discussion: boolean
-    authorized_institution?: string
-    organizer_name?: string
+    authorized_institution?: string | null
+    organizer_name?: string | null
     placement_month: string
     way_id: number
     way: Way
@@ -47,10 +47,10 @@ export interface Schedule {
     initiator: string
     branch_uuid: string
     branch: Branch
-    price_value?: number
-    savings?: number
-    contract_number?: string
-    contract_date?: string
-    contragent?: string
+    price_value?: number | null
+    savings?: number | null
+    contract_number?: string | null
+    contract_date?: string | null
+    contragent?: string | null
     approval_letter: string
 }
