@@ -13,6 +13,7 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     isLoading?: boolean
     withBackground?: boolean
+    onRowClick?: (rowData: TData) => void
     className?: string
 }
 
@@ -21,6 +22,7 @@ export function DataTable<TData, TValue>({
     data,
     isLoading,
     withBackground,
+    onRowClick,
     className,
 }: DataTableProps<TData, TValue>) {
     const tableData = useMemo(() => (isLoading ? Array(SKELETON_ITEMS_COUNT).fill({}) : data), [isLoading, data])
@@ -48,16 +50,31 @@ export function DataTable<TData, TValue>({
             <div className={cn(withBackground && 'rounded-[10px] border border-table pb-3 pl-5 pt-8', className)}>
                 <ScrollArea type="always" className="w-full pb-5">
                     <Table>
-                        <TableHeader className="border border-secondary-border bg-secondary">
+                        <TableHeader className="bg-secondary">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <TableHead key={header.id} className="font-bold text-primary">
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(header.column.columnDef.header, header.getContext())}
-                                        </TableHead>
-                                    ))}
+                                    {headerGroup.headers.map((header) => {
+                                        const rowSpan = header.column.columnDef.meta?.rowSpan
+
+                                        if (
+                                            !header.isPlaceholder &&
+                                            rowSpan !== undefined &&
+                                            header.id === header.column.id
+                                        ) {
+                                            return null
+                                        }
+
+                                        return (
+                                            <TableHead
+                                                key={header.id}
+                                                className="border text-center font-bold text-primary"
+                                                colSpan={header.colSpan}
+                                                rowSpan={rowSpan}
+                                            >
+                                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                            </TableHead>
+                                        )
+                                    })}
                                 </TableRow>
                             ))}
                         </TableHeader>
@@ -68,9 +85,22 @@ export function DataTable<TData, TValue>({
                                         className="border-none hover:bg-white"
                                         key={row.id}
                                         data-state={row.getIsSelected() && 'selected'}
+                                        onClick={(e) => {
+                                            const clickedColumnId = (e.target as HTMLTableRowElement).getAttribute(
+                                                'data-column-id'
+                                            )
+
+                                            if (
+                                                typeof onRowClick !== 'undefined' &&
+                                                clickedColumnId !== null &&
+                                                !isLoading
+                                            ) {
+                                                onRowClick(row.original)
+                                            }
+                                        }}
                                     >
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id}>
+                                            <TableCell key={cell.id} data-column-id={cell.column.id}>
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>
                                         ))}
