@@ -16,7 +16,7 @@ export const TablePagination = () => {
     const [pageSize, setPageSize] = useState(String(ITEMS_PER_PAGE_LIST[0]))
 
     return (
-        <div className="mt-6 flex ">
+        <div className="mt-6 flex items-center">
             <Select value={pageSize} onValueChange={setPageSize}>
                 <SelectTrigger className="h-9 w-[80px] items-start rounded-[20px] border-table px-4">
                     <SelectValue placeholder={pageSize} />

@@ -1,4 +1,4 @@
-export interface CountResponse<T> {
-    count: number
-    data: T
+export interface RouteInterface {
+    route: string
+    label: string
 }

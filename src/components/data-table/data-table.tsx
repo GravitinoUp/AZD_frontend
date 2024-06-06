@@ -47,9 +47,9 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className={cn(withBackground && 'rounded-[10px] border border-table pb-3 pl-5 pt-8', className)}>
-                <ScrollArea type="always" className="w-full pb-5">
-                    <Table>
+            <div className={cn(withBackground && 'rounded-[10px] border border-table py-5', className)}>
+                <ScrollArea type="always" className="w-full">
+                    <Table className="mx-4 w-[calc(100%-2rem)]">
                         <TableHeader className="bg-secondary">
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <TableRow key={headerGroup.id}>
@@ -100,7 +100,7 @@ export function DataTable<TData, TValue>({
                                         }}
                                     >
                                         {row.getVisibleCells().map((cell) => (
-                                            <TableCell key={cell.id} data-column-id={cell.column.id}>
+                                            <TableCell key={cell.id} data-column-id={cell.column.id} style={{ width: cell.column.getSize() }}>
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </TableCell>
                                         ))}

@@ -3,7 +3,8 @@ import { AllSchedules, Schedule } from '@/modules/schedules'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { SchedulesPage } from '@/pages/schedules'
-import { PLANS } from '@/shared/router/routes.ts'
+import { UsersPage } from '@/pages/users'
+import { PLANS, USERS } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
                         element: <Schedule />,
                     },
                 ],
+            },
+            {
+                path: USERS,
+                element: <UsersPage />,
             },
         ],
     },
