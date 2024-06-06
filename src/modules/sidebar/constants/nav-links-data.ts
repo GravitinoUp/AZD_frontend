@@ -5,7 +5,7 @@ import OrganizationsIcon from '@/assets/icons/navigation/organizations-icon.svg'
 import permissionsIcon from '@/assets/icons/navigation/roles-and-permissions-icon.svg'
 import usersIcon from '@/assets/icons/navigation/users-icon.svg'
 import i18next from '@/shared/i18n/i18n.ts'
-import { ROLES, SCHEDULES, USERS } from '@/shared/router/routes.ts'
+import { ROLES, PLANS, USERS } from '@/shared/router/routes.ts'
 
 interface SubLink {
     id: string
@@ -47,23 +47,23 @@ const Fz44Links: NavLink[] = [
     {
         id: crypto.randomUUID(),
         link: {
-            title: i18next.t('schedules'),
+            title: i18next.t('plans'),
             href: '/',
             subLinks: [
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('init-schedule'),
+                    title: i18next.t('init-plan'),
                     href: '/',
                     isHighlighted: true,
                 },
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('all-schedules'),
-                    href: SCHEDULES,
+                    title: i18next.t('all-plans'),
+                    href: PLANS,
                 },
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('summary-schedule'),
+                    title: i18next.t('summary-plan'),
                     href: '/',
                 },
                 {

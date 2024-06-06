@@ -1,4 +1,4 @@
-import { RecursivePartial } from '@/shared/lib/recursive-partial'
+import { RecursivePartial } from '@/shared/lib/recursive-partial.ts'
 
 interface Offset {
     count: number

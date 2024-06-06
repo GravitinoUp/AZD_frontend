@@ -1,12 +1,12 @@
 import { Layout } from '@/components/layout'
+import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
-import { RolesPage } from '@/pages/roles'
-import { SchedulesPage } from '@/pages/schedules'
+import { PlansPage } from '@/pages/plans'
 import { UsersPage } from '@/pages/users'
-import { UserManagePage } from '@/pages/users/manage'
-import { ROLES, SCHEDULES, USERS } from '@/shared/router/routes.ts'
+import { PLANS, USERS } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
+import { PageTitleProvider } from '../context/plans-page-title'
 
 export const router = createBrowserRouter([
     {
@@ -18,42 +18,27 @@ export const router = createBrowserRouter([
                 path: '',
                 element: <HomePage />,
             },
-        ],
-    },
-    {
-        path: SCHEDULES,
-        element: <Layout />,
-        errorElement: <ErrorPage />,
-        children: [
             {
-                path: '',
-                element: <SchedulesPage />,
+                path: PLANS,
+                element: (
+                    <PageTitleProvider>
+                        <PlansPage />
+                    </PageTitleProvider>
+                ),
+                children: [
+                    {
+                        path: '',
+                        element: <AllPlans />,
+                    },
+                    {
+                        path: ':id',
+                        element: <Plan />,
+                    },
+                ],
             },
-        ],
-    },
-    {
-        path: USERS,
-        element: <Layout />,
-        errorElement: <ErrorPage />,
-        children: [
             {
-                path: '',
+                path: USERS,
                 element: <UsersPage />,
-            },
-            {
-                path: 'manage',
-                element: <UserManagePage />,
-            },
-        ],
-    },
-    {
-        path: ROLES,
-        element: <Layout />,
-        errorElement: <ErrorPage />,
-        children: [
-            {
-                path: '',
-                element: <RolesPage />,
             },
         ],
     },
