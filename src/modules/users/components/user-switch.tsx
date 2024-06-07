@@ -1,6 +1,6 @@
 import { User } from '@/types/user.ts'
 import { Switch } from '@/ui/switch'
-import { useChangeUserStatus } from '../api/useChangeUserStatus'
+import { useChangeUserStatus } from '../api/use-change-user-status'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'

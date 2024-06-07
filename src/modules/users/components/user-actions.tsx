@@ -3,7 +3,7 @@ import { Button } from '@/ui/button'
 import { Popover, PopoverContent, PopoverItem, PopoverTrigger } from '@/ui/popover'
 import { MoreVertical } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import EditIcon from '@/assets/icons/edit.svg'
+import EditIcon from '@/assets/icons/edit-circle.svg'
 import { useNavigate } from 'react-router-dom'
 import { USER_MANAGE } from '@/shared/router/routes'
 

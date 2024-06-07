@@ -6,7 +6,7 @@ import { Button } from '@/ui/button'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
 import { ROLES } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
-import { useGetAllRoles } from './api/useGetAllRoles'
+import { useGetAllRoles } from './api/use-get-all-roles'
 
 const routes = [
     { route: '/', label: 'Главная' },
