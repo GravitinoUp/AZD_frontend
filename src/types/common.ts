@@ -1,4 +1,4 @@
-export interface RouteInterface {
+export interface Route {
     route: string
     label: string
 }

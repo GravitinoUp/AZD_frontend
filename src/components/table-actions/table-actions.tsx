@@ -1,12 +1,12 @@
 import ExportIcon from '@/assets/icons/arrow-circle-export.svg'
 import ImportIcon from '@/assets/icons/arrow-circle-import.svg'
-import { RouteInterface } from '@/types/common.ts'
+import { Route } from '@/types/common.ts'
 import { Button } from '@/ui/button'
 import { useTranslation } from 'react-i18next'
-import Breadcrumbs from '../breadcrumbs/breadcrumbs'
+import { Breadcrumbs } from '../breadcrumbs/breadcrumbs'
 
 interface TableActionsProps {
-    routes: RouteInterface[]
+    routes: Route[]
     onExportClick: () => void
     onImportClick: () => void
 }

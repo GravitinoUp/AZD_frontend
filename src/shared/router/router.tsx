@@ -3,9 +3,10 @@ import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { PlansPage } from '@/pages/plans'
+import { RolesPage } from '@/pages/roles'
 import { UsersPage } from '@/pages/users'
 import { PageTitleProvider } from '@/shared/context/plans-page-title.tsx'
-import { PLANS, USERS } from '@/shared/router/routes.ts'
+import { PLANS, ROLES, USERS } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 
 export const router = createBrowserRouter([
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: USERS,
                 element: <UsersPage />,
+            },
+            {
+                path: ROLES,
+                element: <RolesPage />,
             },
         ],
     },

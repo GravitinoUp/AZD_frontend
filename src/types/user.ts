@@ -1,3 +1,5 @@
+import { SortOptions } from './fetch'
+
 export interface User {
     user_uuid: string
     is_active: boolean
@@ -20,6 +22,8 @@ export interface Role {
     role_id: number
     role_name: string
 }
+
+export type RoleSort = Partial<Record<keyof Role, SortOptions>>
 
 export interface LegalBasis {
     legal_basis_uuid: string
