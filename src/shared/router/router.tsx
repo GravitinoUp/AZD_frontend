@@ -3,8 +3,9 @@ import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { PlansPage } from '@/pages/plans'
+import { RolesPage } from '@/pages/roles'
 import { UsersPage } from '@/pages/users'
-import { PLANS, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
+import { PLANS, ROLES, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
 import { UserManagePage } from '@/pages/users/manage'
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
             {
                 path: USER_MANAGE,
                 element: <UserManagePage />,
+            },
+            {
+                path: ROLES,
+                element: <RolesPage />,
             },
         ],
     },
