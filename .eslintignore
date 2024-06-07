@@ -10,5 +10,6 @@
 **/*.md
 build
 mock-server
+src/ui/**
 
 .eslintrc.js
