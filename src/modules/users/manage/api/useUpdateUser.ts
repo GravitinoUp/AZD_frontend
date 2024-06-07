@@ -1,6 +1,6 @@
 import { apiRequest } from '@/shared/api'
-import { Data } from '@/types/interface/fetch'
-import { User, UserPayload } from '@/types/interface/user'
+import { Data } from '@/types/fetch'
+import { User, UserPayload } from '@/types/user'
 import { useMutation } from '@tanstack/react-query'
 
 const updateUser = async (body: UserPayload) => {

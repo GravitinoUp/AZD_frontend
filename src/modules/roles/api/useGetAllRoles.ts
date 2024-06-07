@@ -1,6 +1,6 @@
 import { apiRequest } from '@/shared/api'
-import { Data, Payload } from '@/types/interface/fetch'
-import { Role, RoleSort } from '@/types/interface/user'
+import { Data, Payload } from '@/types/fetch'
+import { Role, RoleSort } from '@/types/user'
 import { useQuery } from '@tanstack/react-query'
 
 const getAllRoles = async (body: Payload<Role, RoleSort>) => {

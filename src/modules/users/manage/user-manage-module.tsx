@@ -15,7 +15,7 @@ import { placeholderQuery } from '@/shared/constants'
 import { CommandSelect } from '@/components/command'
 import { ErrorAlert } from '@/components/error-alert'
 import { Skeleton } from '@/ui/skeleton'
-import { User } from '@/types/interface/user'
+import { User } from '@/types/user'
 import { useUpdateUser } from './api/useUpdateUser'
 import { useMemo } from 'react'
 
