@@ -1,10 +1,9 @@
-import { User } from '@/types/interface/user'
+import { User } from '@/types/user'
 import { Button } from '@/ui/button'
 import { Popover, PopoverContent, PopoverItem, PopoverTrigger } from '@/ui/popover'
 import { MoreVertical } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import EditIcon from '@/assets/icons/edit.svg'
-import DeleteIcon from '@/assets/icons/delete.svg'
 import { useNavigate } from 'react-router-dom'
 import { USER_MANAGE } from '@/shared/router/routes'
 
@@ -37,10 +36,6 @@ export const UserActions = ({ user }: UserActionsProps) => {
                     >
                         <p>{t('action.edit')}</p>
                         <EditIcon />
-                    </PopoverItem>
-                    <PopoverItem>
-                        <p className="text-destructive">{t('action.delete')}</p>
-                        <DeleteIcon />
                     </PopoverItem>
                 </PopoverContent>
             </Popover>

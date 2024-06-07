@@ -36,7 +36,7 @@ export const UserManageModule = () => {
     const navigate = useNavigate()
     const location = useLocation()
 
-    const user = location.state.user as User
+    const user: User | undefined = location.state?.user
 
     const {
         data: roles = { count: 0, data: [] },
