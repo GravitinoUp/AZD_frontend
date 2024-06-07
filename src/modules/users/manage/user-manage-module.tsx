@@ -106,12 +106,12 @@ export const UserManageModule = () => {
 
     return (
         <div className="mx-auto w-[95%]">
-            <h1 className="mt-20 text-3xl font-bold">{t('add.user')}</h1>
+            <h1 className="mt-20 text-3xl font-bold">{user ? t('manage.user') : t('add.user')}</h1>
             <Form form={form} onSubmit={handleSubmit}>
                 <div className="flex-center mt-16 gap-3">
                     <Button className="h-12 w-[200px] gap-4" loading={userCreating || userUpdating}>
                         <PlusCircleIcon />
-                        {t('action.add')}
+                        {user ? t('action.edit') : t('action.add')}
                     </Button>
                     <Button
                         className="text- h-12 w-[200px] bg-secondary text-destructive"
