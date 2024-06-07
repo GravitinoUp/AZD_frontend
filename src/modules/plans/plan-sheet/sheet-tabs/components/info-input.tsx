@@ -20,9 +20,7 @@ export const InfoInputField = ({ label, initialValue }: InfoInputFieldProps) => 
 
     const handleEditClick = () => {
         setIsReadOnly(false)
-        setTimeout(() => {
-            inputRef.current?.focus()
-        }, 0)
+        inputRef.current?.focus()
     }
 
     const handleCopyClick = () => {
