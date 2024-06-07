@@ -21,6 +21,11 @@ export interface UserPayload {
     password: string
 }
 
+export interface UserStatusPayload {
+    user_uuid: string
+    is_active: boolean
+}
+
 export interface Person {
     person_uuid: string
     last_name: string
