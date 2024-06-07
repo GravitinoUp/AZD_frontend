@@ -4,9 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { TableActions } from '@/components/table-actions'
 import { Button } from '@/ui/button'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
-import { ROLES } from '@/shared/router/routes'
+import { ROLES, ROLE_MANAGE } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
 import { useGetAllRoles } from './api/useGetAllRoles'
+import { useNavigate } from 'react-router-dom'
+import { placeholderQuery } from '@/shared/constants'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -15,21 +17,19 @@ const routes = [
 
 export const RolesModule = () => {
     const { t } = useTranslation()
-    const {
-        data: roles = { count: 0, data: [] },
-        isLoading,
-        isError,
-    } = useGetAllRoles({ offset: { count: 10, page: 1 }, filter: {}, sorts: {} })
+    const navigate = useNavigate()
+
+    const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(placeholderQuery)
 
     if (isError) {
-        return <p>Произошла ошибка. Данные не загрузились</p>
+        return <p>{t('error.default')}</p>
     }
 
     return (
         <div className="mx-auto w-[95%]">
             <div className="flex-center mt-20 gap-4">
                 <h1 className="text-3xl font-bold">{t('roles-and-permissions')}</h1>
-                <Button className="h-7 w-7" size="icon">
+                <Button className="h-7 w-7" size="icon" onClick={() => navigate(ROLE_MANAGE)}>
                     <PlusRoundedIcon />
                 </Button>
             </div>
