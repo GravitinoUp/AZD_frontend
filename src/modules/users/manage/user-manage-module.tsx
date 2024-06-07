@@ -1,12 +1,10 @@
-import { Form, useForm } from '@/components/form'
+import { useForm } from '@/components/form'
 import { InputField } from '@/components/input-field'
-import { Button } from '@/ui/button'
 import { FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { useCreateUser } from './api/useCreateUser'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'
@@ -18,6 +16,9 @@ import { Skeleton } from '@/ui/skeleton'
 import { User } from '@/types/user'
 import { useUpdateUser } from './api/useUpdateUser'
 import { useMemo } from 'react'
+import { ManageLayout } from '@/components/layout'
+import { Button } from '@/ui/button'
+import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -105,10 +106,12 @@ export const UserManageModule = () => {
     useErrorToast(void 0, userCreateError || userUpdateError)
 
     return (
-        <div className="mx-auto w-[95%]">
-            <h1 className="mt-20 text-3xl font-bold">{user ? t('manage.user') : t('add.user')}</h1>
-            <Form form={form} onSubmit={handleSubmit}>
-                <div className="flex-center mt-16 gap-3">
+        <ManageLayout
+            form={form}
+            handleSubmit={handleSubmit}
+            title={user ? t('manage.user') : t('add.user')}
+            actions={
+                <>
                     <Button className="h-12 w-[200px] gap-4" loading={userCreating || userUpdating}>
                         <PlusCircleIcon />
                         {user ? t('action.edit') : t('action.add')}
@@ -121,77 +124,73 @@ export const UserManageModule = () => {
                     >
                         {t('action.cancel')}
                     </Button>
-                </div>
-                <div className="mt-10 rounded-xl border bg-white">
-                    <div className="mx-auto flex w-[80%] flex-wrap gap-x-20 gap-y-10 py-10">
-                        <FormField
-                            control={form.control}
-                            name="last_name"
-                            render={({ field }) => <InputField label={t('last.name')} required {...field} />}
+                </>
+            }
+        >
+            <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => <InputField label={t('last.name')} required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => <InputField label={t('first.name')} required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="patronymic"
+                render={({ field }) => <InputField label={t('patronymic')} {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="post"
+                render={({ field }) => <InputField label={t('post')} required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="role_id"
+                render={({ field }) => (
+                    <FormItem className="flex flex-45 flex-col items-start space-y-2">
+                        <FormLabel>{t('role')}</FormLabel>
+                        {rolesFetching && <Skeleton className="h-12 w-full" />}
+                        {rolesError && <ErrorAlert />}
+                        {rolesSuccess && (
+                            <CommandSelect
+                                selectedValue={field.value ? field.value : 0}
+                                setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
+                                items={formattedRoles}
+                            />
+                        )}
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="legal_basis_uuid"
+                render={({ field }) => (
+                    <FormItem className="flex flex-45 flex-col items-start space-y-2">
+                        <FormLabel>{t('legal.basis')}</FormLabel>
+                        <CommandSelect
+                            placeholder="Нет"
+                            selectedValue={field.value ? field.value : ''}
+                            setSelectedValue={(value) => field.onChange(value !== '' ? value : undefined)}
+                            items={formattedLegalBasisList}
                         />
-                        <FormField
-                            control={form.control}
-                            name="first_name"
-                            render={({ field }) => <InputField label={t('first.name')} required {...field} />}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="patronymic"
-                            render={({ field }) => <InputField label={t('patronymic')} {...field} />}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="post"
-                            render={({ field }) => <InputField label={t('post')} required {...field} />}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="role_id"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-45 flex-col items-start space-y-2">
-                                    <FormLabel>{t('role')}</FormLabel>
-                                    {rolesFetching && <Skeleton className="h-12 w-full" />}
-                                    {rolesError && <ErrorAlert />}
-                                    {rolesSuccess && (
-                                        <CommandSelect
-                                            selectedValue={field.value ? field.value : 0}
-                                            setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
-                                            items={formattedRoles}
-                                        />
-                                    )}
-
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="legal_basis_uuid"
-                            render={({ field }) => (
-                                <FormItem className="flex flex-45 flex-col items-start space-y-2">
-                                    <FormLabel>{t('legal.basis')}</FormLabel>
-                                    <CommandSelect
-                                        placeholder="Нет"
-                                        selectedValue={field.value ? field.value : ''}
-                                        setSelectedValue={(value) => field.onChange(value !== '' ? value : undefined)}
-                                        items={formattedLegalBasisList}
-                                    />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => <InputField label="Email" required {...field} />}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => <InputField label={t('password')} required {...field} />}
-                        />
-                    </div>
-                </div>
-            </Form>
-        </div>
+                    </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => <InputField label="Email" required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => <InputField label={t('password')} required {...field} />}
+            />
+        </ManageLayout>
     )
 }
