@@ -1,7 +1,7 @@
-import { RoleInterface } from '@/types/interface/user'
+import { Role } from '@/types/user'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const roleColumns: ColumnDef<RoleInterface>[] = [
+export const roleColumns: ColumnDef<Role>[] = [
     {
         accessorKey: 'role_id',
         header: 'ID',
