@@ -1,5 +1,6 @@
 export const DASHBOARD = '/dashboard'
 export const USERS = '/users'
+export const USER_MANAGE = '/users/manage'
 export const ROLES = '/roles'
 export const PROFILE = '/profile'
 export const SETTINGS = '/settings'

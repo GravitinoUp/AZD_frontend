@@ -2,11 +2,11 @@ import { DataTable } from '@/components/data-table'
 import { userColumns } from './components/users-columns'
 import { useTranslation } from 'react-i18next'
 import { TableActions } from '@/components/table-actions'
-import { useGetAllUsers } from './api/useGetAllUsers'
-import { Button } from '@/ui/button'
+import { useGetAllUsers } from './api/use-get-all-users'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
-import { USERS } from '@/shared/router/routes'
+import { USERS, USER_MANAGE } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
+import { Link } from 'react-router-dom'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -15,19 +15,20 @@ const routes = [
 
 export const UsersModule = () => {
     const { t } = useTranslation()
+
     const { data: users = { count: 0, data: [] }, isLoading, isError } = useGetAllUsers()
 
     if (isError) {
-        return <p>Произошла ошибка. Данные не загрузились</p>
+        return <p>{t('error.default')}</p>
     }
 
     return (
         <div className="mx-auto w-[95%]">
             <div className="flex-center mt-20 gap-4">
                 <h1 className="text-3xl font-bold">{t('users')}</h1>
-                <Button className="h-7 w-7" size="icon">
+                <Link to={USER_MANAGE} className="flex-center h-7 w-7 rounded-full bg-primary">
                     <PlusRoundedIcon />
-                </Button>
+                </Link>
             </div>
             <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
             <DebouncedInput className="my-6" value="" onChange={() => void 0} />

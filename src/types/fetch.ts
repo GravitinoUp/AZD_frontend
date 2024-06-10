@@ -31,3 +31,11 @@ export interface Payload<FilterType, SortType> extends Query {
 }
 
 export type SortOptions = 'ASC' | 'DESC' | null | undefined
+
+export interface ErrorResponse {
+    message: string
+    url: string
+    method: string
+    error: string
+    statusCode: number
+}

@@ -22,7 +22,10 @@
   "organizations": "Организации",
   "branches": "Филиалы",
   "purchase-initiators": "Инициаторы закупки",
+  "user": "Пользователь",
   "users": "Пользователи",
+  "add.user": "Добавление пользователя",
+  "manage.user": "Управление пользователем",
   "roles-and-permissions": "Права и роли",
   "manage-properties": "Управление характеристиками",
   "information": "Информация",
@@ -48,5 +51,49 @@
   "branch": "Филиал",
   "status": "Статус",
   "version": "Версия",
-  "not.added": "Не указан"
+  "not.added": "Не указан",
+  "nothing.found": "Ничего не найдено",
+  "last.name": "Фамилия",
+  "first.name": "Имя",
+  "patronymic": "Отчество",
+  "post": "Должность",
+  "legal.basis": "Юридическое обоснование",
+  "password": "Пароль",
+  "role": "Роль",
+  "fio": "ФИО",
+  "phone": "Номер телефона",
+  "error": {
+    "title": "Ошибка",
+    "default": "Произошла ошибка, повторите попытку позднее.",
+    "password.length": "Пароль должен содержать не меньше 6 символов",
+    "email.format": "Email должен быть в формате email@example.ru",
+    "required": "Поле должно быть заполнено"
+  },
+  "placeholder": {
+    "select": "Выберите значение из выпадающего списка"
+  },
+  "action": {
+    "add": "Добавить",
+    "cancel": "Отменить",
+    "edit": "Изменить",
+    "delete": "Удалить",
+    "dropdown.menu.open": "Подробнее..."
+  },
+  "toast": {
+    "success": {
+      "create": {
+        "m": "{{entity}} успешно добавлен",
+        "f": "{{entity}} успешно добавлена",
+        "multiple": "{{entity}} успешно добавлены"
+      },
+      "update": {
+        "m": "{{entity}} успешно изменен",
+        "f": "{{entity}} успешно изменена"
+      },
+      "delete": {
+        "m": "{{entity}} удален",
+        "f": "{{entity}} удалена"
+      }
+    }
+  }
 }

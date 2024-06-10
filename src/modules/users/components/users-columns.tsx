@@ -3,6 +3,7 @@ import { User } from '@/types/user.ts'
 import { ColumnDef } from '@tanstack/react-table'
 import i18next from 'i18next'
 import UserSwitch from './user-switch'
+import { UserActions } from './user-actions'
 
 export const userColumns: ColumnDef<User>[] = [
     {
@@ -12,7 +13,7 @@ export const userColumns: ColumnDef<User>[] = [
     },
     {
         accessorKey: 'fio',
-        header: 'ФИО',
+        header: i18next.t('fio'),
         cell: ({ row }) =>
             formatInitials(
                 row.original.person.last_name,
@@ -22,7 +23,7 @@ export const userColumns: ColumnDef<User>[] = [
     },
     {
         accessorKey: 'phone',
-        header: 'Номер телефона',
+        header: i18next.t('phone'),
         cell: ({ row }) => (row.original.phone !== null ? row.original.phone : i18next.t('not.added')),
     },
     {
@@ -31,19 +32,23 @@ export const userColumns: ColumnDef<User>[] = [
     },
     {
         accessorKey: 'person.post',
-        header: 'Должность',
+        header: i18next.t('post'),
     },
     {
         accessorKey: 'legal_basis.legal_basis_name',
-        header: 'Юридическое обоснование',
+        header: i18next.t('legal.basis'),
     },
     {
         accessorKey: 'role.role_name',
-        header: 'Роль',
+        header: i18next.t('role'),
     },
     {
         accessorKey: 'is_active',
-        header: 'Статус',
+        header: i18next.t('status'),
         cell: ({ row }) => <UserSwitch user={row.original} />,
+    },
+    {
+        id: 'actions',
+        cell: ({ row }) => <UserActions user={row.original} />,
     },
 ]

@@ -28,7 +28,7 @@ module.exports = {
                     border: '#DADADB',
                 },
                 destructive: {
-                    DEFAULT: 'hsl(var(--destructive))',
+                    DEFAULT: '#DE5A5A',
                     foreground: 'hsl(var(--destructive-foreground))',
                 },
                 muted: {
@@ -54,6 +54,9 @@ module.exports = {
                     content: '#E6E8E7',
                 },
                 table: '#D6D6D6',
+            },
+            flex: {
+                45: '1 1 45%',
             },
             boxShadow: {
                 custom: '0px 2px 5px 0px #00000033',
