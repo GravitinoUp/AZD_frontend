@@ -100,7 +100,20 @@ ul li::marker {
     @apply text-[32px] font-bold leading-9 text-[#333333];
 }
 
+.bordered-space {
+    @apply h-[70px] border-b border-b-[#ECECEC];
+}
+
 .label-required::after {
     content: ' *';
     color: red;
+}
+
+/* Ограничивает длину строки до 2х, переполнение уходит в "..." */
+.line-ellipsis-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
 }

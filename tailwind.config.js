@@ -49,7 +49,10 @@ module.exports = {
                     foreground: 'hsl(var(--card-foreground))',
                 },
                 caption: '#D2CFCF',
-                tabs: '#183028',
+                tabs: {
+                    DEFAULT: '#183028',
+                    content: '#E6E8E7',
+                },
                 table: '#D6D6D6',
             },
             flex: {
