@@ -26,7 +26,7 @@ export default function UserSwitch({ user }: { user: User }) {
     const updateSuccessMessage = useMemo(() => t('toast.success.update.m', { entity: t('user') }), [])
 
     useSuccessToast(updateSuccessMessage, userUpdateSuccess)
-    useErrorToast(void 0, userUpdateError)
+    useErrorToast(userUpdateError)
 
     return <Switch disabled={userUpdating} checked={user.is_active} onCheckedChange={updateStatus} />
 }

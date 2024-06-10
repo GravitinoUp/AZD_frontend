@@ -103,7 +103,7 @@ export const UserManageModule = () => {
 
     useSuccessToast(createSuccessMessage, userCreateSuccess, () => navigate(-1))
     useSuccessToast(updateSuccessMessage, userUpdateSuccess, () => navigate(-1))
-    useErrorToast(void 0, userCreateError || userUpdateError)
+    useErrorToast(userCreateError || userUpdateError)
 
     return (
         <ManageLayout
