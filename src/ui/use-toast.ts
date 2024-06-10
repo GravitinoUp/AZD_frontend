@@ -1,6 +1,7 @@
 // Inspired by react-hot-toast library
 import * as React from 'react'
-import { ToastActionElement, ToastProps } from './toast'
+
+import type { ToastActionElement, ToastProps } from '/src/ui/toast'
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
@@ -68,7 +69,6 @@ const addToRemoveQueue = (toastId: string) => {
     toastTimeouts.set(toastId, timeout)
 }
 
-// eslint-disable-next-line consistent-return
 export const reducer = (state: State, action: Action): State => {
     switch (action.type) {
         case 'ADD_TOAST':

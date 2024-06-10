@@ -7,6 +7,7 @@ import { ROLES } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
 import { useGetAllRoles } from './api/use-get-all-roles'
 import { Link } from 'react-router-dom'
+import { placeholderQuery } from '@/shared/constants'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -15,11 +16,7 @@ const routes = [
 
 export const RolesModule = () => {
     const { t } = useTranslation()
-    const {
-        data: roles = { count: 0, data: [] },
-        isLoading,
-        isError,
-    } = useGetAllRoles({ offset: { count: 10, page: 1 }, filter: {}, sorts: {} })
+    const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(placeholderQuery)
 
     if (isError) {
         return <p>{t('error.default')}</p>

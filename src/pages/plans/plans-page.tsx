@@ -12,17 +12,13 @@ export const PlansPage = () => {
 
     return (
         <>
-            <div className="h-[70px] border-b border-b-[#ECECEC]" />
+            <div className="bordered-space" />
             {pageTitle && <h1 className="page-title mt-8">{pageTitle}</h1>}
             <Tabs defaultValue={tabsData[0].value} className="mt-7">
-                <div className="border-b-2 border-b-[#E6E8E7] pb-[3px]">
+                <div className="border-b-2 border-b-tabs-content pb-[3px]">
                     <TabsList className="gap-5">
                         {tabsData.map(({ value, icon, label }) => (
-                            <TabsTrigger
-                                key={value}
-                                value={value}
-                                className={value === 'all-plans' ? 'plans-tab-trigger' : ''}
-                            >
+                            <TabsTrigger key={value} value={value}>
                                 <span className="mr-1.5">{icon}</span>
                                 {label}
                             </TabsTrigger>

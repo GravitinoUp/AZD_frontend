@@ -1,6 +1,6 @@
 import { SideBar } from '@/modules/sidebar'
 import { cn } from '@/shared/lib/cn.ts'
-import { Toaster } from '@/ui/toaster'
+import { Toaster } from '@/ui/toaster.tsx'
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 
