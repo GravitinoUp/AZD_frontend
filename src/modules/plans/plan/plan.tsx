@@ -1,17 +1,19 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
 import { TableActions } from '@/components/table-actions'
+import { PlanSheet } from '@/modules/plans/plan-sheet'
 import { usePlan } from '@/modules/plans/plan/api/usePlan.ts'
-import { planTableColumns } from '@/modules/plans/plan/plan-table-columns.tsx'
+import { planTableColumns } from '@/modules/plans/plan/components/plan-table-columns.tsx'
 import { usePageTitle } from '@/shared/context/plans-page-title.tsx'
 import { PLANS } from '@/shared/router/routes.ts'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 export const Plan = () => {
     const { id = '' } = useParams()
     const { data: plan, isLoading, isError } = usePlan(id)
-    const { setPageTitle } = usePageTitle()
+    const { pageTitle, setPageTitle } = usePageTitle()
+    const [sheetOpen, setSheetOpen] = useState(false)
 
     useEffect(() => {
         setPageTitle(`План график ${id}`)
@@ -37,10 +39,12 @@ export const Plan = () => {
             <DataTable
                 columns={planTableColumns}
                 data={typeof plan === 'undefined' ? [] : [plan]}
+                onRowClick={() => setSheetOpen(true)}
                 isLoading={isLoading}
                 skeletonsCount={1}
                 withBackground
             />
+            <PlanSheet title={pageTitle} open={sheetOpen} setOpen={setSheetOpen} />
         </div>
     )
 }
