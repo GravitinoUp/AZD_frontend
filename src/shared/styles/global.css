@@ -100,13 +100,13 @@ ul li::marker {
     @apply text-[32px] font-bold leading-9 text-[#333333];
 }
 
+.bordered-space {
+    @apply h-[70px] border-b border-b-[#ECECEC];
+}
+
 .label-required::after {
     content: ' *';
     color: red;
-}
-
-.bordered-space {
-    @apply h-[70px] border-b border-b-[#ECECEC];
 }
 
 /* Ограничивает длину строки до 2х, переполнение уходит в "..." */
