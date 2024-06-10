@@ -1,5 +1,5 @@
 export interface RolePermission {
-    role_permission_id: number
+    role_permission_uuid: string
     role_id: number | null
     user_uuid: string | null
     permission_id: string
