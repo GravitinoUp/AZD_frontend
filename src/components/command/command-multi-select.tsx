@@ -42,7 +42,7 @@ export function CommandMultiSelect<T>({
         } else {
             return placeholder
         }
-    }, [])
+    }, [selectedValues, disabled])
 
     return (
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen} modal={true}>
