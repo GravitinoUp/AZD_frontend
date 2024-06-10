@@ -4,11 +4,11 @@ import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { PlansPage } from '@/pages/plans'
 import { RolesPage } from '@/pages/roles'
-import { UsersPage } from '@/pages/users'
+import { UsersPageLazy } from '@/pages/users'
 import { PLANS, ROLES, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
-import { UserManagePage } from '@/pages/users/manage'
+import { UserManagePageLazy } from '@/pages/users/manage'
 
 export const router = createBrowserRouter([
     {
@@ -40,11 +40,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: USERS,
-                element: <UsersPage />,
+                element: <UsersPageLazy />,
             },
             {
                 path: USER_MANAGE,
-                element: <UserManagePage />,
+                element: <UserManagePageLazy />,
             },
             {
                 path: ROLES,

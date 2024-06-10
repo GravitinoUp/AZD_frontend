@@ -1,3 +1,5 @@
 import { UsersModule } from '@/modules/users'
 
-export const UsersPage = () => <UsersModule />
+const UsersPage = () => <UsersModule />
+
+export default UsersPage
