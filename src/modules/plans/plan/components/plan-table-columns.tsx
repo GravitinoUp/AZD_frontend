@@ -1,8 +1,14 @@
 import { formatIsoDate } from '@/shared/lib/format-iso-date.ts'
 import { Plan } from '@/types/plans.ts'
+import { Skeleton } from '@/ui/skeleton.tsx'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const planTableColumns: ColumnDef<Plan>[] = [
+export const getCurrentYear = (createdAt: string) => {
+    const date = new Date(createdAt)
+    return date.getFullYear()
+}
+
+export const getTableColumns = (currentYear?: number): ColumnDef<Plan>[] => [
     {
         id: 'init-info',
         columns: [
@@ -21,8 +27,7 @@ export const planTableColumns: ColumnDef<Plan>[] = [
                 },
             },
             {
-                // purchase_identification_code
-                accessorKey: 'purchase_uuid',
+                accessorKey: 'purchase.purchase_identification_code',
                 header: 'Идентификационный код закупки',
                 meta: {
                     rowSpan: 2,
@@ -34,12 +39,17 @@ export const planTableColumns: ColumnDef<Plan>[] = [
         header: 'Объект закупки',
         columns: [
             {
-                // okpd.okpd_code okpd.okpd_name
-                accessorKey: 'okpd_code',
-                header: 'Общероссийскому классификатору продукции по видам экономической деятельности ОК 034-2014 (КПЕС 2008)',
-                meta: {
-                    rowSpan: 2,
-                },
+                header: 'Товар, работа, услуга по Общероссийскому классификатору продукции по видам экономической деятельности ОК 034-2014 (КПЕС 2008) (ОКПД2)',
+                columns: [
+                    {
+                        accessorKey: 'okpd.okpd_code',
+                        header: 'Код',
+                    },
+                    {
+                        accessorKey: 'okpd.okpd_name',
+                        header: 'Наименование',
+                    },
+                ],
             },
             {
                 accessorKey: 'object_name',
@@ -47,6 +57,78 @@ export const planTableColumns: ColumnDef<Plan>[] = [
                 meta: {
                     rowSpan: 2,
                 },
+            },
+        ],
+    },
+    {
+        id: 'okei_code',
+        columns: [
+            {
+                header: 'Код по ОКЕИ ОК 015-94 (МК 002-97) Общероссийский классификатор единиц измерения',
+                accessorKey: 'okei_code',
+                meta: {
+                    rowSpan: 2,
+                },
+            },
+        ],
+    },
+    {
+        header: 'Плановое значение/Детализация объекта закупки с учетом норм положенности',
+        columns: [
+            {
+                id: 'current-year',
+                header: () => (currentYear ? `${currentYear} год` : <Skeleton className="mx-auto h-5 w-[80px]" />),
+                columns: [
+                    {
+                        accessorKey: 'current_year_plan_count',
+                        header: 'Количество',
+                    },
+                    {
+                        accessorKey: 'current_year_plan_avg_price',
+                        header: 'Средняя цена за единицу, руб.',
+                    },
+                ],
+            },
+            {
+                id: 'first-year',
+                header: () => (currentYear ? `${currentYear + 1} год` : <Skeleton className="mx-auto h-5 w-[80px]" />),
+                columns: [
+                    {
+                        accessorKey: 'first_year_plan_count',
+                        header: 'Количество',
+                    },
+                    {
+                        accessorKey: 'first_year_plan_avg_price',
+                        header: 'Средняя цена за единицу, руб.',
+                    },
+                ],
+            },
+            {
+                id: 'second-year',
+                header: () => (currentYear ? `${currentYear + 2} год` : <Skeleton className="mx-auto h-5 w-[80px]" />),
+                columns: [
+                    {
+                        accessorKey: 'second_year_plan_count',
+                        header: 'Количество',
+                    },
+                    {
+                        accessorKey: 'second_year_plan_avg_price',
+                        header: 'Средняя цена за единицу, руб.',
+                    },
+                ],
+            },
+            {
+                header: 'Последующие годы',
+                columns: [
+                    {
+                        accessorKey: 'next_years_plan_count',
+                        header: 'Количество',
+                    },
+                    {
+                        accessorKey: 'next_years_plan_avg_price',
+                        header: 'Средняя цена за единицу, руб.',
+                    },
+                ],
             },
         ],
     },
@@ -76,8 +158,12 @@ export const planTableColumns: ColumnDef<Plan>[] = [
             },
             {
                 accessorKey: 'current_year_limit',
-                // TODO: убрать хардкод в годах
-                header: 'На текущий финансовый год  (2023 год)',
+                header: () =>
+                    currentYear ? (
+                        `На текущий финансовый год (${currentYear} год)`
+                    ) : (
+                        <Skeleton className="mx-auto h-5 w-[80px]" />
+                    ),
                 meta: {
                     rowSpan: 2,
                 },
@@ -87,11 +173,21 @@ export const planTableColumns: ColumnDef<Plan>[] = [
                 columns: [
                     {
                         accessorKey: 'first_year_limit',
-                        header: 'На первый год (2024 год)',
+                        header: () =>
+                            currentYear ? (
+                                `На первый год (${currentYear} год)`
+                            ) : (
+                                <Skeleton className="mx-auto h-5 w-full max-w-[80px]" />
+                            ),
                     },
                     {
                         accessorKey: 'second_year_limit',
-                        header: 'На второй год (2025 год)',
+                        header: () =>
+                            currentYear ? (
+                                `На второй год (${currentYear + 1} год)`
+                            ) : (
+                                <Skeleton className="mx-auto h-5 w-full max-w-[80px]" />
+                            ),
                     },
                 ],
             },
@@ -108,36 +204,14 @@ export const planTableColumns: ColumnDef<Plan>[] = [
         id: 'additional-info',
         columns: [
             {
-                accessorKey: 'public_purchase_discussion',
-                header: 'Информация о проведении обязательного общественного обсуждения закупки',
-                meta: {
-                    rowSpan: 2,
-                },
-            },
-            {
-                accessorKey: 'authorized_institution',
-                header: 'Наименование уполномоченного органа (учреждения)',
-                meta: {
-                    rowSpan: 2,
-                },
-            },
-            {
-                accessorKey: 'organizer_name',
-                header: 'Наименование организатора проведения совместного конкурса или аукциона',
-                meta: {
-                    rowSpan: 2,
-                },
-            },
-            {
                 accessorKey: 'placement_month',
                 header: 'Месяц размещения извещения или заключения контракта у ед. поставщика',
                 meta: {
                     rowSpan: 2,
                 },
             },
-            // way.way_name
             {
-                accessorKey: 'way_id',
+                accessorKey: 'way.way_name',
                 header: 'Способ',
                 meta: {
                     rowSpan: 2,

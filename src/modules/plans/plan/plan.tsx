@@ -3,7 +3,7 @@ import { DebouncedInput } from '@/components/debounced-input'
 import { TableActions } from '@/components/table-actions'
 import { PlanSheet } from '@/modules/plans/plan-sheet'
 import { usePlan } from '@/modules/plans/plan/api/usePlan.ts'
-import { planTableColumns } from '@/modules/plans/plan/components/plan-table-columns.tsx'
+import { getCurrentYear, getTableColumns } from '@/modules/plans/plan/components/plan-table-columns.tsx'
 import { usePageTitle } from '@/shared/context/plans-page-title.tsx'
 import { PLANS } from '@/shared/router/routes.ts'
 import { useEffect, useMemo, useState } from 'react'
@@ -27,6 +27,15 @@ export const Plan = () => {
         ],
         [id]
     )
+
+    const planTableColumns = useMemo(() => {
+        if (plan?.created_at) {
+            const currentYear = getCurrentYear(plan.created_at)
+            return getTableColumns(currentYear)
+        }
+
+        return getTableColumns()
+    }, [plan])
 
     if (isError) {
         return <p>Произошла ошибка</p>
