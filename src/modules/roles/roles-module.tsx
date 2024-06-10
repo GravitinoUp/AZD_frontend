@@ -9,6 +9,7 @@ import { DebouncedInput } from '@/components/debounced-input'
 import { useGetAllRoles } from './api/useGetAllRoles'
 import { useNavigate } from 'react-router-dom'
 import { placeholderQuery } from '@/shared/constants'
+import { useState } from 'react'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -19,7 +20,8 @@ export const RolesModule = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
-    const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(placeholderQuery)
+    const [rolesQuery, setRolesQuery] = useState(placeholderQuery)
+    const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(rolesQuery)
 
     if (isError) {
         return <p>{t('error.default')}</p>
@@ -34,7 +36,19 @@ export const RolesModule = () => {
                 </Button>
             </div>
             <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
-            <DebouncedInput className="my-6" value="" onChange={() => void 0} />
+            <DebouncedInput
+                className="my-6"
+                value=""
+                onChange={(query) => {
+                    const searchQuery = String(query).trim()
+                    setRolesQuery({
+                        ...rolesQuery,
+                        filter: {
+                            role_name: searchQuery !== '' ? searchQuery : undefined,
+                        },
+                    })
+                }}
+            />
             <DataTable
                 className="mb-10 mt-7"
                 columns={roleColumns}

@@ -1,4 +1,5 @@
 import { SortOptions } from './fetch'
+import { RolePermission } from './role-permission'
 
 export interface User {
     user_uuid: string
@@ -36,6 +37,12 @@ export interface Person {
 }
 
 export interface Role {
+    role_id: number
+    role_name: string
+    role_permissions: RolePermission[]
+}
+
+export interface RolePayload {
     role_id: number
     role_name: string
 }

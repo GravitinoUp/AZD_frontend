@@ -9,7 +9,7 @@ import { useCreateRole } from './api/use-create-role'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'
 import { Role } from '@/types/user'
-import { useUpdateRole } from './api/useUpdateRole'
+import { useUpdateRole } from './api/use-update-role'
 import { useEffect, useMemo, useState } from 'react'
 import { ManageLayout } from '@/components/layout'
 import { Button } from '@/ui/button'
@@ -23,7 +23,7 @@ import { useCreateRolePermission } from './api/use-create-role-permission'
 
 const roleSchema = z.object({
     role_name: z.string().min(1, i18next.t('error.required')),
-    permission_ids: z.array(z.number()),
+    permission_ids: z.array(z.string()),
 })
 
 export const RoleManageModule = () => {
@@ -35,7 +35,12 @@ export const RoleManageModule = () => {
 
     const form = useForm({
         schema: roleSchema,
-        defaultValues: role ? { role_name: role.role_name, permission_ids: [] } : { role_name: '', permission_ids: [] },
+        defaultValues: role
+            ? {
+                  role_name: role.role_name,
+                  permission_ids: role.role_permissions.map((value) => value.permission_id),
+              }
+            : { role_name: '', permission_ids: [] },
     })
 
     const [permissionQuery, setPermissionQuery] = useState('')

@@ -9,6 +9,6 @@ export interface RolePermission {
 export interface RolePermissionPayload {
     role_id?: number
     user_uuid?: number
-    permission_ids: number[]
+    permission_ids: string[]
     rights: boolean
 }
