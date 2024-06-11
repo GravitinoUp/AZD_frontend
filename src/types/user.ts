@@ -47,6 +47,7 @@ export interface Role {
 export interface RolePayload {
     role_id: number
     role_name: string
+    permission_ids: string[]
 }
 
 export type RoleSort = Partial<Record<keyof Role, SortOptions>>

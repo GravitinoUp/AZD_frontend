@@ -1,9 +1,9 @@
 import { apiRequest } from '@/shared/api'
 import { Result } from '@/types/fetch'
-import { Role } from '@/types/user'
+import { Role, RolePayload } from '@/types/user'
 import { useMutation } from '@tanstack/react-query'
 
-const createRole = async (body: Partial<Role>) => {
+const createRole = async (body: Partial<RolePayload>) => {
     const response = await apiRequest.post('/roles', body)
     return response.data as Result<Role>
 }

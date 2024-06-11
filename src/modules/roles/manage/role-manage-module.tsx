@@ -10,7 +10,7 @@ import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'
 import { Role } from '@/types/user'
 import { useUpdateRole } from './api/use-update-role'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ManageLayout } from '@/components/layout'
 import { Button } from '@/ui/button'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
@@ -19,7 +19,6 @@ import { Skeleton } from '@/ui/skeleton'
 import { ErrorAlert } from '@/components/error-alert'
 import { Checkbox } from '@/ui/checkbox'
 import { DebouncedInput } from '@/components/debounced-input'
-import { useCreateRolePermission } from './api/use-create-role-permission'
 
 const roleSchema = z.object({
     role_name: z.string().min(1, i18next.t('error.required')),
@@ -61,7 +60,6 @@ export const RoleManageModule = () => {
 
     const {
         mutate: createRole,
-        data: createdRole,
         isPending: roleCreating,
         error: roleCreateError,
         isSuccess: roleCreateSuccess,
@@ -74,37 +72,20 @@ export const RoleManageModule = () => {
         isSuccess: roleUpdateSuccess,
     } = useUpdateRole()
 
-    const {
-        mutate: createRolePermission,
-        isPending: rolePermissionCreating,
-        error: rolePermissionCreateError,
-        isSuccess: rolePermissionCreateSuccess,
-    } = useCreateRolePermission()
-
     const handleSubmit = (data: z.infer<typeof roleSchema>) => {
         if (role) {
-            updateRole({ role_id: role.role_id, role_name: data.role_name })
+            updateRole({ ...data, role_id: role.role_id })
         } else {
-            createRole({ role_name: data.role_name })
+            createRole({ ...data })
         }
     }
 
     const createSuccessMessage = useMemo(() => t('toast.success.create.f', { entity: t('role') }), [])
     const updateSuccessMessage = useMemo(() => t('toast.success.update.f', { entity: t('role') }), [])
 
-    useEffect(() => {
-        if (roleCreateSuccess) {
-            createRolePermission({
-                role_id: createdRole.data?.role_id,
-                permission_ids: form.getValues('permission_ids'),
-                rights: true,
-            })
-        }
-    }, [roleCreateSuccess])
-
-    useSuccessToast(createSuccessMessage, roleCreateSuccess && rolePermissionCreateSuccess, () => navigate(-1))
+    useSuccessToast(createSuccessMessage, roleCreateSuccess, () => navigate(-1))
     useSuccessToast(updateSuccessMessage, roleUpdateSuccess, () => navigate(-1))
-    useErrorToast(roleCreateError || roleUpdateError || rolePermissionCreateError)
+    useErrorToast(roleCreateError || roleUpdateError)
 
     return (
         <ManageLayout
@@ -113,10 +94,7 @@ export const RoleManageModule = () => {
             title={role ? t('manage.user') : t('add.user')}
             actions={
                 <>
-                    <Button
-                        className="h-12 w-[200px] gap-4"
-                        loading={roleCreating || roleUpdating || rolePermissionCreating}
-                    >
+                    <Button className="h-12 w-[200px] gap-4" loading={roleCreating || roleUpdating}>
                         <PlusCircleIcon />
                         {role ? t('action.edit') : t('action.add')}
                     </Button>
