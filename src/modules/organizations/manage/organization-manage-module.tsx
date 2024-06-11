@@ -1,6 +1,6 @@
 import { useForm } from '@/components/form'
 import { InputField } from '@/components/input-field'
-import { FormField } from '@/ui/form'
+import { FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -13,9 +13,16 @@ import { useMemo } from 'react'
 import { ManageLayout } from '@/components/layout'
 import { Organization } from '@/types/organization'
 import { ManageActions } from '@/components/manage-actions'
+import { useGetAllOrganizationTypes } from '../api/use-get-all-organization-types'
+import { Skeleton } from '@/ui/skeleton'
+import { ErrorAlert } from '@/components/error-alert'
+import { CommandSelect } from '@/components/command'
+import { useGetAllPeople } from '@/modules/users/api/use-get-all-people'
+import { formatInitials } from '@/shared/lib/format-initials'
+import { placeholderQuery } from '@/shared/constants'
 
 const organizationSchema = z.object({
-    organization_type_id: z.number(),
+    organization_type_id: z.number().min(1, i18next.t('error.required')),
     contact_person_uuid: z.string().min(1, i18next.t('error.required')),
     full_name: z.string().min(1, i18next.t('error.required')),
     short_name: z.string().min(1, i18next.t('error.required')),
@@ -73,6 +80,28 @@ export const OrganizationManageModule = () => {
     })
 
     const {
+        data: organizationTypes = [],
+        isFetching: organizationTypesFetching,
+        isSuccess: organizationTypesSuccess,
+        error: organizationTypesError,
+    } = useGetAllOrganizationTypes()
+    const formattedTypes = organizationTypes.map((value) => ({
+        value: value.organization_type_id,
+        label: value.organization_type_name,
+    }))
+
+    const {
+        data: people = [],
+        isFetching: peopleFetching,
+        isSuccess: peopleSuccess,
+        error: peopleError,
+    } = useGetAllPeople(placeholderQuery)
+    const formattedPeople = people.map((value) => ({
+        value: value.person_uuid,
+        label: formatInitials(value.last_name, value.first_name, value.patronymic),
+    }))
+
+    const {
         mutate: createOrganization,
         isPending: organizationCreating,
         error: organizationCreateError,
@@ -122,6 +151,44 @@ export const OrganizationManageModule = () => {
                 control={form.control}
                 name="short_name"
                 render={({ field }) => <InputField label={t('organization.short.name')} required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="organization_type_id"
+                render={({ field }) => (
+                    <FormItem className="flex flex-45 flex-col items-start space-y-2">
+                        <FormLabel className="label-required">{t('organization.type')}</FormLabel>
+                        {organizationTypesFetching && <Skeleton className="h-12 w-full" />}
+                        {organizationTypesError && <ErrorAlert />}
+                        {organizationTypesSuccess && !organizationTypesFetching && (
+                            <CommandSelect
+                                selectedValue={field.value ? field.value : 0}
+                                setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
+                                items={formattedTypes}
+                            />
+                        )}
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="contact_person_uuid"
+                render={({ field }) => (
+                    <FormItem className="flex flex-45 flex-col items-start space-y-2">
+                        <FormLabel className="label-required">{t('organization.contact.person')}</FormLabel>
+                        {peopleFetching && <Skeleton className="h-12 w-full" />}
+                        {peopleError && <ErrorAlert />}
+                        {peopleSuccess && !peopleFetching && (
+                            <CommandSelect
+                                selectedValue={field.value ? field.value : ''}
+                                setSelectedValue={field.onChange}
+                                items={formattedPeople}
+                            />
+                        )}
+                        <FormMessage />
+                    </FormItem>
+                )}
             />
             <FormField
                 control={form.control}

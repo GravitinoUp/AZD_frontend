@@ -104,8 +104,10 @@
   "all.organizations": "Все организации",
   "add.organization": "Добавление организации",
   "manage.organization": "Управление организацией",
+  "organization.type": "Тип организации",
   "organization": {
     "title": "Организация",
+    "contact.person": "Контактное лицо",
     "full.name": "Полное название",
     "short.name": "Короткое название",
     "register.number": "Рег. номер",
