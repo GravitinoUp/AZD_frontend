@@ -3,7 +3,7 @@ import { roleColumns } from './components/roles-columns'
 import { useTranslation } from 'react-i18next'
 import { TableActions } from '@/components/table-actions'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
-import { ROLES } from '@/shared/router/routes'
+import { ROLES, ROLE_MANAGE } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
 import { useGetAllRoles } from './api/use-get-all-roles'
 import { Link } from 'react-router-dom'
@@ -29,7 +29,7 @@ export const RolesModule = () => {
         <div className="mx-auto w-[95%]">
             <div className="flex-center mt-20 gap-4">
                 <h1 className="text-3xl font-bold">{t('roles-and-permissions')}</h1>
-                <Link to="" className="flex-center h-7 w-7 rounded-full bg-primary">
+                <Link to={ROLE_MANAGE} className="flex-center h-7 w-7 rounded-full bg-primary">
                     <PlusRoundedIcon />
                 </Link>
             </div>

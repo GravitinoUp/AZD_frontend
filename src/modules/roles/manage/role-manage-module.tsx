@@ -38,7 +38,9 @@ export const RoleManageModule = () => {
         defaultValues: role
             ? {
                   role_name: role.role_name,
-                  permission_ids: role.role_permissions.map((value) => value.permission_id),
+                  permission_ids: role.role_permissions
+                      ? role.role_permissions.map((value) => value.permission_id)
+                      : [],
               }
             : { role_name: '', permission_ids: [] },
     })
@@ -139,7 +141,7 @@ export const RoleManageModule = () => {
                 control={form.control}
                 name="permission_ids"
                 render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col items-start">
                         <FormLabel>{t('permissions')}</FormLabel>
                         {permissionsFetching && <Skeleton className="h-[200px] w-full" />}
                         {permissionsError && <ErrorAlert />}
