@@ -10,6 +10,8 @@ export interface User {
     person: Person
 }
 
+export type UserSort = Partial<Record<keyof User, SortOptions>>
+
 export interface UserPayload {
     user_uuid?: string
     last_name: string
