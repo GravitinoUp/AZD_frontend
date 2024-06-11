@@ -1,3 +1,5 @@
 import { RoleManageModule } from '@/modules/roles/manage'
 
-export const RoleManagePage = () => <RoleManageModule />
+const RoleManagePage = () => <RoleManageModule />
+
+export default RoleManagePage
