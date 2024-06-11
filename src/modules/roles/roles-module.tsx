@@ -19,7 +19,7 @@ export const RolesModule = () => {
     const { t } = useTranslation()
 
     const [rolesQuery, setRolesQuery] = useState(placeholderQuery)
-    const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(placeholderQuery)
+    const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(rolesQuery)
 
     if (isError) {
         return <p>{t('error.default')}</p>
