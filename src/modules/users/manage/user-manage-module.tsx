@@ -117,7 +117,7 @@ export const UserManageModule = () => {
                         {user ? t('action.edit') : t('action.add')}
                     </Button>
                     <Button
-                        className="text- h-12 w-[200px] bg-secondary text-destructive"
+                        className="h-12 w-[200px] bg-secondary text-destructive"
                         variant="outline"
                         type="button"
                         onClick={() => navigate(-1)}

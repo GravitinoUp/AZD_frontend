@@ -95,5 +95,25 @@
         "f": "{{entity}} удалена"
       }
     }
+  },
+  "address": "Адрес",
+  "mail.address": "Почтовый адрес",
+  "region": "Регион",
+  "additional.info": "Доп. информация",
+  "web.site": "Веб-сайт",
+  "all.organizations": "Все организации",
+  "add.organization": "Добавление организации",
+  "manage.organization": "Управление организацией",
+  "organization": {
+    "title": "Организация",
+    "full.name": "Полное название",
+    "short.name": "Короткое название",
+    "register.number": "Рег. номер",
+    "bic": "БИК",
+    "ogrn": "ОГРН",
+    "inn": "ИНН",
+    "kpp": "КПП",
+    "okpo": "ОКПО",
+    "fax": "Факс"
   }
 }
