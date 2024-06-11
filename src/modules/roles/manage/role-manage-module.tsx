@@ -14,7 +14,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { ManageLayout } from '@/components/layout'
 import { Button } from '@/ui/button'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
-import { useGetAllPermissions } from './api/useGetAllPermissions'
+import { useGetAllPermissions } from './api/use-get-all-permissions'
 import { Skeleton } from '@/ui/skeleton'
 import { ErrorAlert } from '@/components/error-alert'
 import { Checkbox } from '@/ui/checkbox'
@@ -102,7 +102,7 @@ export const RoleManageModule = () => {
 
     useSuccessToast(createSuccessMessage, roleCreateSuccess && rolePermissionCreateSuccess, () => navigate(-1))
     useSuccessToast(updateSuccessMessage, roleUpdateSuccess, () => navigate(-1))
-    useErrorToast(void 0, roleCreateError || roleUpdateError || rolePermissionCreateError)
+    useErrorToast(roleCreateError || roleUpdateError || rolePermissionCreateError)
 
     return (
         <ManageLayout
@@ -143,7 +143,7 @@ export const RoleManageModule = () => {
                         <FormLabel>{t('permissions')}</FormLabel>
                         {permissionsFetching && <Skeleton className="h-[200px] w-full" />}
                         {permissionsError && <ErrorAlert />}
-                        {permissionsSuccess && (
+                        {permissionsSuccess && !permissionsFetching && (
                             <div className="flex w-full flex-col gap-2 rounded-xl border p-4">
                                 <DebouncedInput
                                     className="mb-2 bg-transparent"
