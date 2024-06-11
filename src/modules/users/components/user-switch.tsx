@@ -1,6 +1,6 @@
 import { User } from '@/types/user.ts'
 import { Switch } from '@/ui/switch'
-import { useChangeUserStatus } from '../api/useChangeUserStatus'
+import { useChangeUserStatus } from '../api/use-change-user-status'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'
@@ -26,7 +26,7 @@ export default function UserSwitch({ user }: { user: User }) {
     const updateSuccessMessage = useMemo(() => t('toast.success.update.m', { entity: t('user') }), [])
 
     useSuccessToast(updateSuccessMessage, userUpdateSuccess)
-    useErrorToast(void 0, userUpdateError)
+    useErrorToast(userUpdateError)
 
     return <Switch disabled={userUpdating} checked={user.is_active} onCheckedChange={updateStatus} />
 }

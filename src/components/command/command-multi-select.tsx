@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import i18next from 'i18next'
 import { Check, ChevronsUpDown } from 'lucide-react'
@@ -30,11 +30,19 @@ export function CommandMultiSelect<T>({
     const { t } = useTranslation()
     const [popoverOpen, setPopoverOpen] = useState(false)
 
-    const isNotEmpty = selectedValues && selectedValues.length !== 0
-
     const selectedItems = selectedValues
         .reduce((acc, item) => `${acc}, ${items.find(({ value }) => item === value)?.label}`, '')
         .toString()
+
+    const buttonText = useMemo(() => {
+        if (selectedValues && selectedValues.length > 0) {
+            return selectedItems.substring(2, selectedItems.length)
+        } else if (disabled) {
+            return disabledPlaceholder
+        } else {
+            return placeholder
+        }
+    }, [selectedValues, disabled])
 
     return (
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen} modal={true}>
@@ -48,13 +56,7 @@ export function CommandMultiSelect<T>({
                         className
                     )}
                 >
-                    <span className="pointer-events-none">
-                        {isNotEmpty
-                            ? selectedItems.substring(2, selectedItems.length)
-                            : !disabled
-                            ? placeholder
-                            : disabledPlaceholder}
-                    </span>
+                    <span className="pointer-events-none">{buttonText}</span>
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>

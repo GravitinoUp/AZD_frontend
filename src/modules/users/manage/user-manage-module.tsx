@@ -5,20 +5,20 @@ import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import { useCreateUser } from './api/useCreateUser'
+import { useCreateUser } from './api/use-create-user'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useSuccessToast } from '@/shared/hooks/use-success-toast'
-import { useGetAllRoles } from '@/modules/roles/api/useGetAllRoles'
 import { placeholderQuery } from '@/shared/constants'
 import { CommandSelect } from '@/components/command'
 import { ErrorAlert } from '@/components/error-alert'
 import { Skeleton } from '@/ui/skeleton'
 import { User } from '@/types/user'
-import { useUpdateUser } from './api/useUpdateUser'
+import { useUpdateUser } from './api/use-update-user'
 import { useMemo } from 'react'
 import { ManageLayout } from '@/components/layout'
 import { Button } from '@/ui/button'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
+import { useGetAllRoles } from '@/modules/roles/api/use-get-all-roles'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -103,7 +103,7 @@ export const UserManageModule = () => {
 
     useSuccessToast(createSuccessMessage, userCreateSuccess, () => navigate(-1))
     useSuccessToast(updateSuccessMessage, userUpdateSuccess, () => navigate(-1))
-    useErrorToast(void 0, userCreateError || userUpdateError)
+    useErrorToast(userCreateError || userUpdateError)
 
     return (
         <ManageLayout

@@ -1,3 +1,5 @@
 import { UserManageModule } from '@/modules/users/manage'
 
-export const UserManagePage = () => <UserManageModule />
+const UserManagePage = () => <UserManageModule />
+
+export default UserManagePage

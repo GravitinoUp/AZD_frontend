@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ErrorResponse } from '@/types/interface/fetch'
 import { ToastAction } from '@/ui/toast'
 import { useToast } from '@/ui/use-toast'
 import { AxiosError } from 'axios'
+import { ErrorResponse } from '@/types/fetch'
 
 const ERROR_DURATION = 3000
 
-export const useErrorToast = (repeatFn?: () => void, error?: Error | null) => {
+export const useErrorToast = (error?: Error | null, repeatFn?: () => void) => {
     const { toast } = useToast()
     const { t } = useTranslation()
 
