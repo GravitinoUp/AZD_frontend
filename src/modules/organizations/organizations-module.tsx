@@ -41,7 +41,10 @@ export const OrganizationsModule = () => {
                 value=""
                 onChange={(query) => {
                     const searchQuery = String(query).trim()
-                    setOrganizationsQuery({ ...organizationsQuery, filter: { short_name: searchQuery } })
+                    setOrganizationsQuery({
+                        ...organizationsQuery,
+                        filter: { short_name: searchQuery !== '' ? searchQuery : undefined },
+                    })
                 }}
             />
             <DataTable
