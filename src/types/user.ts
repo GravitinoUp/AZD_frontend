@@ -1,4 +1,5 @@
 import { SortOptions } from './fetch'
+import { RolePermission } from './role-permission'
 
 export interface User {
     user_uuid: string
@@ -8,6 +9,8 @@ export interface User {
     role: Role
     person: Person
 }
+
+export type UserSort = Partial<Record<keyof User, SortOptions>>
 
 export interface UserPayload {
     user_uuid?: string
@@ -40,6 +43,13 @@ export type PersonSort = Partial<Record<keyof Person, SortOptions>>
 export interface Role {
     role_id: number
     role_name: string
+    role_permissions: RolePermission[]
+}
+
+export interface RolePayload {
+    role_id: number
+    role_name: string
+    permission_ids: string[]
 }
 
 export type RoleSort = Partial<Record<keyof Role, SortOptions>>

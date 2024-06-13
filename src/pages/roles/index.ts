@@ -1,1 +1,3 @@
-export { RolesPage } from './roles-page.tsx'
+import { lazy } from 'react'
+
+export const RolesPageLazy = lazy(() => import('./roles-page'))

@@ -18,11 +18,11 @@ export const TableActions = ({ routes, onExportClick, onImportClick }: TableActi
         <div className="mt-10 flex items-center justify-between">
             <Breadcrumbs routes={routes} />
             <div className="flex gap-3">
-                <Button variant="secondary" onClick={onExportClick}>
+                <Button className="w-[120px]" variant="secondary" onClick={onExportClick}>
                     <span className="mr-3">{t('export')}</span>
                     <ExportIcon />
                 </Button>
-                <Button variant="secondary" onClick={onImportClick}>
+                <Button className="w-[120px]" variant="secondary" onClick={onImportClick}>
                     <span className="mr-3">{t('import')}</span>
                     <ImportIcon />
                 </Button>

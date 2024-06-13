@@ -1,3 +1,5 @@
 import { RolesModule } from '@/modules/roles'
 
-export const RolesPage = () => <RolesModule />
+const RolesPage = () => <RolesModule />
+
+export default RolesPage
