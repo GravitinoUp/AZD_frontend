@@ -1,6 +1,6 @@
 import { RouterButton } from '@/components/router-button'
 import { usePageTitle } from '@/shared/context/plans-page-title'
-import { BRANCHES, ORGANIZATIONS, ORGANIZATION_MANAGE, USER_MANAGE } from '@/shared/router/routes'
+import { BRANCHES, ORGANIZATIONS, ORGANIZATION_MANAGE } from '@/shared/router/routes'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'
 import i18next from 'i18next'
 import { Fragment } from 'react'
@@ -13,7 +13,7 @@ const OrganizationsPage = () => {
         <>
             <div className="bordered-space" />
             <div className="flex-center mt-20 gap-4">
-                {pageTitle && <h1 className="page-title mt-8">{pageTitle}</h1>}
+                {pageTitle && <h1 className="page-title">{pageTitle}</h1>}
                 <RouterButton to={ORGANIZATION_MANAGE} />
             </div>
             <Tabs defaultValue={tabsData[0].value} className="mt-7">
