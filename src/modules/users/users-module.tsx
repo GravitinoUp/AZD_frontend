@@ -7,6 +7,7 @@ import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
 import { USERS, USER_MANAGE } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
 import { Link } from 'react-router-dom'
+import { RouterButton } from '@/components/router-button'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -26,9 +27,7 @@ export const UsersModule = () => {
         <div className="mx-auto w-[95%]">
             <div className="flex-center mt-20 gap-4">
                 <h1 className="text-3xl font-bold">{t('users')}</h1>
-                <Link to={USER_MANAGE} className="flex-center h-7 w-7 rounded-full bg-primary">
-                    <PlusRoundedIcon />
-                </Link>
+                <RouterButton to={USER_MANAGE} />
             </div>
             <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
             <DebouncedInput className="my-6" value="" onChange={() => void 0} />

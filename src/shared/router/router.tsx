@@ -5,7 +5,16 @@ import { HomePage } from '@/pages/home'
 import { PlansPage } from '@/pages/plans'
 import { RolesPage } from '@/pages/roles'
 import { UsersPageLazy } from '@/pages/users'
-import { ORGANIZATIONS, ORGANIZATION_MANAGE, PLANS, ROLES, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
+import {
+    ALL_ORGANIZATIONS,
+    BRANCHES,
+    ORGANIZATIONS,
+    ORGANIZATION_MANAGE,
+    PLANS,
+    ROLES,
+    USERS,
+    USER_MANAGE,
+} from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
 import { UserManagePageLazy } from '@/pages/users/manage'
@@ -15,6 +24,7 @@ import { Suspense } from 'react'
 import { PageLoader } from '@/components/loaders'
 import { OrganizationsPageLazy } from '@/pages/organizations'
 import { OrganizationManagePageLazy } from '@/pages/organizations/manage'
+import { BranchesModule, OrganizationsModule } from '@/modules/organizations'
 
 export const router = createBrowserRouter([
     {
@@ -73,10 +83,22 @@ export const router = createBrowserRouter([
                 element: (
                     <ErrorBoundary fallback={<ErrorAlert />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
-                            <OrganizationsPageLazy />
+                            <PageTitleProvider>
+                                <OrganizationsPageLazy />
+                            </PageTitleProvider>
                         </Suspense>
                     </ErrorBoundary>
                 ),
+                children: [
+                    {
+                        path: '',
+                        element: <OrganizationsModule />,
+                    },
+                    {
+                        path: BRANCHES,
+                        element: <BranchesModule />,
+                    },
+                ],
             },
             {
                 path: ORGANIZATION_MANAGE,

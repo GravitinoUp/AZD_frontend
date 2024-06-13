@@ -5,7 +5,7 @@ import OrganizationsIcon from '@/assets/icons/navigation/organizations-icon.svg'
 import permissionsIcon from '@/assets/icons/navigation/roles-and-permissions-icon.svg'
 import usersIcon from '@/assets/icons/navigation/users-icon.svg'
 import i18next from '@/shared/i18n/i18n.ts'
-import { ROLES, PLANS, USERS, ORGANIZATIONS } from '@/shared/router/routes.ts'
+import { ROLES, PLANS, USERS, ORGANIZATIONS, BRANCHES } from '@/shared/router/routes.ts'
 
 interface SubLink {
     id: string
@@ -134,6 +134,13 @@ const organizationsLinks: NavLink[] = [
         link: {
             title: i18next.t('all.organizations'),
             href: ORGANIZATIONS,
+        },
+    },
+    {
+        id: crypto.randomUUID(),
+        link: {
+            title: i18next.t('branches'),
+            href: BRANCHES,
         },
     },
 ]

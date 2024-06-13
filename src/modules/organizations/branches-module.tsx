@@ -11,10 +11,10 @@ import { usePageTitle } from '@/shared/context/plans-page-title'
 
 const routes = [
     { route: '/', label: 'Главная' },
-    { route: ORGANIZATIONS, label: 'Организации' },
+    { route: ORGANIZATIONS, label: 'Филиалы' },
 ]
 
-export const OrganizationsModule = () => {
+export const BranchesModule = () => {
     const { t } = useTranslation()
     const { setPageTitle } = usePageTitle()
 
@@ -26,7 +26,7 @@ export const OrganizationsModule = () => {
     } = useGetAllOrganizations(organizationsQuery)
 
     useEffect(() => {
-        setPageTitle(t('all.organizations'))
+        setPageTitle(t('branches'))
     }, [])
 
     if (isError) {
