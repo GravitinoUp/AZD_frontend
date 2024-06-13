@@ -3,16 +3,17 @@ import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { PlansPage } from '@/pages/plans'
-import { RolesPage } from '@/pages/roles'
 import { UsersPageLazy } from '@/pages/users'
-import { PLANS, ROLES, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
+import { PLANS, ROLES, ROLE_MANAGE, USERS, USER_MANAGE } from '@/shared/router/routes.ts'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
 import { UserManagePageLazy } from '@/pages/users/manage'
 import { ErrorBoundary } from '@/components/error-boundary'
 import { ErrorAlert } from '@/components/error-alert'
 import { Suspense } from 'react'
-import { PageLoader } from '@/components/loaders'
+import { PageLoader, TablePageLoader } from '@/components/loaders'
+import { RoleManagePageLazy } from '@/pages/roles/manage'
+import { RolesPageLazy } from '@/pages/roles'
 
 export const router = createBrowserRouter([
     {
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
                 path: USERS,
                 element: (
                     <ErrorBoundary fallback={<ErrorAlert />}>
-                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                        <Suspense fallback={<TablePageLoader />}>
                             <UsersPageLazy />
                         </Suspense>
                     </ErrorBoundary>
@@ -64,7 +65,23 @@ export const router = createBrowserRouter([
             },
             {
                 path: ROLES,
-                element: <RolesPage />,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert />}>
+                        <Suspense fallback={<TablePageLoader />}>
+                            <RolesPageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
+            },
+            {
+                path: ROLE_MANAGE,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <RoleManagePageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
             },
         ],
     },

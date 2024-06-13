@@ -155,7 +155,7 @@ export const UserManageModule = () => {
                         <FormLabel>{t('role')}</FormLabel>
                         {rolesFetching && <Skeleton className="h-12 w-full" />}
                         {rolesError && <ErrorAlert />}
-                        {rolesSuccess && (
+                        {rolesSuccess && !rolesFetching && (
                             <CommandSelect
                                 selectedValue={field.value ? field.value : 0}
                                 setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
