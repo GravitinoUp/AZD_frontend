@@ -1,0 +1,170 @@
+{
+  "count": 0,
+  "data": [
+    {
+      "limit_uuid": "asdkjadkhadh",
+      "limit_name": "string",
+      "line_code": "string",
+      "kbk_uuid": "string",
+      "kbk": {
+        "kbk_uuid": "string",
+        "kbk_name": "string",
+        "kbk_section_uuid": "string",
+        "kbk_section": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_subsection_uuid": "string",
+        "kbk_subsection": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_target_article_uuid": "string",
+        "kbk_target_article": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_expenses_type_uuid": "string",
+        "kbk_expenses_type": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        }
+      },
+      "kosgu_uuid": "string",
+      "kosgu": {
+        "kosgu_uuid": "string",
+        "kosgu_code": "string",
+        "kosgu_name": "string"
+      },
+      "limit_version": 0,
+      "limit_status_id": 0,
+      "limit_status": {
+        "limit_status_id": 0,
+        "limit_status_name": "string"
+      },
+      "current_year_rub_value": 0,
+      "current_year_currency_value": 0,
+      "current_year_currency_code": "string",
+      "first_year_rub_value": 0,
+      "first_year_currency_value": 0,
+      "first_year_currency_code": "string",
+      "second_year_rub_value": 0,
+      "second_year_currency_value": 0,
+      "second_year_currency_code": "string"
+    },
+    {
+      "limit_uuid": "zkczca",
+      "limit_name": "string",
+      "line_code": "string",
+      "kbk_uuid": "string",
+      "kbk": {
+        "kbk_uuid": "string",
+        "kbk_name": "string",
+        "kbk_section_uuid": "string",
+        "kbk_section": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_subsection_uuid": "string",
+        "kbk_subsection": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_target_article_uuid": "string",
+        "kbk_target_article": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_expenses_type_uuid": "string",
+        "kbk_expenses_type": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        }
+      },
+      "kosgu_uuid": "string",
+      "kosgu": {
+        "kosgu_uuid": "string",
+        "kosgu_code": "string",
+        "kosgu_name": "string"
+      },
+      "limit_version": 0,
+      "limit_status_id": 0,
+      "limit_status": {
+        "limit_status_id": 0,
+        "limit_status_name": "string"
+      },
+      "current_year_rub_value": 0,
+      "current_year_currency_value": 0,
+      "current_year_currency_code": "string",
+      "first_year_rub_value": 0,
+      "first_year_currency_value": 0,
+      "first_year_currency_code": "string",
+      "second_year_rub_value": 0,
+      "second_year_currency_value": 0,
+      "second_year_currency_code": "string"
+    },
+    {
+      "limit_uuid": "adks",
+      "limit_name": "string",
+      "line_code": "string",
+      "kbk_uuid": "string",
+      "kbk": {
+        "kbk_uuid": "string",
+        "kbk_name": "string",
+        "kbk_section_uuid": "string",
+        "kbk_section": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_subsection_uuid": "string",
+        "kbk_subsection": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_target_article_uuid": "string",
+        "kbk_target_article": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        },
+        "kbk_expenses_type_uuid": "string",
+        "kbk_expenses_type": {
+          "kbk_value_uuid": "string",
+          "kbk_type": "string",
+          "kbk_value": "string"
+        }
+      },
+      "kosgu_uuid": "string",
+      "kosgu": {
+        "kosgu_uuid": "string",
+        "kosgu_code": "string",
+        "kosgu_name": "string"
+      },
+      "limit_version": 0,
+      "limit_status_id": 0,
+      "limit_status": {
+        "limit_status_id": 0,
+        "limit_status_name": "string"
+      },
+      "current_year_rub_value": 0,
+      "current_year_currency_value": 0,
+      "current_year_currency_code": "string",
+      "first_year_rub_value": 0,
+      "first_year_currency_value": 0,
+      "first_year_currency_code": "string",
+      "second_year_rub_value": 0,
+      "second_year_currency_value": 0,
+      "second_year_currency_code": "string"
+    }
+  ]
+}

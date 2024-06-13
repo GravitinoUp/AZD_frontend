@@ -1,4 +1,5 @@
 import { Branch } from '@/types/branch.ts'
+import { SortOptions } from '@/types/fetch.ts'
 import { User } from '@/types/user.ts'
 
 interface Way {
@@ -54,3 +55,5 @@ export interface Plan {
     contragent?: string | null
     approval_letter: string
 }
+
+export type PlanSort = Partial<Record<keyof Plan, SortOptions>>
