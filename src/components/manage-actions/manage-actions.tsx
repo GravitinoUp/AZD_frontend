@@ -8,7 +8,7 @@ interface ManageActionsProps {
     editing?: boolean
 }
 
-export const ManageActions = ({ loading: isLoading = false, editing: isEditing = false }: ManageActionsProps) => {
+export const ManageActions = ({ loading: isLoading = false, editing = false }: ManageActionsProps) => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
@@ -16,7 +16,7 @@ export const ManageActions = ({ loading: isLoading = false, editing: isEditing =
         <>
             <Button className="h-12 w-[200px] gap-4" loading={isLoading}>
                 <PlusCircleIcon />
-                {isEditing ? t('action.edit') : t('action.add')}
+                {editing ? t('action.edit') : t('action.add')}
             </Button>
             <Button
                 className="h-12 w-[200px] bg-secondary text-destructive"
