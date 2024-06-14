@@ -1,25 +1,26 @@
 import { DataTable } from '@/components/data-table'
-import { organizationColumns } from './components/organization-columns'
 import { useTranslation } from 'react-i18next'
 import { TableActions } from '@/components/table-actions'
-import { ORGANIZATIONS } from '@/shared/router/routes'
+import { BRANCHES } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
 import { placeholderQuery } from '@/shared/constants'
 import { useEffect, useState } from 'react'
-import { usePageTitle } from '@/shared/context/plans-page-title'
 import { useGetAllBranches } from './api/use-get-all-branches'
+import { branchColumns } from './components/branch-columns'
+import { useOrganizationsPageTitle } from '@/shared/context/organizations-page-title'
 
 const routes = [
     { route: '/', label: 'Главная' },
-    { route: ORGANIZATIONS, label: 'Филиалы' },
+    { route: BRANCHES, label: 'Филиалы' },
 ]
 
-export const BranchesModule = () => {
+export const Branches = () => {
     const { t } = useTranslation()
-    const { setPageTitle } = usePageTitle()
 
     const [branchesQuery, setBranchesQuery] = useState(placeholderQuery)
     const { data: branches = { count: 0, data: [] }, isLoading, isError } = useGetAllBranches(branchesQuery)
+
+    const { setPageTitle } = useOrganizationsPageTitle()
 
     useEffect(() => {
         setPageTitle(t('branches'))
@@ -42,7 +43,7 @@ export const BranchesModule = () => {
             />
             <DataTable
                 className="mb-10 mt-7"
-                columns={organizationColumns}
+                columns={branchColumns}
                 data={branches.data}
                 isLoading={isLoading}
                 withBackground

@@ -1,5 +1,5 @@
-import { OrganizationManageModule } from '@/modules/organizations/manage'
+import { OrganizationManage } from '@/modules/organizations/all-organizations/manage'
 
-const OrganizationManagePage = () => <OrganizationManageModule />
+const OrganizationManagePage = () => <OrganizationManage />
 
 export default OrganizationManagePage

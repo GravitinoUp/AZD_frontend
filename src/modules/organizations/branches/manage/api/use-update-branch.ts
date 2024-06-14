@@ -1,15 +1,15 @@
 import { apiRequest } from '@/shared/api'
+import { Branch } from '@/types/branch'
 import { Result } from '@/types/fetch'
-import { Organization, OrganizationPayload } from '@/types/organization'
 import { useMutation } from '@tanstack/react-query'
 
-const updateBranch = async (body: OrganizationPayload) => {
+const updateBranch = async (body: Partial<Branch>) => {
     const response = await apiRequest.patch('/branch', body)
-    return response.data as Result<Organization>
+    return response.data as Result<Branch>
 }
 
 export const useUpdateBranch = () =>
     useMutation({
-        mutationKey: ['brnaches'],
+        mutationKey: ['branches'],
         mutationFn: updateBranch,
     })

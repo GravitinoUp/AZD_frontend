@@ -1,26 +1,29 @@
 import { RouterButton } from '@/components/router-button'
-import { usePageTitle } from '@/shared/context/plans-page-title'
-import { BRANCHES, ORGANIZATIONS, ORGANIZATION_MANAGE } from '@/shared/router/routes'
+import { useOrganizationsPageTitle } from '@/shared/context/organizations-page-title'
+import { BRANCHES, BRANCH_MANAGE, ORGANIZATIONS, ORGANIZATION_MANAGE } from '@/shared/router/routes'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'
 import i18next from 'i18next'
 import { Fragment } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const OrganizationsPage = () => {
-    const { pageTitle } = usePageTitle()
+    const { pathname } = useLocation()
+    const navigate = useNavigate()
+
+    const { pageTitle } = useOrganizationsPageTitle()
 
     return (
         <>
             <div className="bordered-space" />
             <div className="flex-center mt-20 gap-4">
                 {pageTitle && <h1 className="page-title">{pageTitle}</h1>}
-                <RouterButton to={ORGANIZATION_MANAGE} />
+                <RouterButton to={pathname === ORGANIZATIONS ? ORGANIZATION_MANAGE : BRANCH_MANAGE} />
             </div>
-            <Tabs defaultValue={tabsData[0].value} className="mt-7">
+            <Tabs value={pathname} className="mt-7">
                 <div className="border-b-2 border-b-tabs-content pb-[3px]">
                     <TabsList className="gap-5">
                         {tabsData.map(({ value, icon, label }) => (
-                            <TabsTrigger key={value} value={value}>
+                            <TabsTrigger key={value} value={value} onClick={() => navigate(value)}>
                                 <span className="mr-1.5">{icon}</span>
                                 {label}
                             </TabsTrigger>

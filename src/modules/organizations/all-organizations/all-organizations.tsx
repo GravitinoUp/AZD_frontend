@@ -7,16 +7,15 @@ import { ORGANIZATIONS } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
 import { placeholderQuery } from '@/shared/constants'
 import { useEffect, useState } from 'react'
-import { usePageTitle } from '@/shared/context/plans-page-title'
+import { useOrganizationsPageTitle } from '@/shared/context/organizations-page-title'
 
 const routes = [
     { route: '/', label: 'Главная' },
     { route: ORGANIZATIONS, label: 'Организации' },
 ]
 
-export const OrganizationsModule = () => {
+export const AllOrganizations = () => {
     const { t } = useTranslation()
-    const { setPageTitle } = usePageTitle()
 
     const [organizationsQuery, setOrganizationsQuery] = useState(placeholderQuery)
     const {
@@ -24,6 +23,8 @@ export const OrganizationsModule = () => {
         isLoading,
         isError,
     } = useGetAllOrganizations(organizationsQuery)
+
+    const { setPageTitle } = useOrganizationsPageTitle()
 
     useEffect(() => {
         setPageTitle(t('all.organizations'))

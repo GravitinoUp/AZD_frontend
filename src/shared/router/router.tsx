@@ -6,6 +6,7 @@ import { PlansPage } from '@/pages/plans'
 import { UsersPageLazy } from '@/pages/users'
 import {
     BRANCHES,
+    BRANCH_MANAGE,
     ORGANIZATIONS,
     ORGANIZATION_MANAGE,
     PLANS,
@@ -24,8 +25,9 @@ import { PageLoader, TablePageLoader } from '@/components/loaders'
 import { RoleManagePageLazy } from '@/pages/roles/manage'
 import { RolesPageLazy } from '@/pages/roles'
 import { OrganizationsPageLazy } from '@/pages/organizations'
-import { OrganizationManagePageLazy } from '@/pages/organizations/manage'
-import { BranchesModule, OrganizationsModule } from '@/modules/organizations'
+import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
+import { AllOrganizations, Branches } from '@/modules/organizations'
+import { OrganizationsPageTitleProvider } from '../context/organizations-page-title'
 
 export const router = createBrowserRouter([
     {
@@ -100,20 +102,20 @@ export const router = createBrowserRouter([
                 element: (
                     <ErrorBoundary fallback={<ErrorAlert />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
-                            <PageTitleProvider>
+                            <OrganizationsPageTitleProvider>
                                 <OrganizationsPageLazy />
-                            </PageTitleProvider>
+                            </OrganizationsPageTitleProvider>
                         </Suspense>
                     </ErrorBoundary>
                 ),
                 children: [
                     {
                         path: '',
-                        element: <OrganizationsModule />,
+                        element: <AllOrganizations />,
                     },
                     {
                         path: BRANCHES,
-                        element: <BranchesModule />,
+                        element: <Branches />,
                     },
                 ],
             },
@@ -123,6 +125,16 @@ export const router = createBrowserRouter([
                     <ErrorBoundary fallback={<ErrorAlert />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <OrganizationManagePageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
+            },
+            {
+                path: BRANCH_MANAGE,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <BranchManagePageLazy />
                         </Suspense>
                     </ErrorBoundary>
                 ),

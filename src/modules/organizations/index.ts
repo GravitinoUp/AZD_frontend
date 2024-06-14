@@ -1,2 +1,2 @@
-export { OrganizationsModule } from './organizations-module.tsx'
-export { BranchesModule } from './branches-module.tsx'
+export { AllOrganizations } from './all-organizations/all-organizations.tsx'
+export { Branches } from './branches/branches.tsx'
