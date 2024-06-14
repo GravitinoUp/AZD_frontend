@@ -2,9 +2,10 @@ import { RouterButton } from '@/components/router-button'
 import { useOrganizationsPageTitle } from '@/shared/context/organizations-page-title'
 import { BRANCHES, BRANCH_MANAGE, ORGANIZATIONS, ORGANIZATION_MANAGE } from '@/shared/router/routes'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'
-import i18next from 'i18next'
-import { Fragment } from 'react'
+import AllOrganizationsIcon from '@/assets/icons/all-organizations.svg'
+import BranchesIcon from '@/assets/icons/branches.svg'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import i18next from 'i18next'
 
 const OrganizationsPage = () => {
     const { pathname } = useLocation()
@@ -43,13 +44,13 @@ const OrganizationsPage = () => {
 const tabsData = [
     {
         value: ORGANIZATIONS,
-        icon: <Fragment />,
+        icon: <AllOrganizationsIcon />,
         label: i18next.t('all.organizations'),
         content: <Outlet />,
     },
     {
         value: BRANCHES,
-        icon: <Fragment />,
+        icon: <BranchesIcon />,
         label: i18next.t('branches'),
         content: <Outlet />,
     },
