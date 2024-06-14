@@ -38,7 +38,10 @@ export const Branches = () => {
                 value=""
                 onChange={(query) => {
                     const searchQuery = String(query).trim()
-                    setBranchesQuery({ ...branchesQuery, filter: { short_name: searchQuery } })
+                    setBranchesQuery({
+                        ...branchesQuery,
+                        filter: { branch_name: searchQuery !== '' ? searchQuery : undefined },
+                    })
                 }}
             />
             <DataTable
