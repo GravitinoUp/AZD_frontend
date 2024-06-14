@@ -13,8 +13,10 @@
   "summary-plan": "Сводный план-график",
   "publication-in-EIS": "Публикация в ЕИС",
   "purchase": "Закупки",
-  "purchase-offer": "Предложение на закупку",
+  "purchase-initiate": "Инициировать закупку",
+  "initiate-purchase": "Инициализация закупки",
   "all-purchase": "Все закупки",
+  "purchase-type": "Тип закупки",
   "goods-and-services": "Товары и услуги",
   "223-FZ": "223-ФЗ",
   "handbook": "Справочники",
@@ -69,6 +71,7 @@
     "default": "Произошла ошибка, повторите попытку позднее.",
     "password.length": "Пароль должен содержать не меньше 6 символов",
     "email.format": "Email должен быть в формате email@example.ru",
+    "number.format": "Неправильный формат числа. Пример: 12345.67",
     "required": "Поле должно быть заполнено"
   },
   "placeholder": {
@@ -76,6 +79,8 @@
   },
   "action": {
     "add": "Добавить",
+    "next": "Следующий шаг",
+    "skip": "Пропустить шаг",
     "cancel": "Отменить",
     "edit": "Изменить",
     "delete": "Удалить",
@@ -97,5 +102,10 @@
         "f": "{{entity}} удалена"
       }
     }
-  }
+  },
+  "delivery-address": "Адрес поставки",
+  "application-enforcement": "Обеспечение заявки, руб.",
+  "contract-enforcement": "Обеспечение исполнения контракта, руб.",
+  "warranty-obligations-enforcement": "Обеспечение гарантийных обязательств, руб.",
+  "additional-info": "Дополнительная информация"
 }

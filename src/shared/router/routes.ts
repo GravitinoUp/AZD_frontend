@@ -1,4 +1,6 @@
 export const DASHBOARD = '/dashboard'
+export const PURCHASE = '/purchase'
+export const INITIATE_PURCHASE = '/purchase/initiate'
 export const USERS = '/users'
 export const USER_MANAGE = '/users/manage'
 export const ROLES = '/roles'
