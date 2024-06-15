@@ -6,18 +6,18 @@ interface ContextValues {
     setPageTitle: Dispatch<SetStateAction<string>>
 }
 
-const PageTitleContext = createContext<ContextValues>({
+const LimitPageTitle = createContext<ContextValues>({
     pageTitle: '',
     setPageTitle: () => void 0,
 })
 
-interface PageTitleProviderProps {
+interface LimitTitleProviderProps {
     children: ReactNode
 }
 
-export const PageTitleProvider = ({ children }: PageTitleProviderProps) => {
+export const LimitTitleProvider = ({ children }: LimitTitleProviderProps) => {
     const { t } = useTranslation()
-    const [pageTitle, setPageTitle] = useState(t('plans'))
+    const [pageTitle, setPageTitle] = useState(t('all-limits'))
     const contextValues = useMemo(
         () => ({
             pageTitle,
@@ -26,7 +26,7 @@ export const PageTitleProvider = ({ children }: PageTitleProviderProps) => {
         [pageTitle, setPageTitle]
     )
 
-    return <PageTitleContext.Provider value={contextValues}>{children}</PageTitleContext.Provider>
+    return <LimitPageTitle.Provider value={contextValues}>{children}</LimitPageTitle.Provider>
 }
 
-export const usePlanPageTitle = () => useContext(PageTitleContext)
+export const useLimitPageTitle = () => useContext(LimitPageTitle)

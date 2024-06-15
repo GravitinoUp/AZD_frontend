@@ -5,7 +5,7 @@ import OrganizationsIcon from '@/assets/icons/navigation/organizations-icon.svg'
 import permissionsIcon from '@/assets/icons/navigation/roles-and-permissions-icon.svg'
 import usersIcon from '@/assets/icons/navigation/users-icon.svg'
 import i18next from '@/shared/i18n/i18n.ts'
-import { ROLES, PLANS, USERS } from '@/shared/router/routes.ts'
+import { LIMITS, PLANS, ROLES, USERS } from '@/shared/router/routes.ts'
 
 interface SubLink {
     id: string
@@ -39,7 +39,7 @@ const Fz44Links: NavLink[] = [
                 {
                     id: crypto.randomUUID(),
                     title: i18next.t('all-limits'),
-                    href: '/',
+                    href: LIMITS,
                 },
             ],
         },

@@ -3,11 +3,6 @@ import { Plan } from '@/types/plans.ts'
 import { Skeleton } from '@/ui/skeleton.tsx'
 import { ColumnDef } from '@tanstack/react-table'
 
-export const getCurrentYear = (createdAt: string) => {
-    const date = new Date(createdAt)
-    return date.getFullYear()
-}
-
 export const getTableColumns = (currentYear?: number): ColumnDef<Plan>[] => [
     {
         id: 'init-info',
