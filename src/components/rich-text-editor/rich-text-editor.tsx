@@ -38,4 +38,4 @@ import 'tinymce/plugins/emoticons/js/emojis'
 import 'tinymce/skins/content/default/content'
 import 'tinymce/skins/ui/oxide/content'
 
-export const RichTextEditor = ({ ...props }: Partial<Editor>) => <Editor licenseKey="gpl" {...props} />
+export const RichTextEditor = ({ ...props }) => <Editor licenseKey="gpl" {...props} />
