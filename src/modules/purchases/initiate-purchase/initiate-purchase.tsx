@@ -14,6 +14,7 @@ import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 const purchaseSchema = z
     .object({
         step: z.number(),
+        technical_specification: z.string(),
         purchase_name: z.string(),
         purchase_type_id: z.number(),
         initiator_uuid: z.string().optional(), // TODO required
