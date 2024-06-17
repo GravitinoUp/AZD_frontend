@@ -107,5 +107,11 @@
   "application-enforcement": "Обеспечение заявки, руб.",
   "contract-enforcement": "Обеспечение исполнения контракта, руб.",
   "warranty-obligations-enforcement": "Обеспечение гарантийных обязательств, руб.",
-  "additional-info": "Дополнительная информация"
+  "additional-info": "Дополнительная информация",
+  "general-info": "Общая информация",
+  "technical-specification": "Техническое задание",
+  "commercial-offers": "Коммерческие предложения",
+  "nmck": "Расчет НМЦК",
+  "contract-project": "Проект контракта",
+  "done": "Готово"
 }

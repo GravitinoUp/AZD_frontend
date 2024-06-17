@@ -2,13 +2,14 @@ import { Button } from '@/ui/button'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
-import { Tabs, TabsContent, TabsList } from '@/ui/tabs'
+import { Tabs, TabsContent } from '@/ui/tabs'
 import { useState } from 'react'
-import { cn } from '@/shared/lib/cn'
 import { GeneralInfoTab } from './general-info-tab'
 import { Form, useForm } from '@/components/form'
 import i18next from 'i18next'
 import { z } from 'zod'
+import { TechnicalSpecificationTab } from './technical-specification'
+import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 
 const purchaseSchema = z
     .object({
@@ -125,32 +126,32 @@ export const InitiatePurchase = () => {
     const tabsData = [
         {
             value: 'general-info',
-            label: 'Общая информация',
+            label: i18next.t('general-info'),
             content: <GeneralInfoTab form={form} />,
         },
         {
             value: 'technical-specification',
-            label: 'Техническое задание',
-            content: 'Техническое задание',
+            label: i18next.t('technical-specification'),
+            content: <TechnicalSpecificationTab form={form} />,
         },
         {
             value: 'commercial-offers',
-            label: 'Коммерческие предложения',
+            label: i18next.t('commercial-offers'),
             content: 'Коммерческие предложения',
         },
         {
             value: 'nmck',
-            label: 'Расчет НМЦК',
+            label: i18next.t('nmck'),
             content: 'Расчет НМЦК',
         },
         {
             value: 'contract-project',
-            label: 'Проект контракта',
+            label: i18next.t('contract-project'),
             content: 'Проект контракта',
         },
         {
             value: 'done',
-            label: 'Готово',
+            label: i18next.t('done'),
             content: 'Готово',
         },
     ]
@@ -164,43 +165,14 @@ export const InitiatePurchase = () => {
             <h1 className="mt-20 text-3xl font-bold">{t('initiate-purchase')}</h1>
             <Form form={form} onSubmit={handleSubmit}>
                 <Tabs value={currentTab}>
-                    <TabsList className="my-14 w-full select-none items-start self-center">
-                        {tabsData.map(({ value, label }, index) => (
-                            <div
-                                key={value}
-                                className={cn('flex flex-col gap-1', index !== tabsData.length - 1 && 'w-full')}
-                                onClick={() => {
-                                    form.setValue('step', index)
-                                    setCurrentTab(value)
-                                }}
-                            >
-                                <div className="flex items-center">
-                                    <div
-                                        className={cn(
-                                            'flex-center min-h-8 min-w-8 rounded-full border-2 border-[#F3F3F3]',
-                                            currentStep >= index ? 'bg-primary' : 'bg-white'
-                                        )}
-                                    >
-                                        <div
-                                            className={cn(
-                                                'h-[10px] w-[10px] rounded-full',
-                                                currentStep >= index ? 'bg-white' : 'bg-[#F3F3F3]'
-                                            )}
-                                        />
-                                    </div>
-                                    {index !== tabsData.length - 1 && (
-                                        <div
-                                            className={cn(
-                                                'h-[6px] w-full',
-                                                currentStep > index ? 'bg-primary' : 'bg-white'
-                                            )}
-                                        />
-                                    )}
-                                </div>
-                                <p className="text-start font-semibold">{label}</p>
-                            </div>
-                        ))}
-                    </TabsList>
+                    <TabListBreadcrumbs
+                        tabsData={tabsData}
+                        onTabClick={(value, index) => {
+                            form.setValue('step', index)
+                            setCurrentTab(value)
+                        }}
+                        currentStep={currentStep}
+                    />
                     <div className="flex-center mt-16 gap-3">
                         <Button className="h-12 w-[200px] gap-4" loading={false}>
                             <PlusCircleIcon />
