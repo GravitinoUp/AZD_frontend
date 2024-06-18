@@ -16,7 +16,6 @@ export const TechnicalSpecificationTab = ({ form }: { form: UseFormReturn<Purcha
                     render={() => (
                         <RichTextEditor
                             onInit={(_evt: unknown, editor: unknown) => (editorRef.current = editor)}
-                            initialValue="<p>This is the initial content of the editor.</p>"
                             init={{
                                 width: '100%',
                                 height: 500,

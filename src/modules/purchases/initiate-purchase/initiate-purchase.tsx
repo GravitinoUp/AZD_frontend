@@ -10,11 +10,14 @@ import i18next from 'i18next'
 import { z } from 'zod'
 import { TechnicalSpecificationTab } from './technical-specification'
 import { TabListBreadcrumbs } from '@/components/breadcrumbs'
+import { CommercialOffersTab } from './commercial-offers'
 
 const purchaseSchema = z
     .object({
         step: z.number(),
-        technical_specification: z.string(),
+        technical_specification: z.string().optional(), // TODO Required
+        commercial_offer_text: z.string().optional(),
+        commercial_offers: z.array(z.number()).optional(), // MIN 3
         purchase_name: z.string(),
         purchase_type_id: z.number(),
         initiator_uuid: z.string().optional(), // TODO required
@@ -138,7 +141,7 @@ export const InitiatePurchase = () => {
         {
             value: 'commercial-offers',
             label: i18next.t('commercial-offers'),
-            content: 'Коммерческие предложения',
+            content: <CommercialOffersTab form={form} />,
         },
         {
             value: 'nmck',

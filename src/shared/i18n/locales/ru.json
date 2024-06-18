@@ -75,7 +75,8 @@
     "required": "Поле должно быть заполнено"
   },
   "placeholder": {
-    "select": "Выберите значение из выпадающего списка"
+    "select": "Выберите значение из выпадающего списка",
+    "multi.select": "Выберите значения из выпадающего списка"
   },
   "action": {
     "add": "Добавить",
@@ -84,7 +85,9 @@
     "cancel": "Отменить",
     "edit": "Изменить",
     "delete": "Удалить",
-    "dropdown.menu.open": "Подробнее..."
+    "dropdown.menu.open": "Подробнее...",
+    "select.all": "Выбрать все",
+    "unselect.all": "Убрать все"
   },
   "toast": {
     "success": {
@@ -111,6 +114,8 @@
   "general-info": "Общая информация",
   "technical-specification": "Техническое задание",
   "commercial-offers": "Коммерческие предложения",
+  "commercial-offer-text": "Текст коммерческого предложения",
+  "send-commercial-offer": "Отправить коммерческое предложение",
   "nmck": "Расчет НМЦК",
   "contract-project": "Проект контракта",
   "done": "Готово"
