@@ -1,5 +1,6 @@
-import { SheetTabs } from '@/modules/plans/plan-sheet/sheet-tabs.tsx'
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/ui/sheet.tsx'
+import { SheetInfo } from '@/components/sheet-info'
+import { PlanInfoTab } from '@/modules/plans/plan-sheet/components/plan-info-tab.tsx'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs.tsx'
 import { Dispatch, SetStateAction } from 'react'
 
 interface PlanSheetProps {
@@ -9,18 +10,35 @@ interface PlanSheetProps {
 }
 
 export const PlanSheet = ({ title, open, setOpen }: PlanSheetProps) => (
-    <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent
-            className="w-[65vw] bg-[#F5F7FB] p-0"
-            onOpenAutoFocus={(event) => {
-                event.preventDefault()
-            }}
-        >
-            <SheetHeader className="bordered-space"></SheetHeader>
-            <SheetTitle title={title} className="line-ellipsis-2 mx-auto mt-14 w-[60%]">
-                {title}
-            </SheetTitle>
-            <SheetTabs />
-        </SheetContent>
-    </Sheet>
+    <SheetInfo title={title} open={open} setOpen={setOpen}>
+        <Tabs defaultValue={tabsData[0].value} className="mt-10 px-12">
+            <div className="border-b-2 border-b-tabs-content pb-[3px]">
+                <TabsList className="gap-5">
+                    {tabsData.map(({ value, label }) => (
+                        <TabsTrigger key={value} value={value}>
+                            {label}
+                        </TabsTrigger>
+                    ))}
+                </TabsList>
+            </div>
+            {tabsData.map((tab) => (
+                <TabsContent key={tab.value} value={tab.value} className="mt-14">
+                    {tab.content}
+                </TabsContent>
+            ))}
+        </Tabs>
+    </SheetInfo>
 )
+
+const tabsData = [
+    {
+        value: 'common-info',
+        label: 'Общая информация',
+        content: <PlanInfoTab />,
+    },
+    {
+        value: 'journal',
+        label: 'Журнал',
+        content: 'Журнал...',
+    },
+]

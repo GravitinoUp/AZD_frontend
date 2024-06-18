@@ -29,4 +29,4 @@ export const PageTitleProvider = ({ children }: PageTitleProviderProps) => {
     return <PageTitleContext.Provider value={contextValues}>{children}</PageTitleContext.Provider>
 }
 
-export const usePageTitle = () => useContext(PageTitleContext)
+export const usePlanPageTitle = () => useContext(PageTitleContext)

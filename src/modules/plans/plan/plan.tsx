@@ -1,10 +1,11 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
 import { TableActions } from '@/components/table-actions'
-import { PlanSheet } from '@/modules/plans/plan-sheet'
-import { usePlan } from '@/modules/plans/plan/api/usePlan.ts'
-import { getCurrentYear, getTableColumns } from '@/modules/plans/plan/components/plan-table-columns.tsx'
-import { usePageTitle } from '@/shared/context/plans-page-title.tsx'
+import { PlanSheet } from '@/modules/plans/plan-sheet/plan-sheet.tsx'
+import { usePlan } from '@/modules/plans/plan/api/use-plan.ts'
+import { getTableColumns } from '@/modules/plans/plan/components/plan.columns.tsx'
+import { usePlanPageTitle } from '@/shared/context/plans-page-title.tsx'
+import { getCurrentYear } from '@/shared/lib/get-current-year.ts'
 import { PLANS } from '@/shared/router/routes.ts'
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -12,7 +13,7 @@ import { useParams } from 'react-router-dom'
 export const Plan = () => {
     const { id = '' } = useParams()
     const { data: plan, isLoading, isError } = usePlan(id)
-    const { pageTitle, setPageTitle } = usePageTitle()
+    const { pageTitle, setPageTitle } = usePlanPageTitle()
     const [sheetOpen, setSheetOpen] = useState(false)
 
     useEffect(() => {
