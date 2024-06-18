@@ -2,13 +2,13 @@ import ApprovalSheetIcon from '@/assets/icons/tabs/approval-sheet.svg'
 import EisIcon from '@/assets/icons/tabs/EIS-public.svg'
 import PlansIcon from '@/assets/icons/tabs/plans.svg'
 import SummaryPlanIcon from '@/assets/icons/tabs/summary-plan.svg'
-import { usePageTitle } from '@/shared/context/plans-page-title.tsx'
+import { usePlanPageTitle } from '@/shared/context/plans-page-title.tsx'
 import i18next from '@/shared/i18n/i18n.ts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs.tsx'
 import { Outlet } from 'react-router-dom'
 
 export const PlansPage = () => {
-    const { pageTitle } = usePageTitle()
+    const { pageTitle } = usePlanPageTitle()
 
     return (
         <>

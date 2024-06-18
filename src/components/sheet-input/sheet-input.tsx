@@ -6,13 +6,17 @@ import { Label } from '@/ui/label.tsx'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/ui/tooltip.tsx'
 import { useToast } from '@/ui/use-toast.ts'
 import React, { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
-interface InfoInputFieldProps {
+interface SheetInputProps {
     label: string
     initialValue: string
+    onInputEdit?: () => void
+    className?: string
 }
 
-export const InfoInputField = ({ label, initialValue }: InfoInputFieldProps) => {
+export const SheetInput = ({ label, initialValue, onInputEdit, className }: SheetInputProps) => {
+    const { t } = useTranslation()
     const [value, setValue] = useState(initialValue)
     const [isReadOnly, setIsReadOnly] = useState(true)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -26,7 +30,7 @@ export const InfoInputField = ({ label, initialValue }: InfoInputFieldProps) => 
     const handleCopyClick = () => {
         navigator.clipboard.writeText(value)
         toast({
-            description: 'Скопировано в буфер обмена',
+            description: t('clipboard-copy'),
             duration: 1500,
         })
     }
@@ -35,15 +39,17 @@ export const InfoInputField = ({ label, initialValue }: InfoInputFieldProps) => 
         if (e.key === 'Enter') {
             setIsReadOnly(true)
             inputRef.current?.blur()
+            onInputEdit?.()
         }
     }
 
     const handleBlur = () => {
         setIsReadOnly(true)
+        onInputEdit?.()
     }
 
     return (
-        <div className="rounded-[10px] border border-tabs-content bg-white px-5 py-8">
+        <div className={className}>
             <Label className="text-base font-bold" htmlFor="name">
                 {label}
             </Label>

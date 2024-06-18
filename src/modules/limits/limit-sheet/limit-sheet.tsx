@@ -1,15 +1,16 @@
 import { SheetInfo } from '@/components/sheet-info'
-import { PlanInfoTab } from '@/modules/plans/plan-sheet/components/plan-info-tab.tsx'
+import { LimitInfoTab } from '@/modules/limits/limit-sheet/limit-sheet-tabs/components/limit-info-tab.tsx'
+import { ScrollArea } from '@/ui/scroll-area.tsx'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs.tsx'
 import { Dispatch, SetStateAction } from 'react'
 
-interface PlanSheetProps {
+interface LimitSheetProps {
     title: string
     open: boolean
     setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export const PlanSheet = ({ title, open, setOpen }: PlanSheetProps) => (
+export const LimitSheet = ({ title, open, setOpen }: LimitSheetProps) => (
     <SheetInfo title={title} open={open} setOpen={setOpen}>
         <Tabs defaultValue={tabsData[0].value} className="mt-10 px-12">
             <div className="border-b-2 border-b-tabs-content pb-[3px]">
@@ -23,7 +24,7 @@ export const PlanSheet = ({ title, open, setOpen }: PlanSheetProps) => (
             </div>
             {tabsData.map((tab) => (
                 <TabsContent key={tab.value} value={tab.value} className="mt-14">
-                    {tab.content}
+                    <ScrollArea className="h-[60vh] pr-10">{tab.content}</ScrollArea>
                 </TabsContent>
             ))}
         </Tabs>
@@ -34,7 +35,7 @@ const tabsData = [
     {
         value: 'common-info',
         label: 'Общая информация',
-        content: <PlanInfoTab />,
+        content: <LimitInfoTab />,
     },
     {
         value: 'journal',

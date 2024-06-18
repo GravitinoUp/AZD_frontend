@@ -1,42 +1,42 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
 import { TableActions } from '@/components/table-actions'
-import { PlanSheet } from '@/modules/plans/plan-sheet/plan-sheet.tsx'
-import { usePlan } from '@/modules/plans/plan/api/use-plan.ts'
-import { getTableColumns } from '@/modules/plans/plan/components/plan.columns.tsx'
-import { usePlanPageTitle } from '@/shared/context/plans-page-title.tsx'
+import { LimitSheet } from '@/modules/limits/limit-sheet/limit-sheet.tsx'
+import { useLimit } from '@/modules/limits/limit/api/use-limit.ts'
+import { getLimitColumns } from '@/modules/limits/limit/limit.columns.tsx'
+import { useLimitPageTitle } from '@/shared/context/limits-page-title.tsx'
 import { getCurrentYear } from '@/shared/lib/get-current-year.ts'
-import { PLANS } from '@/shared/router/routes.ts'
+import { LIMITS } from '@/shared/router/routes.ts'
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-export const Plan = () => {
+export const Limit = () => {
     const { id = '' } = useParams()
-    const { data: plan, isLoading, isError } = usePlan(id)
-    const { pageTitle, setPageTitle } = usePlanPageTitle()
+    const { data: limit, isLoading, isError } = useLimit(id)
+    const { pageTitle, setPageTitle } = useLimitPageTitle()
     const [sheetOpen, setSheetOpen] = useState(false)
 
     useEffect(() => {
-        setPageTitle(`План график ${id}`)
+        setPageTitle(`Лимит ${id}`)
     }, [id])
 
     const breadcrumbsRoutes = useMemo(
         () => [
             { route: '/', label: 'Главная' },
-            { route: PLANS, label: 'Планы-графики' },
+            { route: LIMITS, label: 'Все-лимиты' },
             { route: `/${id}`, label: id },
         ],
         [id]
     )
 
-    const planTableColumns = useMemo(() => {
-        if (plan?.created_at) {
-            const currentYear = getCurrentYear(plan.created_at)
-            return getTableColumns(currentYear)
+    const limitTableColumns = useMemo(() => {
+        if (limit?.created_at) {
+            const currentYear = getCurrentYear(limit.created_at)
+            return getLimitColumns(currentYear)
         }
 
-        return getTableColumns()
-    }, [plan])
+        return getLimitColumns()
+    }, [limit])
 
     if (isError) {
         return <p>Произошла ошибка</p>
@@ -47,14 +47,14 @@ export const Plan = () => {
             <TableActions routes={breadcrumbsRoutes} onExportClick={() => void 0} onImportClick={() => void 0} />
             <DebouncedInput className="my-6" value="" onChange={() => void 0} />
             <DataTable
-                columns={planTableColumns}
-                data={typeof plan === 'undefined' ? [] : [plan]}
+                columns={limitTableColumns}
+                data={typeof limit === 'undefined' ? [] : [limit]}
                 onRowClick={() => setSheetOpen(true)}
                 isLoading={isLoading}
                 skeletonsCount={1}
                 withBackground
             />
-            <PlanSheet title={pageTitle} open={sheetOpen} setOpen={setSheetOpen} />
+            <LimitSheet title={pageTitle} open={sheetOpen} setOpen={setSheetOpen} />
         </div>
     )
 }

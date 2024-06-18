@@ -1,33 +1,37 @@
+import { ErrorAlert } from '@/components/error-alert'
+import { ErrorBoundary } from '@/components/error-boundary'
 import { Layout } from '@/components/layout'
+import { PageLoader, TablePageLoader } from '@/components/loaders'
+import { AllLimits, Limit } from '@/modules/limits'
 import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
+import { LimitsPageLayout } from '@/pages/limits'
 import { PlansPage } from '@/pages/plans'
+import { RolesPageLazy } from '@/pages/roles'
+import { RoleManagePageLazy } from '@/pages/roles/manage'
 import { UsersPageLazy } from '@/pages/users'
+import { UserManagePageLazy } from '@/pages/users/manage'
+import { LimitTitleProvider } from '@/shared/context/limits-page-title.tsx'
 import {
-    BRANCHES,
     BRANCH_MANAGE,
-    ORGANIZATIONS,
+    BRANCHES,
+    LIMITS,
     ORGANIZATION_MANAGE,
+    ORGANIZATIONS,
     PLANS,
-    ROLES,
     ROLE_MANAGE,
-    USERS,
+    ROLES,
     USER_MANAGE,
+    USERS,
 } from '@/shared/router/routes.ts'
+import { Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
-import { UserManagePageLazy } from '@/pages/users/manage'
-import { ErrorBoundary } from '@/components/error-boundary'
-import { ErrorAlert } from '@/components/error-alert'
-import { Suspense } from 'react'
-import { PageLoader, TablePageLoader } from '@/components/loaders'
-import { RoleManagePageLazy } from '@/pages/roles/manage'
-import { RolesPageLazy } from '@/pages/roles'
-import { OrganizationsPageLazy } from '@/pages/organizations'
-import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
-import { AllOrganizations, Branches } from '@/modules/organizations'
 import { OrganizationsPageTitleProvider } from '../context/organizations-page-title'
+import { OrganizationsPageLazy } from '@/pages/organizations'
+import { AllOrganizations, Branches } from '@/modules/organizations'
+import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
 
 export const router = createBrowserRouter([
     {
@@ -96,6 +100,24 @@ export const router = createBrowserRouter([
                         </Suspense>
                     </ErrorBoundary>
                 ),
+            },
+            {
+                path: LIMITS,
+                element: (
+                    <LimitTitleProvider>
+                        <LimitsPageLayout />
+                    </LimitTitleProvider>
+                ),
+                children: [
+                    {
+                        path: '',
+                        element: <AllLimits />,
+                    },
+                    {
+                        path: ':id',
+                        element: <Limit />,
+                    },
+                ],
             },
             {
                 path: ORGANIZATIONS,
