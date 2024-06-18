@@ -8,16 +8,17 @@ import { GeneralInfoTab } from './general-info-tab'
 import { Form, useForm } from '@/components/form'
 import i18next from 'i18next'
 import { z } from 'zod'
-import { TechnicalSpecificationTab } from './technical-specification'
+import { TechnicalSpecificationTab } from './technical-specification-tab'
 import { TabListBreadcrumbs } from '@/components/breadcrumbs'
-import { CommercialOffersTab } from './commercial-offers'
+import { CommercialOffersTab } from './commercial-offers-tab'
+import { ContractProjectTab } from './contract-project-tab'
 
 const purchaseSchema = z
     .object({
         step: z.number(),
-        technical_specification: z.string().optional(), // TODO Required
+        technical_specification: z.string().optional(),
         commercial_offer_text: z.string().optional(),
-        commercial_offers: z.array(z.number()).optional(), // MIN 3
+        commercial_offers: z.array(z.string()).optional(), // MIN 3
         purchase_name: z.string(),
         purchase_type_id: z.number(),
         initiator_uuid: z.string().optional(), // TODO required
@@ -40,9 +41,10 @@ const purchaseSchema = z
         manufacturer_guarantee: z.string().optional(),
         warranty_obligations_enforcement: z.string().optional(),
         additional_info: z.string().optional(),
+        document: z.instanceof(File).optional(),
     })
     .superRefine((values, ctx) => {
-        if (values.step === 0) {
+        if (values.step === 0 || values.step === 5) {
             if (!values.purchase_name) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -99,6 +101,32 @@ const purchaseSchema = z
                     message: i18next.t('error.number.format'),
                 })
             }
+        } else if (values.step === 1 || values.step === 5) {
+            if (!values.technical_specification) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['technical_specification'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+        } else if (values.step === 2 || values.step === 5) {
+            if (!values.commercial_offer_text) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['commercial_offer_text'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.commercial_offers || values.commercial_offers.length < 3) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['commercial_offers'],
+                    fatal: true,
+                    message: i18next.t('error.min.select', { min: 3 }),
+                })
+            }
         }
     })
 
@@ -151,7 +179,7 @@ export const InitiatePurchase = () => {
         {
             value: 'contract-project',
             label: i18next.t('contract-project'),
-            content: 'Проект контракта',
+            content: <ContractProjectTab form={form} />,
         },
         {
             value: 'done',
@@ -177,7 +205,7 @@ export const InitiatePurchase = () => {
                         }}
                         currentStep={currentStep}
                     />
-                    <div className="flex-center mt-16 gap-3">
+                    <div className="flex-center mt-16 select-none gap-3">
                         <Button className="h-12 w-[200px] gap-4" loading={false}>
                             <PlusCircleIcon />
                             {t('action.next')}
@@ -186,12 +214,25 @@ export const InitiatePurchase = () => {
                             className="h-12 w-[200px] bg-secondary"
                             variant="outline"
                             type="button"
+                            disabled={currentStep > 4}
                             onClick={() => {
                                 setCurrentTab(tabsData[currentStep + 1].value)
                                 form.setValue('step', currentStep + 1)
                             }}
                         >
                             {t('action.skip')}
+                        </Button>
+                        <Button
+                            className="h-12 w-[200px] bg-secondary"
+                            variant="outline"
+                            type="button"
+                            disabled={currentStep === 0}
+                            onClick={() => {
+                                setCurrentTab(tabsData[currentStep - 1].value)
+                                form.setValue('step', currentStep - 1)
+                            }}
+                        >
+                            {t('action.back')}
                         </Button>
                         <Button
                             className="h-12 w-[200px] bg-secondary text-destructive"
