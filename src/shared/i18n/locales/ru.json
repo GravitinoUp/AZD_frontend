@@ -98,5 +98,29 @@
       }
     }
   },
+  "address": "Адрес",
+  "mail.address": "Почтовый адрес",
+  "region": "Регион",
+  "additional.info": "Доп. информация",
+  "web.site": "Веб-сайт",
+  "all.organizations": "Все организации",
+  "add.organization": "Добавление организации",
+  "manage.organization": "Управление организацией",
+  "add.branch": "Добавление филиала",
+  "manage.branch": "Управление филиалом",
+  "organization.type": "Тип организации",
+  "organization": {
+    "title": "Организация",
+    "contact.person": "Контактное лицо",
+    "full.name": "Полное название",
+    "short.name": "Короткое название",
+    "register.number": "Рег. номер",
+    "bic": "БИК",
+    "ogrn": "ОГРН",
+    "inn": "ИНН",
+    "kpp": "КПП",
+    "okpo": "ОКПО",
+    "fax": "Факс"
+  },
   "clipboard-copy": "Скопировано в буфер обмена"
 }

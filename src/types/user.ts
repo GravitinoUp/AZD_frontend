@@ -38,6 +38,8 @@ export interface Person {
     legal_basis?: LegalBasis | null
 }
 
+export type PersonSort = Partial<Record<keyof Person, SortOptions>>
+
 export interface Role {
     role_id: number
     role_name: string

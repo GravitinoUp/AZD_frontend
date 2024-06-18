@@ -13,10 +13,25 @@ import { RoleManagePageLazy } from '@/pages/roles/manage'
 import { UsersPageLazy } from '@/pages/users'
 import { UserManagePageLazy } from '@/pages/users/manage'
 import { LimitTitleProvider } from '@/shared/context/limits-page-title.tsx'
-import { LIMITS, PLANS, ROLE_MANAGE, ROLES, USER_MANAGE, USERS } from '@/shared/router/routes.ts'
+import {
+    BRANCH_MANAGE,
+    BRANCHES,
+    LIMITS,
+    ORGANIZATION_MANAGE,
+    ORGANIZATIONS,
+    PLANS,
+    ROLE_MANAGE,
+    ROLES,
+    USER_MANAGE,
+    USERS,
+} from '@/shared/router/routes.ts'
 import { Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { PageTitleProvider } from '../context/plans-page-title'
+import { OrganizationsPageTitleProvider } from '../context/organizations-page-title'
+import { OrganizationsPageLazy } from '@/pages/organizations'
+import { AllOrganizations, Branches } from '@/modules/organizations'
+import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
 
 export const router = createBrowserRouter([
     {
@@ -103,6 +118,48 @@ export const router = createBrowserRouter([
                         element: <Limit />,
                     },
                 ],
+            },
+            {
+                path: ORGANIZATIONS,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <OrganizationsPageTitleProvider>
+                                <OrganizationsPageLazy />
+                            </OrganizationsPageTitleProvider>
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
+                children: [
+                    {
+                        path: '',
+                        element: <AllOrganizations />,
+                    },
+                    {
+                        path: BRANCHES,
+                        element: <Branches />,
+                    },
+                ],
+            },
+            {
+                path: ORGANIZATION_MANAGE,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <OrganizationManagePageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
+            },
+            {
+                path: BRANCH_MANAGE,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <BranchManagePageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
             },
         ],
     },
