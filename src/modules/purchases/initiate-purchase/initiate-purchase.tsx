@@ -13,12 +13,23 @@ import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 import { CommercialOffersTab } from './commercial-offers-tab'
 import { ContractProjectTab } from './contract-project-tab'
 
+const productSchema = z.object({
+    product_id: z.number(),
+    product_name: z.string(),
+    code: z.string(),
+    property_name: z.string(),
+    property_value: z.string(),
+    property_measurement: z.string(),
+    product_count: z.number(),
+})
+
 const purchaseSchema = z
     .object({
         step: z.number(),
         technical_specification: z.string().optional(),
         commercial_offer_text: z.string().optional(),
         commercial_offers: z.array(z.string()).optional(), // MIN 3
+        products: z.array(productSchema).optional(),
         purchase_name: z.string(),
         purchase_type_id: z.number(),
         initiator_uuid: z.string().optional(), // TODO required
@@ -150,6 +161,7 @@ export const InitiatePurchase = () => {
             manufacturer_guarantee: '',
             warranty_obligations_enforcement: '',
             additional_info: '',
+            products: [],
         },
     })
 

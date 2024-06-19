@@ -26,6 +26,7 @@ function replaceCellWithSkeleton<TData, TValue>(columns: ColumnDef<TData, TValue
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    setData?: (newData: TData[]) => void
     isLoading?: boolean
     withBackground?: boolean
     onRowClick?: (rowData: TData) => void
@@ -37,6 +38,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
     columns,
     data,
+    setData,
     isLoading,
     withBackground,
     onRowClick,
@@ -56,6 +58,23 @@ export function DataTable<TData, TValue>({
         columns: tableColumns,
         getCoreRowModel: getCoreRowModel(),
         manualPagination: true,
+        meta: {
+            updateData: (rowIndex: number, columnId: string, value: string) => {
+                if (typeof setData !== 'undefined') {
+                    setData(
+                        data.map((row, index) => {
+                            if (index === rowIndex) {
+                                return {
+                                    ...data[rowIndex],
+                                    [columnId]: value,
+                                }
+                            }
+                            return row
+                        })
+                    )
+                }
+            },
+        },
     })
 
     return (
