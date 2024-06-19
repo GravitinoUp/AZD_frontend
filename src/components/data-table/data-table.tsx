@@ -31,6 +31,7 @@ interface DataTableProps<TData, TValue> {
     onRowClick?: (rowData: TData) => void
     skeletonsCount?: number
     className?: string
+    paginationEnabled?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -41,6 +42,7 @@ export function DataTable<TData, TValue>({
     onRowClick,
     skeletonsCount = SKELETON_ITEMS_COUNT,
     className,
+    paginationEnabled = false,
 }: DataTableProps<TData, TValue>) {
     const tableData = useMemo(
         () => (isLoading ? Array(skeletonsCount).fill({}) : data),
@@ -133,7 +135,7 @@ export function DataTable<TData, TValue>({
                     <ScrollBar orientation="horizontal" className="text-red-400" />
                 </ScrollArea>
             </div>
-            <TablePagination />
+            {paginationEnabled && <TablePagination />}
         </>
     )
 }
