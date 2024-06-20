@@ -21,6 +21,7 @@ import {
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
     PLANS,
+    REGISTER,
     ROLE_MANAGE,
     ROLES,
     USER_MANAGE,
@@ -33,12 +34,17 @@ import { OrganizationsPageTitleProvider } from '../context/organizations-page-ti
 import { OrganizationsPageLazy } from '@/pages/organizations'
 import { AllOrganizations, Branches } from '@/modules/organizations'
 import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
-import { AuthPage } from '@/pages/auth/auth-page'
+import { AuthPage } from '@/pages/auth'
+import { RegisterPage } from '@/pages/register'
 
 export const router = createBrowserRouter([
     {
         path: AUTH,
         element: <AuthPage />,
+    },
+    {
+        path: REGISTER,
+        element: <RegisterPage />,
     },
     {
         path: '/',

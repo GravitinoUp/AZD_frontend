@@ -5,11 +5,12 @@ import { z } from 'zod'
 import { useAuth } from './api/use-auth'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FormField } from '@/ui/form'
 import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
 import { setCookieValue } from '@/shared/lib/set-cookie-value'
+import { REGISTER } from '@/shared/router/routes'
 
 const authSchema = z.object({
     email: z.string().email(i18next.t('error.email.format')),
@@ -53,7 +54,9 @@ export const AuthModule = () => {
 
     return (
         <div className="flex h-screen w-screen justify-end bg-black">
-            <div className="flex-center h-full w-full flex-col bg-white md:w-1/2">
+            <div className="flex-center h-full w-full flex-col bg-white md:w-2/3 lg:w-1/2">
+                <h1 className="text-xl font-bold">{t('app-name')}</h1>
+                <p className="mb-5 mt-10 text-center">{t('provide.description')}</p>
                 <Form className="w-3/4 max-w-[500px]" form={form} onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2">
                         <FormField
@@ -66,11 +69,16 @@ export const AuthModule = () => {
                             name="password"
                             render={({ field }) => <InputField label={t('password')} required {...field} />}
                         />
-                        <Button className="h-[50px]" loading={authPending}>
+                        <Button className="h-[50px] rounded-2xl shadow-xl" loading={authPending}>
                             {t('action.auth')}
                         </Button>
                     </div>
                 </Form>
+                <Link to={REGISTER} className="mt-10 rounded-md px-4 py-2 hover:bg-black/5">
+                    <p className="text-base font-normal">
+                        {t('no.account')} <span className="font-semibold">{t('action.register')}</span>
+                    </p>
+                </Link>
             </div>
         </div>
     )
