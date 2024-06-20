@@ -79,7 +79,9 @@
     "cancel": "Отменить",
     "edit": "Изменить",
     "delete": "Удалить",
-    "dropdown.menu.open": "Подробнее..."
+    "dropdown.menu.open": "Подробнее...",
+    "auth": "Войти",
+    "register": "Зарегистрироваться"
   },
   "toast": {
     "success": {

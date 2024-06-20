@@ -25,7 +25,9 @@ export const Layout = () => {
         const { accessToken, refreshToken } = getJWTtokens()
 
         if (refreshToken) {
-            fetchRefresh({ refresh_token: `${refreshToken}` })
+            if (!accessToken) {
+                fetchRefresh({ refresh_token: `${refreshToken}` })
+            }
         } else if (!accessToken) {
             navigate(AUTH, { replace: true })
         }
@@ -36,7 +38,7 @@ export const Layout = () => {
             setCookieValue('accessToken', newAccessToken, '43200')
 
             if (pathname === AUTH || pathname === REGISTER) {
-                navigate(DASHBOARD, { replace: true })
+                navigate('/', { replace: true })
             }
         }
     }, [refreshSuccess])
