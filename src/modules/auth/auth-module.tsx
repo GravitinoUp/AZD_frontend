@@ -3,7 +3,6 @@ import i18next from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 import { useAuth } from './api/use-auth'
-import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormField } from '@/ui/form'
@@ -11,6 +10,8 @@ import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
 import { setCookieValue } from '@/shared/lib/set-cookie-value'
 import { REGISTER } from '@/shared/router/routes'
+import { AxiosError } from 'axios'
+import { ErrorResponse } from '@/types/fetch'
 
 const authSchema = z.object({
     email: z.string().email(i18next.t('error.email.format')),
@@ -50,7 +51,14 @@ export const AuthModule = () => {
         }
     }, [authSuccess])
 
-    useErrorToast(authError)
+    useEffect(() => {
+        if (authError) {
+            const axiosError = authError as AxiosError
+            const errorResponse = axiosError.response?.data as ErrorResponse
+
+            form.setError('password', { message: errorResponse.message ? errorResponse.message : '' })
+        }
+    }, [authError])
 
     return (
         <div className="flex h-screen w-screen justify-end bg-black">

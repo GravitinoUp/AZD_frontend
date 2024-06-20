@@ -9,6 +9,8 @@ import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
 import { AUTH } from '@/shared/router/routes'
 import { useRegister } from './api/use-register'
+import { AxiosError } from 'axios'
+import { ErrorResponse } from '@/types/fetch'
 
 const registerSchema = z
     .object({
@@ -58,6 +60,15 @@ export const RegisterModule = () => {
             navigate(AUTH)
         }
     }, [registerSuccess])
+
+    useEffect(() => {
+        if (registerError) {
+            const axiosError = registerError as AxiosError
+            const errorResponse = axiosError.response?.data as ErrorResponse
+
+            form.setError('password', { message: errorResponse.message ? errorResponse.message : '' })
+        }
+    }, [registerError])
 
     return (
         <div className="flex h-screen w-screen justify-end bg-black">
