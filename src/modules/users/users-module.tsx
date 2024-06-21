@@ -1,14 +1,15 @@
-import { DataTable } from '@/components/data-table'
-import { userColumns } from './components/users-columns'
-import { useTranslation } from 'react-i18next'
-import { TableActions } from '@/components/table-actions'
-import { useGetAllUsers } from './api/use-get-all-users'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
-import { USERS, USER_MANAGE } from '@/shared/router/routes'
+import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
-import { Link } from 'react-router-dom'
+import { ErrorAlert } from '@/components/error-alert'
+import { TableActions } from '@/components/table-actions'
 import { placeholderQuery } from '@/shared/constants'
+import { USER_MANAGE, USERS } from '@/shared/router/routes'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { useGetAllUsers } from './api/use-get-all-users'
+import { userColumns } from './components/users-columns'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -22,7 +23,7 @@ export const UsersModule = () => {
     const { data: users = { count: 0, data: [] }, isLoading, isError } = useGetAllUsers(usersQuery)
 
     if (isError) {
-        return <p>{t('error.default')}</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (

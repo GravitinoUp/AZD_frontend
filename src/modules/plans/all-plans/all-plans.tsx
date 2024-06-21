@@ -1,5 +1,6 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
+import { ErrorAlert } from '@/components/error-alert'
 import { useAllPlans } from '@/modules/plans/all-plans/api/use-all-plans.ts'
 import { allPlansColumns } from '@/modules/plans/all-plans/components/all-plans.columns.ts'
 import { PageContentHeader } from '@/modules/plans/all-plans/components/page-content-header.tsx'
@@ -20,7 +21,7 @@ export const AllPlans = () => {
     }, [])
 
     if (isError) {
-        return <p>Произошлая ошибка. Данные не загрузились</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (

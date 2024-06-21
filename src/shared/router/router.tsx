@@ -2,7 +2,7 @@ import { ErrorAlert } from '@/components/error-alert'
 import { ErrorBoundary } from '@/components/error-boundary'
 import { Layout } from '@/components/layout'
 import { PageLoader, TablePageLoader } from '@/components/loaders'
-import { AllLimits, Limit } from '@/modules/limits'
+import { AllLimits, Limit, LimitAdd } from '@/modules/limits'
 import { AllPlans, Plan } from '@/modules/plans'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
             {
                 path: USERS,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<TablePageLoader />}>
                             <UsersPageLazy />
                         </Suspense>
@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
             {
                 path: USER_MANAGE,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <UserManagePageLazy />
                         </Suspense>
@@ -69,7 +69,7 @@ export const router = createBrowserRouter([
             {
                 path: ROLES,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<TablePageLoader />}>
                             <RolesPageLazy />
                         </Suspense>
@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
             {
                 path: ROLE_MANAGE,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <RoleManagePageLazy />
                         </Suspense>
@@ -106,7 +106,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: LIMITS_ADD,
-                element: <p>placeholder</p>,
+                element: <LimitAdd />,
             },
         ],
     },

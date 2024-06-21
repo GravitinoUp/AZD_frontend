@@ -1,5 +1,6 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
+import { ErrorAlert } from '@/components/error-alert'
 import { TableActions } from '@/components/table-actions'
 import { LimitSheet } from '@/modules/limits/limit-sheet/limit-sheet.tsx'
 import { useLimit } from '@/modules/limits/limit/api/use-limit.ts'
@@ -39,7 +40,7 @@ export const Limit = () => {
     }, [limit])
 
     if (isError) {
-        return <p>Произошла ошибка</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (

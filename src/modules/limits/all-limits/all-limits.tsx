@@ -1,5 +1,6 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
+import { ErrorAlert } from '@/components/error-alert'
 import { TableActions } from '@/components/table-actions'
 import { AllLimitsColumns } from '@/modules/limits/all-limits/all-limits.columns.ts'
 import { useAllLimits } from '@/modules/limits/all-limits/api/use-all-limits.ts'
@@ -23,9 +24,9 @@ export const AllLimits = () => {
     useEffect(() => {
         setPageTitle(t('all-limits'))
     }, [])
-    
+
     if (isError) {
-        return <p>Произошлая ошибка. Данные не загрузились</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (
