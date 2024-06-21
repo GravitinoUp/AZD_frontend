@@ -13,10 +13,10 @@ import { RoleManagePageLazy } from '@/pages/roles/manage'
 import { UsersPageLazy } from '@/pages/users'
 import { UserManagePageLazy } from '@/pages/users/manage'
 import { LimitTitleProvider } from '@/shared/context/limits-page-title.tsx'
-import { LIMITS, PLANS, ROLE_MANAGE, ROLES, USER_MANAGE, USERS } from '@/shared/router/routes.ts'
+import { PlansTitleProvider } from '@/shared/context/plans-page-title.tsx'
+import { LIMITS, LIMITS_ADD, PLANS, ROLE_MANAGE, ROLES, USER_MANAGE, USERS } from '@/shared/router/routes.ts'
 import { Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import { PageTitleProvider } from '../context/plans-page-title'
 
 export const router = createBrowserRouter([
     {
@@ -31,9 +31,9 @@ export const router = createBrowserRouter([
             {
                 path: PLANS,
                 element: (
-                    <PageTitleProvider>
+                    <PlansTitleProvider>
                         <PlansPage />
-                    </PageTitleProvider>
+                    </PlansTitleProvider>
                 ),
                 children: [
                     {
@@ -103,6 +103,10 @@ export const router = createBrowserRouter([
                         element: <Limit />,
                     },
                 ],
+            },
+            {
+                path: LIMITS_ADD,
+                element: <p>placeholder</p>,
             },
         ],
     },

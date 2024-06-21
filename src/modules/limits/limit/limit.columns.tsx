@@ -34,28 +34,28 @@ export const getLimitColumns = (currentYear?: number): ColumnDef<Limit>[] => [
         columns: [
             {
                 header: 'Раздел',
-                accessorKey: 'kbk_section.kbk_type',
+                accessorKey: 'kbk.kbk_section.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },
             },
             {
                 header: 'Подраздел',
-                accessorKey: 'kbk_subsection.kbk_type',
+                accessorKey: 'kbk.kbk_subsection.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },
             },
             {
                 header: 'Целевая статья',
-                accessorKey: 'kbk_target_article.kbk_type',
+                accessorKey: 'kbk.kbk_target_article.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },
             },
             {
                 header: 'Вид расходов',
-                accessorKey: 'kbk_expenses_type.kbk_expenses_type',
+                accessorKey: 'kbk.kbk_expenses_type.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },

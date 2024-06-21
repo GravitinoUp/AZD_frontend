@@ -17,7 +17,7 @@ export const AllLimitsColumns: ColumnDef<Limit>[] = [
     },
     {
         accessorKey: 'branch.branch_name',
-        header: 'Общая',
+        header: 'Филиал',
     },
     {
         accessorKey: 'limit_status.limit_status_name',
