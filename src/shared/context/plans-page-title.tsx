@@ -15,7 +15,7 @@ interface PageTitleProviderProps {
     children: ReactNode
 }
 
-export const PageTitleProvider = ({ children }: PageTitleProviderProps) => {
+export const PlansTitleProvider = ({ children }: PageTitleProviderProps) => {
     const { t } = useTranslation()
     const [pageTitle, setPageTitle] = useState(t('plans'))
     const contextValues = useMemo(

@@ -1,3 +1,4 @@
+import { ErrorAlert } from '@/components/error-alert'
 import { SheetInput } from '@/components/sheet-input'
 import { useLimit } from '@/modules/limits/limit/api/use-limit.ts'
 import { getCurrentYear } from '@/shared/lib/get-current-year.ts'
@@ -17,7 +18,7 @@ export const LimitInfoTab = () => {
     }, [limit])
 
     if (isError) {
-        return <p>возникла ошибка</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return isSuccess ? (

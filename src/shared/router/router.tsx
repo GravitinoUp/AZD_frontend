@@ -25,9 +25,9 @@ import {
     USER_MANAGE,
     USERS,
 } from '@/shared/router/routes.ts'
+import { PlansTitleProvider } from '@/shared/context/plans-page-title.tsx'
 import { Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
-import { PageTitleProvider } from '../context/plans-page-title'
 import { OrganizationsPageTitleProvider } from '../context/organizations-page-title'
 import { OrganizationsPageLazy } from '@/pages/organizations'
 import { AllOrganizations, Branches } from '@/modules/organizations'
@@ -46,9 +46,9 @@ export const router = createBrowserRouter([
             {
                 path: PLANS,
                 element: (
-                    <PageTitleProvider>
+                    <PlansTitleProvider>
                         <PlansPage />
-                    </PageTitleProvider>
+                    </PlansTitleProvider>
                 ),
                 children: [
                     {
@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
             {
                 path: USERS,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<TablePageLoader />}>
                             <UsersPageLazy />
                         </Suspense>
@@ -74,7 +74,7 @@ export const router = createBrowserRouter([
             {
                 path: USER_MANAGE,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <UserManagePageLazy />
                         </Suspense>
@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
             {
                 path: ROLES,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<TablePageLoader />}>
                             <RolesPageLazy />
                         </Suspense>
@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
             {
                 path: ROLE_MANAGE,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <RoleManagePageLazy />
                         </Suspense>
@@ -122,7 +122,7 @@ export const router = createBrowserRouter([
             {
                 path: ORGANIZATIONS,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <OrganizationsPageTitleProvider>
                                 <OrganizationsPageLazy />
@@ -144,7 +144,7 @@ export const router = createBrowserRouter([
             {
                 path: ORGANIZATION_MANAGE,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <OrganizationManagePageLazy />
                         </Suspense>
@@ -154,7 +154,7 @@ export const router = createBrowserRouter([
             {
                 path: BRANCH_MANAGE,
                 element: (
-                    <ErrorBoundary fallback={<ErrorAlert />}>
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <BranchManagePageLazy />
                         </Suspense>

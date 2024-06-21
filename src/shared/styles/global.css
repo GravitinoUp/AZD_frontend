@@ -96,6 +96,12 @@ ul li::marker {
     }
 }
 
+.nav-link-svg {
+    svg {
+        fill: white;
+    }
+}
+
 .flex-center {
     @apply flex items-center justify-center;
 }
