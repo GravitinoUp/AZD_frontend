@@ -57,6 +57,21 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                 />
                 <FormField
                     control={form.control}
+                    name="currency_code"
+                    render={({ field }) => <InputField label={t('currency-code')} required {...field} />}
+                />
+                <FormField
+                    control={form.control}
+                    name="quality_guarantee_period"
+                    render={({ field }) => <InputField label={t('quality-guarantee-period')} required {...field} />}
+                />
+                <FormField
+                    control={form.control}
+                    name="end_date"
+                    render={({ field }) => <InputField label={t('end-date')} required {...field} />}
+                />
+                <FormField
+                    control={form.control}
                     name="application_enforcement"
                     render={({ field }) => <InputField label={t('application-enforcement')} {...field} />}
                 />

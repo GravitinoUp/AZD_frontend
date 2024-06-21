@@ -12,6 +12,7 @@ import { TechnicalSpecificationTab } from './technical-specification-tab'
 import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 import { CommercialOffersTab } from './commercial-offers-tab'
 import { ContractProjectTab } from './contract-project-tab'
+import { NMCKTab } from './nmck-tab'
 
 const productSchema = z.object({
     product_id: z.number(),
@@ -23,34 +24,35 @@ const productSchema = z.object({
     product_count: z.number(),
 })
 
+const commercialOfferSchema = z.object({ organization_uuid: z.string(), short_name: z.string(), price: z.string() })
+
 const purchaseSchema = z
     .object({
         step: z.number(),
-        technical_specification: z.string().optional(),
-        commercial_offer_text: z.string().optional(),
-        commercial_offers: z.array(z.string()).optional(), // MIN 3
-        products: z.array(productSchema).optional(),
-        purchase_name: z.string(),
-        purchase_type_id: z.number(),
-        initiator_uuid: z.string().optional(), // TODO required
+        purchase_name: z.string().optional(), // required step 1
+        purchase_type_id: z.number().optional(), // required step 1
+        delivery_address: z.string().optional(), // required step 1
+        quality_guarantee_period: z.string().optional(), // required step 1
+        currency_code: z.string().optional(), // required step 1
+        end_date: z.string().optional(), // required step 1
+        is_organization_fund: z.boolean().optional(), // TODO required step 1
+        is_unilateral_refusal: z.boolean().optional(), // TODO required step 1
+        application_enforcement: z.string().optional(), // optional step 1
+        contract_enforcement: z.string().optional(), // optional step 1
+        warranty_obligations_enforcement: z.string().optional(), // optional step 1
+        technical_specification: z.string().optional(), // required step 2
+        products: z.array(productSchema).optional(), // required step 2
+        commercial_offer_text: z.string().optional(), // required step 3
+        commercial_offers: z.array(commercialOfferSchema), // required step 3 4 (MIN 3)
         executor_uuid: z.string().optional(),
         purchase_identification_code: z.string().optional(),
         contract_identification_code: z.string().optional(),
         start_date: z.string().optional(),
         end_application_date: z.string().optional(),
         executor_date: z.string().optional(),
-        end_date: z.string().optional(), // TODO required
         start_max_price: z.number().optional(),
         end_price: z.number().optional(),
-        currency_code: z.string().optional(), // TODO required
-        delivery_address: z.string(),
-        is_organization_fund: z.boolean().optional(), // TODO required
-        application_enforcement: z.string().optional(),
-        is_unilateral_refusal: z.boolean().optional(), // TODO required
-        contract_enforcement: z.string().optional(),
-        quality_guarantee_period: z.string(),
         manufacturer_guarantee: z.string().optional(),
-        warranty_obligations_enforcement: z.string().optional(),
         additional_info: z.string().optional(),
         document: z.instanceof(File).optional(),
     })
@@ -92,6 +94,22 @@ const purchaseSchema = z
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     path: ['quality_guarantee_period'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.currency_code) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['currency_code'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.end_date) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['end_date'],
                     fatal: true,
                     message: i18next.t('error.required'),
                 })
@@ -138,6 +156,23 @@ const purchaseSchema = z
                     message: i18next.t('error.min.select', { min: 3 }),
                 })
             }
+        } else if (values.step === 3 || values.step === 5) {
+            for (const value in values.commercial_offers) {
+                if (Object.prototype.hasOwnProperty.call(values.commercial_offers, value)) {
+                    const element = values.commercial_offers[value]
+
+                    if (!element.price && !Number(element.price)) {
+                        console.log(element.price)
+
+                        ctx.addIssue({
+                            code: z.ZodIssueCode.custom,
+                            path: ['commercial_offers'],
+                            fatal: true,
+                            message: i18next.t('error.number.format'),
+                        })
+                    }
+                }
+            }
         }
     })
 
@@ -162,6 +197,7 @@ export const InitiatePurchase = () => {
             warranty_obligations_enforcement: '',
             additional_info: '',
             products: [],
+            commercial_offers: [],
         },
     })
 
@@ -186,7 +222,7 @@ export const InitiatePurchase = () => {
         {
             value: 'nmck',
             label: i18next.t('nmck'),
-            content: 'Расчет НМЦК',
+            content: <NMCKTab form={form} />,
         },
         {
             value: 'contract-project',
@@ -201,7 +237,10 @@ export const InitiatePurchase = () => {
     ]
 
     const handleSubmit = () => {
-        // TODO
+        if (currentStep !== 5) {
+            setCurrentTab(tabsData[currentStep + 1].value)
+            form.setValue('step', currentStep + 1)
+        }
     }
 
     return (

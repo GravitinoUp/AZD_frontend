@@ -1,7 +1,7 @@
 import { UseFormReturn } from 'react-hook-form'
 import { PurchaseSchema } from './initiate-purchase'
 import { RichTextEditor } from '@/components/rich-text-editor'
-import { FormField, FormItem } from '@/ui/form'
+import { FormField, FormItem, FormMessage } from '@/ui/form'
 import { useRef } from 'react'
 import { DataTable } from '@/components/data-table'
 import { productColumns } from './components/product-columns'
@@ -18,32 +18,35 @@ export const TechnicalSpecificationTab = ({ form }: { form: UseFormReturn<Purcha
                     control={form.control}
                     name="technical_specification"
                     render={() => (
-                        <RichTextEditor
-                            onInit={(_evt: unknown, editor: unknown) => (editorRef.current = editor)}
-                            init={{
-                                width: '100%',
-                                height: 500,
-                                menubar: false,
-                                plugins: [
-                                    'advlist',
-                                    'anchor',
-                                    'autolink',
-                                    'help',
-                                    'image',
-                                    'link',
-                                    'lists',
-                                    'searchreplace',
-                                    'table',
-                                    'wordcount',
-                                ],
-                                toolbar:
-                                    'undo redo | blocks | ' +
-                                    'bold italic forecolor | alignleft aligncenter ' +
-                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                    'removeformat | help',
-                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                            }}
-                        />
+                        <FormItem className="flex w-full flex-col items-start">
+                            <RichTextEditor
+                                onInit={(_evt: unknown, editor: unknown) => (editorRef.current = editor)}
+                                init={{
+                                    width: '100%',
+                                    height: 500,
+                                    menubar: false,
+                                    plugins: [
+                                        'advlist',
+                                        'anchor',
+                                        'autolink',
+                                        'help',
+                                        'image',
+                                        'link',
+                                        'lists',
+                                        'searchreplace',
+                                        'table',
+                                        'wordcount',
+                                    ],
+                                    toolbar:
+                                        'undo redo | blocks | ' +
+                                        'bold italic forecolor | alignleft aligncenter ' +
+                                        'alignright alignjustify | bullist numlist outdent indent | ' +
+                                        'removeformat | help',
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                                }}
+                            />
+                            <FormMessage />
+                        </FormItem>
                     )}
                 />
                 <FormField
@@ -77,6 +80,7 @@ export const TechnicalSpecificationTab = ({ form }: { form: UseFormReturn<Purcha
                                     <Plus />
                                 </Button>
                             </div>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />

@@ -41,8 +41,21 @@ export const CommercialOffersTab = ({ form }: { form: UseFormReturn<PurchaseSche
                             {isError && <ErrorAlert />}
                             {isSuccess && !isFetching && (
                                 <CommandMultiSelect
-                                    selectedValues={field.value ? field.value : []}
-                                    setSelectedValues={field.onChange}
+                                    selectedValues={
+                                        field.value ? field.value.map((value) => value.organization_uuid) : []
+                                    }
+                                    setSelectedValues={(newValues) => {
+                                        field.onChange(
+                                            newValues.map((value) => ({
+                                                organization_uuid: value,
+                                                short_name: formattedOrganizations.find((o) => o.value === value)
+                                                    ?.label,
+                                                price: '0',
+                                            }))
+                                        )
+
+                                        console.log(field.value)
+                                    }}
                                     items={formattedOrganizations}
                                 />
                             )}
