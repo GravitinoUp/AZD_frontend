@@ -8,19 +8,23 @@ import { GeneralInfoTab } from './general-info-tab'
 import { Form, useForm } from '@/components/form'
 import i18next from 'i18next'
 import { z } from 'zod'
-import { TechnicalSpecificationTab } from './technical-specification-tab'
+import { TechnicalSpecificationTab } from './technical-specification/technical-specification-tab'
 import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 import { CommercialOffersTab } from './commercial-offers-tab'
 import { ContractProjectTab } from './contract-project-tab'
 import { NMCKTab } from './nmck-tab'
 
+const propertySchema = z.object({
+    property_name: z.string(),
+    property_value: z.string(),
+    property_measurement: z.string(),
+})
+
 const productSchema = z.object({
     product_id: z.number(),
     product_name: z.string(),
     code: z.string(),
-    property_name: z.string(),
-    property_value: z.string(),
-    property_measurement: z.string(),
+    properties: z.array(propertySchema),
     product_count: z.number(),
 })
 
