@@ -129,5 +129,6 @@
   "clipboard-copy": "Скопировано в буфер обмена",
   "provide.description": "Внимательно заполните все поля ниже",
   "has.account": "Уже есть аккаунт?",
-  "no.account": "У вас ещё нет аккаунта?"
+  "no.account": "У вас ещё нет аккаунта?",
+  "watermark": "© 2024 Сделано в Гравитино. All Rights Reserved."
 }

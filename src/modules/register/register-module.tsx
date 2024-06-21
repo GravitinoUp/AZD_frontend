@@ -11,6 +11,8 @@ import { AUTH } from '@/shared/router/routes'
 import { useRegister } from './api/use-register'
 import { AxiosError } from 'axios'
 import { ErrorResponse } from '@/types/fetch'
+import { AppLogo } from '@/components/app-logo'
+import { Watermark } from '@/components/watermark'
 
 const registerSchema = z
     .object({
@@ -73,7 +75,8 @@ export const RegisterModule = () => {
     return (
         <div className="flex h-screen w-screen justify-end bg-black">
             <div className="flex-center h-full w-full flex-col bg-white md:w-2/3 lg:w-1/2">
-                <h1 className="text-xl font-bold">{t('app-name')}</h1>
+                <div className="flex-grow" />
+                <AppLogo variant="dark" expanded />
                 <p className="mb-5 mt-10 text-center">{t('provide.description')}</p>
                 <Form className="w-3/4 max-w-[500px]" form={form} onSubmit={handleSubmit}>
                     <div className="flex flex-wrap gap-2">
@@ -81,14 +84,26 @@ export const RegisterModule = () => {
                             control={form.control}
                             name="last_name"
                             render={({ field }) => (
-                                <InputField label={t('last.name')} placeholder={t('last.name')} required {...field} />
+                                <InputField
+                                    label={t('last.name')}
+                                    placeholder={t('last.name')}
+                                    inputClassName="rounded-2xl"
+                                    required
+                                    {...field}
+                                />
                             )}
                         />
                         <FormField
                             control={form.control}
                             name="first_name"
                             render={({ field }) => (
-                                <InputField label={t('first.name')} placeholder={t('first.name')} required {...field} />
+                                <InputField
+                                    label={t('first.name')}
+                                    placeholder={t('first.name')}
+                                    inputClassName="rounded-2xl"
+                                    required
+                                    {...field}
+                                />
                             )}
                         />
                         <FormField
@@ -99,6 +114,7 @@ export const RegisterModule = () => {
                                     className="w-full flex-none"
                                     label={t('patronymic')}
                                     placeholder={t('patronymic')}
+                                    inputClassName="rounded-2xl"
                                     {...field}
                                 />
                             )}
@@ -111,6 +127,7 @@ export const RegisterModule = () => {
                                     className="w-full flex-none"
                                     label={t('post')}
                                     placeholder={t('post')}
+                                    inputClassName="rounded-2xl"
                                     required
                                     {...field}
                                 />
@@ -124,6 +141,7 @@ export const RegisterModule = () => {
                                     className="w-full flex-none"
                                     label={t('phone')}
                                     placeholder={t('phone')}
+                                    inputClassName="rounded-2xl"
                                     {...field}
                                 />
                             )}
@@ -136,6 +154,7 @@ export const RegisterModule = () => {
                                     className="w-full flex-none"
                                     label="Email"
                                     placeholder="Email"
+                                    inputClassName="rounded-2xl"
                                     required
                                     {...field}
                                 />
@@ -145,7 +164,13 @@ export const RegisterModule = () => {
                             control={form.control}
                             name="password"
                             render={({ field }) => (
-                                <InputField label={t('password')} placeholder={t('password')} required {...field} />
+                                <InputField
+                                    label={t('password')}
+                                    placeholder={t('password')}
+                                    inputClassName="rounded-2xl"
+                                    required
+                                    {...field}
+                                />
                             )}
                         />
                         <FormField
@@ -155,6 +180,7 @@ export const RegisterModule = () => {
                                 <InputField
                                     label={t('repeat-password')}
                                     placeholder={t('repeat-password')}
+                                    inputClassName="rounded-2xl"
                                     required
                                     {...field}
                                 />
@@ -170,6 +196,8 @@ export const RegisterModule = () => {
                         {t('has.account')} <span className="font-semibold">{t('action.auth')}</span>
                     </p>
                 </Link>
+                <div className="flex-grow" />
+                <Watermark />
             </div>
         </div>
     )

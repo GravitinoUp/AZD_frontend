@@ -12,6 +12,8 @@ import { setCookieValue } from '@/shared/lib/set-cookie-value'
 import { REGISTER } from '@/shared/router/routes'
 import { AxiosError } from 'axios'
 import { ErrorResponse } from '@/types/fetch'
+import { AppLogo } from '@/components/app-logo'
+import { Watermark } from '@/components/watermark'
 
 const authSchema = z.object({
     email: z.string().email(i18next.t('error.email.format')),
@@ -63,19 +65,24 @@ export const AuthModule = () => {
     return (
         <div className="flex h-screen w-screen justify-end bg-black">
             <div className="flex-center h-full w-full flex-col bg-white md:w-2/3 lg:w-1/2">
-                <h1 className="text-xl font-bold">{t('app-name')}</h1>
+                <div className="flex-grow" />
+                <AppLogo variant="dark" expanded />
                 <p className="mb-5 mt-10 text-center">{t('provide.description')}</p>
                 <Form className="w-3/4 max-w-[500px]" form={form} onSubmit={handleSubmit}>
                     <div className="flex flex-col gap-2">
                         <FormField
                             control={form.control}
                             name="email"
-                            render={({ field }) => <InputField label="Email" required {...field} />}
+                            render={({ field }) => (
+                                <InputField label="Email" inputClassName="rounded-2xl" required {...field} />
+                            )}
                         />
                         <FormField
                             control={form.control}
                             name="password"
-                            render={({ field }) => <InputField label={t('password')} required {...field} />}
+                            render={({ field }) => (
+                                <InputField label={t('password')} inputClassName="rounded-2xl" required {...field} />
+                            )}
                         />
                         <Button className="h-[50px] rounded-2xl shadow-xl" loading={authPending}>
                             {t('action.auth')}
@@ -87,6 +94,8 @@ export const AuthModule = () => {
                         {t('no.account')} <span className="font-semibold">{t('action.register')}</span>
                     </p>
                 </Link>
+                <div className="flex-grow" />
+                <Watermark />
             </div>
         </div>
     )
