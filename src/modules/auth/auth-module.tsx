@@ -15,6 +15,7 @@ import { ErrorResponse } from '@/types/fetch'
 import { AppLogo } from '@/components/app-logo'
 import { Watermark } from '@/components/watermark'
 import { LOGIN_IMAGES } from '@/shared/constants'
+import { Eye, EyeOff } from 'lucide-react'
 
 const authSchema = z.object({
     email: z.string().email(i18next.t('error.email.format')),
@@ -25,10 +26,8 @@ export const AuthModule = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 
+    const [passwordShown, setPasswordShown] = useState(false)
     const [bgImage, setBgImage] = useState('')
-    useEffect(() => {
-        setBgImage(LOGIN_IMAGES[Math.floor(1 + Math.random() * 9)])
-    }, [])
 
     const form = useForm({
         schema: authSchema,
@@ -68,6 +67,10 @@ export const AuthModule = () => {
         }
     }, [authError])
 
+    useEffect(() => {
+        setBgImage(LOGIN_IMAGES[Math.floor(1 + Math.random() * 9)])
+    }, [])
+
     return (
         <>
             <div className="absolute h-full w-1/2 overflow-hidden">
@@ -97,8 +100,23 @@ export const AuthModule = () => {
                                 render={({ field }) => (
                                     <InputField
                                         label={t('password')}
+                                        type={passwordShown ? 'text' : 'password'}
                                         inputClassName="rounded-2xl"
                                         required
+                                        suffixIcon={
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                className="h-12 rounded-l-none rounded-r-xl px-4"
+                                                onClick={() => setPasswordShown(!passwordShown)}
+                                            >
+                                                {passwordShown ? (
+                                                    <Eye size={20} strokeWidth={2.4} color="#3F434A" />
+                                                ) : (
+                                                    <EyeOff size={20} strokeWidth={2.4} color="#3F434A" />
+                                                )}
+                                            </Button>
+                                        }
                                         {...field}
                                     />
                                 )}
