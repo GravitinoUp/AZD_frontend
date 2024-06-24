@@ -21,6 +21,9 @@ import {
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
     PLANS,
+    PURCHASE_PRODUCTS_AND_SERVICES,
+    PURCHASE_REFERENCES,
+    PURCHASES,
     ROLE_MANAGE,
     ROLES,
     USER_MANAGE,
@@ -33,7 +36,8 @@ import { OrganizationsPageTitleProvider } from '../context/organizations-page-ti
 import { OrganizationsPageLazy } from '@/pages/organizations'
 import { AllOrganizations, Branches } from '@/modules/organizations'
 import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
-import { InitiatePurchasePage } from '@/pages/purchase'
+import { InitiatePurchasePage, PurchasesPage } from '@/pages/purchase'
+import { AllPurchases } from '@/modules/purchases'
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +64,24 @@ export const router = createBrowserRouter([
                     {
                         path: ':id',
                         element: <Plan />,
+                    },
+                ],
+            },
+            {
+                path: PURCHASES,
+                element: <PurchasesPage />,
+                children: [
+                    {
+                        path: '',
+                        element: <AllPurchases />,
+                    },
+                    {
+                        path: PURCHASE_REFERENCES,
+                        element: <div />,
+                    },
+                    {
+                        path: PURCHASE_PRODUCTS_AND_SERVICES,
+                        element: <div />,
                     },
                 ],
             },

@@ -11,9 +11,11 @@ import {
     ROLES,
     USERS,
     INITIATE_PURCHASE,
-    PURCHASE,
     ORGANIZATIONS,
     BRANCHES,
+    PURCHASES,
+    PURCHASE_REFERENCES,
+    PURCHASE_PRODUCTS_AND_SERVICES,
 } from '@/shared/router/routes.ts'
 
 interface SubLink {
@@ -86,8 +88,8 @@ const Fz44Links: NavLink[] = [
     {
         id: crypto.randomUUID(),
         link: {
-            title: i18next.t('purchase'),
-            href: PURCHASE,
+            title: i18next.t('all-purchase'),
+            href: PURCHASES,
             subLinks: [
                 {
                     id: crypto.randomUUID(),
@@ -97,8 +99,13 @@ const Fz44Links: NavLink[] = [
                 },
                 {
                     id: crypto.randomUUID(),
-                    title: i18next.t('all-purchase'),
-                    href: '/',
+                    title: i18next.t('handbook'),
+                    href: PURCHASE_REFERENCES,
+                },
+                {
+                    id: crypto.randomUUID(),
+                    title: i18next.t('goods-and-services'),
+                    href: PURCHASE_PRODUCTS_AND_SERVICES,
                 },
                 {
                     id: crypto.randomUUID(),

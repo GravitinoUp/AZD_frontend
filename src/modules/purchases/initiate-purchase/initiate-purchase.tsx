@@ -1,6 +1,6 @@
 import { Button } from '@/ui/button'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { Tabs, TabsContent } from '@/ui/tabs'
 import { useEffect, useState } from 'react'
@@ -15,6 +15,9 @@ import { ContractProjectTab } from './contract-project-tab'
 import { NMCKTab } from './nmck-tab'
 import { useInitiatePurchase } from './api/use-initiate-purchase'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
+import { Purchase } from '@/types/purchase'
+import { formatShortDate } from '@/shared/lib/format-short-date'
+import { useUpdatePurchase } from './api/use-update-purchase'
 
 const propertySchema = z.object({
     property_name: z.string(),
@@ -144,27 +147,59 @@ export type PurchaseSchema = z.infer<typeof purchaseSchema>
 
 export const InitiatePurchase = () => {
     const { t } = useTranslation()
+    const location = useLocation()
     const navigate = useNavigate()
+
+    const purchase: Purchase | undefined = location.state?.purchase
 
     const [currentTab, setCurrentTab] = useState('general-info')
 
     const form = useForm({
         schema: purchaseSchema,
-        defaultValues: {
-            step: 0,
-            purchase_name: '',
-            purchase_type_id: 0,
-            delivery_address: '',
-            contract_enforcement: '',
-            quality_guarantee_period: '',
-            manufacturer_guarantee: '',
-            warranty_obligations_enforcement: '',
-            additional_info: '',
-            currency_code: '',
-            end_date: '',
-            products: [],
-            commercial_offers: [],
-        },
+        defaultValues: purchase
+            ? {
+                  step: 0,
+                  ...purchase,
+                  quality_guarantee_period: String(purchase.quality_guarantee_period),
+                  manufacturer_guarantee: purchase.manufacturer_guarantee
+                      ? String(purchase.manufacturer_guarantee)
+                      : '',
+                  application_enforcement: purchase.application_enforcement
+                      ? String(purchase.application_enforcement)
+                      : '',
+                  contract_enforcement: purchase.contract_enforcement ? String(purchase.contract_enforcement) : '',
+                  warranty_obligations_enforcement: purchase.warranty_obligations_enforcement
+                      ? purchase.warranty_obligations_enforcement
+                      : '',
+                  start_date: purchase.start_date ? formatShortDate(purchase.end_date) : '',
+                  end_date: formatShortDate(purchase.end_date),
+                  purchase_identification_code: purchase.purchase_identification_code
+                      ? purchase.purchase_identification_code
+                      : '',
+                  contract_identification_code: purchase.contract_identification_code
+                      ? purchase.contract_identification_code
+                      : '',
+                  additional_info: purchase.additional_info ? purchase.additional_info : '',
+                  end_application_date: purchase.end_application_date ? purchase.end_application_date : '',
+                  executor_date: purchase.executor_date ? purchase.executor_date : '',
+                  start_max_price: purchase.start_max_price ? purchase.start_max_price : 0,
+                  end_price: purchase.end_price ? purchase.end_price : 0,
+              }
+            : {
+                  step: 0,
+                  purchase_name: '',
+                  purchase_type_id: 0,
+                  delivery_address: '',
+                  contract_enforcement: '',
+                  quality_guarantee_period: '',
+                  manufacturer_guarantee: '',
+                  warranty_obligations_enforcement: '',
+                  additional_info: '',
+                  currency_code: '',
+                  end_date: '',
+                  products: [],
+                  commercial_offers: [],
+              },
     })
 
     const currentStep = form.watch('step')
@@ -210,47 +245,86 @@ export const InitiatePurchase = () => {
         isSuccess: purchaseInitiateSuccess,
     } = useInitiatePurchase()
 
+    const {
+        mutate: updatePurchase,
+        isPending: purchaseUpdating,
+        error: purchaseUpdateError,
+        isSuccess: purchaseUpdateSuccess,
+    } = useUpdatePurchase()
+
     const handleSubmit = (data: z.infer<typeof purchaseSchema>) => {
-        if (currentStep === 0) {
-            initiatePurchase({
-                executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
-                purchase_name: data.purchase_name,
-                purchase_type_id: data.purchase_type_id,
-                delivery_address: data.delivery_address,
-                quality_guarantee_period: Number(data.quality_guarantee_period),
-                manufacturer_guarantee: data.manufacturer_guarantee ? Number(data.manufacturer_guarantee) : undefined,
-                currency_code: data.currency_code,
-                end_date: data.end_date,
-                is_organization_fund: data.is_organization_fund,
-                is_unilateral_refusal: data.is_unilateral_refusal,
-                application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
-                contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
-                warranty_obligations_enforcement: data.warranty_obligations_enforcement
-                    ? data.warranty_obligations_enforcement
-                    : undefined,
-            })
-            // TODO create purchase
-        } else if (currentStep === 1) {
-            // TODO add technical specification and products
-        } else if (currentStep === 2) {
-            // TODO add organizations
-        } else if (currentStep === 3) {
-            // TODO calculate NMCK
-        } else if (currentStep !== 5) {
-            setCurrentTab(tabsData[currentStep + 1].value)
-            form.setValue('step', currentStep + 1)
+        if (!purchase) {
+            // CREATE
+            if (currentStep === 0) {
+                initiatePurchase({
+                    executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
+                    purchase_name: data.purchase_name,
+                    purchase_type_id: data.purchase_type_id,
+                    delivery_address: data.delivery_address,
+                    quality_guarantee_period: Number(data.quality_guarantee_period),
+                    manufacturer_guarantee: data.manufacturer_guarantee
+                        ? Number(data.manufacturer_guarantee)
+                        : undefined,
+                    currency_code: data.currency_code,
+                    end_date: data.end_date,
+                    is_organization_fund: data.is_organization_fund,
+                    is_unilateral_refusal: data.is_unilateral_refusal,
+                    application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
+                    contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
+                    warranty_obligations_enforcement: data.warranty_obligations_enforcement
+                        ? data.warranty_obligations_enforcement
+                        : undefined,
+                })
+                // TODO create purchase
+            } else if (currentStep === 1) {
+                // TODO add technical specification and products
+            } else if (currentStep === 2) {
+                // TODO add organizations
+            } else if (currentStep === 3) {
+                // TODO calculate NMCK
+            } else if (currentStep !== 5) {
+                setCurrentTab(tabsData[currentStep + 1].value)
+                form.setValue('step', currentStep + 1)
+            }
+        } else {
+            // UPDATE
+            if (currentStep === 0) {
+                updatePurchase({
+                    executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
+                    purchase_uuid: data.purchase_uuid,
+                    purchase_name: data.purchase_name,
+                    purchase_type_id: data.purchase_type_id,
+                    delivery_address: data.delivery_address,
+                    quality_guarantee_period: Number(data.quality_guarantee_period),
+                    manufacturer_guarantee: data.manufacturer_guarantee
+                        ? Number(data.manufacturer_guarantee)
+                        : undefined,
+                    currency_code: data.currency_code,
+                    end_date: data.end_date,
+                    is_organization_fund: data.is_organization_fund,
+                    is_unilateral_refusal: data.is_unilateral_refusal,
+                    application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
+                    contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
+                    warranty_obligations_enforcement: data.warranty_obligations_enforcement
+                        ? data.warranty_obligations_enforcement
+                        : undefined,
+                })
+            }
         }
     }
 
     useEffect(() => {
-        if (purchaseInitiateSuccess) {
+        if (purchaseInitiateSuccess || purchaseUpdateSuccess) {
             setCurrentTab(tabsData[currentStep + 1].value)
-            form.setValue('purchase_uuid', createdPurchase.data?.purchase_uuid)
             form.setValue('step', currentStep + 1)
-        }
-    }, [purchaseInitiateSuccess])
 
-    useErrorToast(purchaseInitiateError)
+            if (purchaseInitiateSuccess) {
+                form.setValue('purchase_uuid', createdPurchase.data?.purchase_uuid)
+            }
+        }
+    }, [purchaseInitiateSuccess, purchaseUpdateSuccess])
+
+    useErrorToast(purchaseInitiateError || purchaseUpdateError)
 
     return (
         <div className="mx-auto w-[95%]">
@@ -266,7 +340,7 @@ export const InitiatePurchase = () => {
                         currentStep={currentStep}
                     />
                     <div className="flex-center mt-16 select-none gap-3">
-                        <Button className="h-12 w-[200px] gap-4" loading={false}>
+                        <Button className="h-12 w-[200px] gap-4" loading={purchaseInitiating || purchaseUpdating}>
                             <PlusCircleIcon />
                             {t('action.next')}
                         </Button>

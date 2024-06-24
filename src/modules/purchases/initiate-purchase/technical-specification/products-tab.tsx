@@ -14,7 +14,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
             control={form.control}
             name="products"
             render={({ field }) => (
-                <FormItem className="flex w-full flex-col items-start gap-4">
+                <FormItem className="flex w-full flex-col items-start gap-6">
                     <div className="flex items-center gap-2">
                         <FormLabel>{t('products')}</FormLabel>
                         <Button
@@ -30,7 +30,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                             product_name: '',
                                             code: '',
                                             properties: [],
-                                            product_count: 0,
+                                            product_count: '',
                                         },
                                     ])
                                 } else {
@@ -40,7 +40,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                             product_name: '',
                                             code: '',
                                             properties: [],
-                                            product_count: 0,
+                                            product_count: '',
                                         },
                                     ])
                                 }
@@ -55,7 +55,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                             <div key={productIndex} className="flex flex-col gap-2">
                                 <div className="flex items-center gap-2">
                                     <InputField
-                                        className="h-10 w-full max-w-[250px]"
+                                        className="h-10 max-w-[250px]"
                                         placeholder={t('product-name')}
                                         value={product.product_name}
                                         onChange={(e) => {
@@ -69,7 +69,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                         required
                                     />
                                     <InputField
-                                        className="h-10 w-full max-w-[150px]"
+                                        className="h-10 max-w-[150px]"
                                         placeholder={t('code')}
                                         value={product.code}
                                         onChange={(e) => {
@@ -83,7 +83,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                         required
                                     />
                                     <InputField
-                                        className="h-10 w-full max-w-[80px]"
+                                        className="h-10 max-w-[80px]"
                                         placeholder={t('count')}
                                         value={product.product_count}
                                         onChange={(e) => {

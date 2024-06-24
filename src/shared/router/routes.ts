@@ -1,5 +1,7 @@
 export const DASHBOARD = '/dashboard'
-export const PURCHASE = '/purchase'
+export const PURCHASES = '/purchases'
+export const PURCHASE_REFERENCES = '/purchases/references'
+export const PURCHASE_PRODUCTS_AND_SERVICES = '/purchases/products-and-services'
 export const INITIATE_PURCHASE = '/purchase/initiate'
 export const USERS = '/users'
 export const USER_MANAGE = '/users/manage'
