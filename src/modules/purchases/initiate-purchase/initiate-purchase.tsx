@@ -19,18 +19,19 @@ import { Purchase } from '@/types/purchase'
 import { formatShortDate } from '@/shared/lib/format-short-date'
 import { useUpdatePurchase } from './api/use-update-purchase'
 
-const propertySchema = z.object({
+export const propertySchema = z.object({
     property_name: z.string(),
     property_value: z.string(),
     property_measurement: z.string(),
 })
 
-const productSchema = z.object({
+export const productSchema = z.object({
     product_id: z.number(),
     product_name: z.string(),
     code: z.string(),
     properties: z.array(propertySchema),
     product_count: z.string(),
+    product_measurement: z.string(),
 })
 
 const commercialOfferSchema = z.object({ organization_uuid: z.string(), short_name: z.string(), price: z.string() })
