@@ -30,10 +30,9 @@ export const FileContainer = ({
     }
 
     // TODO Remove file
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const handleRemoveClick = () => {
-        setSelectedFile(undefined)
-    }
+    // const handleRemoveClick = () => {
+    //     setSelectedFile(undefined)
+    // }
 
     const handleFileChange = (event: BaseSyntheticEvent) => {
         setSelectedFile(event.target.files && event.target.files[0])

@@ -25,7 +25,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
                 </CheckboxPrimitive.Indicator>
             </CheckboxPrimitive.Root>
             {label && (
-                <label className="pl-3" htmlFor={id}>
+                <label className="pl-3 text-start" htmlFor={id}>
                     {label}
                 </label>
             )}
