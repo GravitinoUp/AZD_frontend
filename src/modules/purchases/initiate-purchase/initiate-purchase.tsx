@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { Tabs, TabsContent } from '@/ui/tabs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GeneralInfoTab } from './general-info-tab'
 import { Form, useForm } from '@/components/form'
 import i18next from 'i18next'
@@ -13,6 +13,8 @@ import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 import { CommercialOffersTab } from './commercial-offers-tab'
 import { ContractProjectTab } from './contract-project-tab'
 import { NMCKTab } from './nmck-tab'
+import { useInitiatePurchase } from './api/use-initiate-purchase'
+import { useErrorToast } from '@/shared/hooks/use-error-toast'
 
 const propertySchema = z.object({
     property_name: z.string(),
@@ -25,7 +27,7 @@ const productSchema = z.object({
     product_name: z.string(),
     code: z.string(),
     properties: z.array(propertySchema),
-    product_count: z.number(),
+    product_count: z.string(),
 })
 
 const commercialOfferSchema = z.object({ organization_uuid: z.string(), short_name: z.string(), price: z.string() })
@@ -33,57 +35,42 @@ const commercialOfferSchema = z.object({ organization_uuid: z.string(), short_na
 const purchaseSchema = z
     .object({
         step: z.number(),
-        purchase_name: z.string().optional(), // required step 1
-        purchase_type_id: z.number().optional(), // required step 1
-        delivery_address: z.string().optional(), // required step 1
-        quality_guarantee_period: z.string().optional(), // required step 1
-        currency_code: z.string().optional(), // required step 1
-        end_date: z.string().optional(), // required step 1
-        is_organization_fund: z.boolean().optional(), // TODO required step 1
-        is_unilateral_refusal: z.boolean().optional(), // TODO required step 1
+        purchase_uuid: z.string().optional(),
+        purchase_name: z.string().min(1, i18next.t('error.required')), // required step 1
+        purchase_type_id: z.number().min(1, i18next.t('error.required')), // required step 1
+        delivery_address: z.string().min(1, i18next.t('error.required')), // required step 1
+        quality_guarantee_period: z.string().min(1, i18next.t('error.required')), // required step 1
+        currency_code: z.string().min(1, i18next.t('error.required')), // required step 1
+        end_date: z.string().min(1, i18next.t('error.required')), // required step 1
+        is_organization_fund: z.boolean(), // TODO required step 1
+        is_unilateral_refusal: z.boolean(), // TODO required step 1
+        manufacturer_guarantee: z.string().optional(), // optional step 1
         application_enforcement: z.string().optional(), // optional step 1
         contract_enforcement: z.string().optional(), // optional step 1
         warranty_obligations_enforcement: z.string().optional(), // optional step 1
+        start_date: z.string().optional(), // optional step 1
+        additional_info: z.string().optional(), // optional step 1
         technical_specification: z.string().optional(), // required step 2
         products: z.array(productSchema).optional(), // required step 2
         commercial_offer_text: z.string().optional(), // required step 3
         commercial_offers: z.array(commercialOfferSchema), // required step 3 4 (MIN 3)
-        executor_uuid: z.string().optional(),
-        purchase_identification_code: z.string().optional(),
-        contract_identification_code: z.string().optional(),
-        start_date: z.string().optional(),
         end_application_date: z.string().optional(),
         executor_date: z.string().optional(),
-        start_max_price: z.number().optional(),
-        end_price: z.number().optional(),
-        manufacturer_guarantee: z.string().optional(),
-        additional_info: z.string().optional(),
-        document: z.instanceof(File).optional(),
+        start_max_price: z.number().optional(), // TODO step 4
+        end_price: z.number().optional(), // TODO step 4
+        document: z.instanceof(File).optional(), // TODO step 5
+        purchase_identification_code: z.string().optional(),
+        contract_identification_code: z.string().optional(),
+        executor_uuid: z.string().optional(),
     })
     .superRefine((values, ctx) => {
         if (values.step === 0 || values.step === 5) {
-            if (!values.purchase_name) {
+            if (values.manufacturer_guarantee && !Number(values.manufacturer_guarantee)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
-                    path: ['purchase_name'],
+                    path: ['manufacturer_guarantee'],
                     fatal: true,
-                    message: i18next.t('error.required'),
-                })
-            }
-            if (!values.purchase_type_id) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['purchase_type_id'],
-                    fatal: true,
-                    message: i18next.t('error.required'),
-                })
-            }
-            if (!values.delivery_address) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['delivery_address'],
-                    fatal: true,
-                    message: i18next.t('error.required'),
+                    message: i18next.t('error.number.format'),
                 })
             }
             if (values.application_enforcement && !Number(values.application_enforcement)) {
@@ -92,30 +79,6 @@ const purchaseSchema = z
                     path: ['application_enforcement'],
                     fatal: true,
                     message: i18next.t('error.number.format'),
-                })
-            }
-            if (!values.quality_guarantee_period) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['quality_guarantee_period'],
-                    fatal: true,
-                    message: i18next.t('error.required'),
-                })
-            }
-            if (!values.currency_code) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['currency_code'],
-                    fatal: true,
-                    message: i18next.t('error.required'),
-                })
-            }
-            if (!values.end_date) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['end_date'],
-                    fatal: true,
-                    message: i18next.t('error.required'),
                 })
             }
             if (values.contract_enforcement && !Number(values.contract_enforcement)) {
@@ -162,19 +125,16 @@ const purchaseSchema = z
             }
         } else if (values.step === 3 || values.step === 5) {
             for (const value in values.commercial_offers) {
-                if (Object.prototype.hasOwnProperty.call(values.commercial_offers, value)) {
-                    const element = values.commercial_offers[value]
+                const element = values.commercial_offers[value]
+                console.log(!element.price && !Number(element.price))
 
-                    if (!element.price && !Number(element.price)) {
-                        console.log(element.price)
-
-                        ctx.addIssue({
-                            code: z.ZodIssueCode.custom,
-                            path: ['commercial_offers'],
-                            fatal: true,
-                            message: i18next.t('error.number.format'),
-                        })
-                    }
+                if (!element.price || !Number(element.price)) {
+                    ctx.addIssue({
+                        code: z.ZodIssueCode.custom,
+                        path: ['commercial_offers'],
+                        fatal: true,
+                        message: i18next.t('error.number.format'),
+                    })
                 }
             }
         }
@@ -200,6 +160,8 @@ export const InitiatePurchase = () => {
             manufacturer_guarantee: '',
             warranty_obligations_enforcement: '',
             additional_info: '',
+            currency_code: '',
+            end_date: '',
             products: [],
             commercial_offers: [],
         },
@@ -240,12 +202,55 @@ export const InitiatePurchase = () => {
         },
     ]
 
-    const handleSubmit = () => {
-        if (currentStep !== 5) {
+    const {
+        mutate: initiatePurchase,
+        data: createdPurchase,
+        isPending: purchaseInitiating,
+        error: purchaseInitiateError,
+        isSuccess: purchaseInitiateSuccess,
+    } = useInitiatePurchase()
+
+    const handleSubmit = (data: z.infer<typeof purchaseSchema>) => {
+        if (currentStep === 0) {
+            initiatePurchase({
+                executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
+                purchase_name: data.purchase_name,
+                purchase_type_id: data.purchase_type_id,
+                delivery_address: data.delivery_address,
+                quality_guarantee_period: Number(data.quality_guarantee_period),
+                manufacturer_guarantee: data.manufacturer_guarantee ? Number(data.manufacturer_guarantee) : undefined,
+                currency_code: data.currency_code,
+                end_date: data.end_date,
+                is_organization_fund: data.is_organization_fund,
+                is_unilateral_refusal: data.is_unilateral_refusal,
+                application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
+                contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
+                warranty_obligations_enforcement: data.warranty_obligations_enforcement
+                    ? data.warranty_obligations_enforcement
+                    : undefined,
+            })
+            // TODO create purchase
+        } else if (currentStep === 1) {
+            // TODO add technical specification and products
+        } else if (currentStep === 2) {
+            // TODO add organizations
+        } else if (currentStep === 3) {
+            // TODO calculate NMCK
+        } else if (currentStep !== 5) {
             setCurrentTab(tabsData[currentStep + 1].value)
             form.setValue('step', currentStep + 1)
         }
     }
+
+    useEffect(() => {
+        if (purchaseInitiateSuccess) {
+            setCurrentTab(tabsData[currentStep + 1].value)
+            form.setValue('purchase_uuid', createdPurchase.data?.purchase_uuid)
+            form.setValue('step', currentStep + 1)
+        }
+    }, [purchaseInitiateSuccess])
+
+    useErrorToast(purchaseInitiateError)
 
     return (
         <div className="mx-auto w-[95%]">

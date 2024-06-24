@@ -90,7 +90,8 @@
     "dropdown.menu.open": "Подробнее...",
     "select.all": "Выбрать все",
     "unselect.all": "Убрать все",
-    "attach.document": "Прикрепить документ"
+    "attach.document": "Прикрепить документ",
+    "calculate": "Рассчитать"
   },
   "toast": {
     "success": {
@@ -154,7 +155,18 @@
     "mb": "Мб",
     "gb": "Гб"
   },
-  "products": "Продукты",
-  "product": "Продукт",
-  "product-name": "Название продукта"
+  "products": "Товары",
+  "product": "Товар",
+  "product-name": "Название товара",
+  "empty-product-list": "Список товаров пуст. Добавьте новые товары.",
+  "property-name": "Название характеристики",
+  "property-value": "Значение характеристики",
+  "property-measurement": "Единица измерения",
+  "code": "Код",
+  "count": "Кол-во",
+  "currency-code": "Код валюты",
+  "quality-guarantee-period": "Срок гарантии качества, мес",
+  "manufacturer-guarantee": "Срок гарантии производителя, мес",
+  "start-date": "start-date",
+  "end-date": "Дата выполнения закупки"
 }

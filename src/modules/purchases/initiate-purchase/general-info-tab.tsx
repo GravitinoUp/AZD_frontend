@@ -8,6 +8,7 @@ import { useGetAllPurchaseTypes } from '../api/use-get-all-purchase-types'
 import { placeholderQuery } from '@/shared/constants'
 import { UseFormReturn } from 'react-hook-form'
 import { PurchaseSchema } from './initiate-purchase'
+import { Checkbox } from '@/ui/checkbox'
 
 export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) => {
     const { t } = useTranslation()
@@ -67,8 +68,18 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                 />
                 <FormField
                     control={form.control}
+                    name="manufacturer_guarantee"
+                    render={({ field }) => <InputField label={t('manufacturer-guarantee')} {...field} />}
+                />
+                <FormField
+                    control={form.control}
+                    name="start_date"
+                    render={({ field }) => <InputField type="date" label={t('start-date')} {...field} />}
+                />
+                <FormField
+                    control={form.control}
                     name="end_date"
-                    render={({ field }) => <InputField label={t('end-date')} required {...field} />}
+                    render={({ field }) => <InputField type="date" label={t('end-date')} required {...field} />}
                 />
                 <FormField
                     control={form.control}
@@ -89,6 +100,30 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                     control={form.control}
                     name="additional_info"
                     render={({ field }) => <InputField label={t('additional-info')} {...field} />}
+                />
+                <FormField
+                    control={form.control}
+                    name="is_organization_fund"
+                    render={({ field }) => (
+                        <Checkbox
+                            id="is_organization_fund"
+                            label={t('is-organization-fund')}
+                            checked={field.value}
+                            onCheckedChange={(value) => field.onChange(value)}
+                        />
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="is_unilateral_refusal"
+                    render={({ field }) => (
+                        <Checkbox
+                            id="is_unilateral_refusal"
+                            label={t('is-unilateral-refusal')}
+                            checked={field.value}
+                            onCheckedChange={(value) => field.onChange(value)}
+                        />
+                    )}
                 />
             </div>
         </div>

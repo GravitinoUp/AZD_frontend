@@ -53,8 +53,6 @@ export const CommercialOffersTab = ({ form }: { form: UseFormReturn<PurchaseSche
                                                 price: '0',
                                             }))
                                         )
-
-                                        console.log(field.value)
                                     }}
                                     items={formattedOrganizations}
                                 />

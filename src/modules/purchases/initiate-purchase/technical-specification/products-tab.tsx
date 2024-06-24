@@ -27,8 +27,8 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                         ...field.value,
                                         {
                                             product_id: field.value?.length,
-                                            product_name: 'product_name',
-                                            code: 'code',
+                                            product_name: '',
+                                            code: '',
                                             properties: [],
                                             product_count: 0,
                                         },
@@ -37,8 +37,8 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                     field.onChange([
                                         {
                                             product_id: 1,
-                                            product_name: 'product_name',
-                                            code: 'code',
+                                            product_name: '',
+                                            code: '',
                                             properties: [],
                                             product_count: 0,
                                         },
@@ -49,6 +49,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                             <Plus />
                         </Button>
                     </div>
+                    {!field.value || (field.value.length === 0 && <p>{t('empty-product-list')}</p>)}
                     {field.value &&
                         field.value.map((product, productIndex) => (
                             <div key={productIndex} className="flex flex-col gap-2">
@@ -57,19 +58,55 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                         className="h-10 w-full max-w-[250px]"
                                         placeholder={t('product-name')}
                                         value={product.product_name}
+                                        onChange={(e) => {
+                                            if (field.value) {
+                                                const newArray = [...field.value]
+                                                newArray[productIndex].product_name = e.target.value
+
+                                                field.onChange(newArray)
+                                            }
+                                        }}
+                                        required
+                                    />
+                                    <InputField
+                                        className="h-10 w-full max-w-[150px]"
+                                        placeholder={t('code')}
+                                        value={product.code}
+                                        onChange={(e) => {
+                                            if (field.value) {
+                                                const newArray = [...field.value]
+                                                newArray[productIndex].code = e.target.value
+
+                                                field.onChange(newArray)
+                                            }
+                                        }}
+                                        required
+                                    />
+                                    <InputField
+                                        className="h-10 w-full max-w-[80px]"
+                                        placeholder={t('count')}
+                                        value={product.product_count}
+                                        onChange={(e) => {
+                                            if (field.value) {
+                                                const newArray = [...field.value]
+                                                newArray[productIndex].product_count = e.target.value
+
+                                                field.onChange(newArray)
+                                            }
+                                        }}
                                         required
                                     />
                                     <Button
-                                        className="h-8 w-8"
+                                        className="h-8 min-h-8 w-8 min-w-8"
                                         size="icon"
                                         type="button"
                                         onClick={() => {
                                             if (field.value) {
                                                 const newArray = [...field.value]
                                                 newArray[productIndex].properties.push({
-                                                    property_name: 'name',
-                                                    property_value: 'value',
-                                                    property_measurement: 'measurement',
+                                                    property_name: '',
+                                                    property_value: '',
+                                                    property_measurement: '',
                                                 })
 
                                                 field.onChange(newArray)
@@ -79,11 +116,16 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                         <Plus />
                                     </Button>
                                     <Button
-                                        className="h-8 w-8"
+                                        className="h-8 min-h-8 w-8 min-w-8"
                                         size="icon"
                                         type="button"
                                         onClick={() => {
-                                            // TODO remove
+                                            if (field.value) {
+                                                const newArray = [...field.value]
+                                                newArray.splice(productIndex, 1)
+
+                                                field.onChange(newArray)
+                                            }
                                         }}
                                     >
                                         <LucideTrash2 size={18} />
@@ -95,20 +137,63 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                             className="h-10"
                                             placeholder={t('property-name')}
                                             value={property.property_name}
+                                            onChange={(e) => {
+                                                if (field.value) {
+                                                    const newArray = [...field.value]
+                                                    newArray[productIndex].properties[propertyIndex].property_name =
+                                                        e.target.value
+
+                                                    field.onChange(newArray)
+                                                }
+                                            }}
                                             required
                                         />
                                         <InputField
                                             className="h-10"
                                             placeholder={t('property-value')}
                                             value={property.property_value}
+                                            onChange={(e) => {
+                                                if (field.value) {
+                                                    const newArray = [...field.value]
+                                                    newArray[productIndex].properties[propertyIndex].property_value =
+                                                        e.target.value
+
+                                                    field.onChange(newArray)
+                                                }
+                                            }}
                                             required
                                         />
                                         <InputField
                                             className="h-10"
                                             placeholder={t('property-measurement')}
                                             value={property.property_measurement}
+                                            onChange={(e) => {
+                                                if (field.value) {
+                                                    const newArray = [...field.value]
+                                                    newArray[productIndex].properties[
+                                                        propertyIndex
+                                                    ].property_measurement = e.target.value
+
+                                                    field.onChange(newArray)
+                                                }
+                                            }}
                                             required
                                         />
+                                        <Button
+                                            className="h-8 min-h-8 w-8 min-w-8"
+                                            size="icon"
+                                            type="button"
+                                            onClick={() => {
+                                                if (field.value) {
+                                                    const newArray = [...field.value]
+                                                    newArray[productIndex].properties.splice(propertyIndex, 1)
+
+                                                    field.onChange(newArray)
+                                                }
+                                            }}
+                                        >
+                                            <LucideTrash2 size={18} />
+                                        </Button>
                                     </div>
                                 ))}
                             </div>
