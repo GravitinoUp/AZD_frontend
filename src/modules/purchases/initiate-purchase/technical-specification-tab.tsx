@@ -3,7 +3,7 @@ import { PurchaseSchema } from './initiate-purchase'
 import { useTranslation } from 'react-i18next'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'
 import { RichTextEditorTab } from './technical-specification/rich-text-editor-tab'
-import { ProductsTab } from './technical-specification/products/products-tab'
+import { ProductsTab } from './technical-specification/products-tab'
 
 export const TechnicalSpecificationTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) => {
     const { t } = useTranslation()

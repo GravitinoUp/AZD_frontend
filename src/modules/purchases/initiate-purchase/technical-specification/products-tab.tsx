@@ -1,11 +1,11 @@
 import { UseFormReturn } from 'react-hook-form'
-import { PurchaseSchema, productSchema } from '../../initiate-purchase'
+import { PurchaseSchema, productSchema } from '../initiate-purchase'
 import { FormField } from '@/ui/form'
 import { Tabs, TabsContent } from '@/ui/tabs'
-import { ManageProductTab } from './manage-product-tab'
+import { ManageProductTab } from './products/manage-product-tab'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
-import { ProductListTab } from './product-list-tab'
+import { ProductListTab } from './products/product-list-tab'
 
 export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) => {
     const [currentTab, setCurrentTab] = useState('product-list')
