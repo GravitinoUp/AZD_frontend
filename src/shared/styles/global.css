@@ -69,6 +69,8 @@
 @layer base {
     * {
         @apply border-border;
+        @apply focus:outline-primary;
+        @apply [&:is(input)]:focus:outline-none;
         font-family: system-ui, sans-serif;
     }
 
@@ -91,6 +93,12 @@ ul li::marker {
 .nav-link {
     @apply flex gap-3 py-4 text-base font-normal text-white hover:opacity-60;
 
+    svg {
+        fill: white;
+    }
+}
+
+.nav-link-svg {
     svg {
         fill: white;
     }
@@ -129,5 +137,5 @@ ul li::marker {
 }
 
 .info-wrapper {
-    @apply rounded-[10px] border border-tabs-content bg-white px-5 py-8
+    @apply rounded-[10px] border border-tabs-content bg-white px-5 py-8;
 }

@@ -1,5 +1,6 @@
 import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
+import { ErrorAlert } from '@/components/error-alert'
 import { TableActions } from '@/components/table-actions'
 import { PlanSheet } from '@/modules/plans/plan-sheet/plan-sheet.tsx'
 import { usePlan } from '@/modules/plans/plan/api/use-plan.ts'
@@ -39,7 +40,7 @@ export const Plan = () => {
     }, [plan])
 
     if (isError) {
-        return <p>Произошла ошибка</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (

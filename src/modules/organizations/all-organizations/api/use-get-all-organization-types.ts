@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Data } from '@/types/fetch.ts'
 import { OrganizationType } from '@/types/organization'
 import { useQuery } from '@tanstack/react-query'
@@ -10,7 +11,7 @@ const getAllOrganizationTypes = async () => {
 
 export const useGetAllOrganizationTypes = () =>
     useQuery({
-        queryKey: ['organization-types'],
+        queryKey: [ApiKeys.OrganizationTypes],
         queryFn: getAllOrganizationTypes,
         select: (data) => data.data,
     })

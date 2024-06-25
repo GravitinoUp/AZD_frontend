@@ -42,7 +42,7 @@ export const NavLinks = ({ expanded }: { expanded?: boolean }) => {
                                                             </Link>
                                                             {subLink.isHighlighted && (
                                                                 <Link
-                                                                    to="/"
+                                                                    to={subLink.href}
                                                                     className="flex-center h-6 w-6 rounded-full bg-white hover:opacity-60"
                                                                 >
                                                                     <PlusIcon />

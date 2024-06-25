@@ -1,15 +1,22 @@
+import { cn } from '@/shared/lib/cn.ts'
+import { Alert, AlertDescription, AlertTitle } from '@/ui/alert'
+import { AlertCircle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
 interface ErrorAlertProps {
-    error?: string
+    title?: string
+    description?: string
+    className?: string
 }
 
-export const ErrorAlert = ({ error }: ErrorAlertProps) => {
+export const ErrorAlert = ({ title, description, className }: ErrorAlertProps) => {
     const { t } = useTranslation()
 
     return (
-        <div className="flex-center h-12 w-full rounded-md border text-destructive">
-            {error ? error : t('error.default')}
-        </div>
+        <Alert variant="destructive" className={cn('w-fit', className)}>
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{title || t('error.default')}</AlertTitle>
+            {description && <AlertDescription>{description}</AlertDescription>}
+        </Alert>
     )
 }

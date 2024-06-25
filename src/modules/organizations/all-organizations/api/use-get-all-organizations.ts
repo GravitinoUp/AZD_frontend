@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Data, Payload } from '@/types/fetch.ts'
 import { Organization, OrganizationSort } from '@/types/organization'
 import { useQuery } from '@tanstack/react-query'
@@ -10,6 +11,6 @@ const getAllOrganizations = async (body: Payload<Organization, OrganizationSort>
 
 export const useGetAllOrganizations = (body: Payload<Organization, OrganizationSort>) =>
     useQuery({
-        queryKey: ['organizations', body],
+        queryKey: [ApiKeys.Organizations, body],
         queryFn: () => getAllOrganizations(body),
     })

@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Data } from '@/types/fetch'
 import { Permission } from '@/types/permission'
 import { useQuery } from '@tanstack/react-query'
@@ -10,7 +11,7 @@ const getAllPermissions = async () => {
 
 export const useGetAllPermissions = () =>
     useQuery({
-        queryKey: ['permissions'],
+        queryKey: [ApiKeys.Permissions],
         queryFn: getAllPermissions,
         select: (result) => result.data,
     })

@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Result } from '@/types/fetch'
 import { Role, RolePayload } from '@/types/user'
 import { useMutation } from '@tanstack/react-query'
@@ -10,6 +11,6 @@ const updateRole = async (body: RolePayload) => {
 
 export const useUpdateRole = () =>
     useMutation({
-        mutationKey: ['roles'],
+        mutationKey: [ApiKeys.Roles],
         mutationFn: updateRole,
     })

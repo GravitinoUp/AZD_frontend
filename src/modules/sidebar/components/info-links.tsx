@@ -21,7 +21,7 @@ export const InfoLinks = ({ expanded }: { expanded?: boolean }) => {
                     {infoLinks.map(({ id, title, href, icon: Icon, isCollapsible, subLinks }) => (
                         <div key={id}>
                             {isCollapsible ? (
-                                <Accordion type="multiple" className="w-full">
+                                <Accordion type="multiple" className="nav-link-svg w-full">
                                     <AccordionItem key={id} value={title} className="border-none">
                                         <AccordionTrigger>
                                             <div className="flex gap-3 text-base font-normal text-white">

@@ -12,7 +12,7 @@ import {
     USERS,
     INITIATE_PURCHASE,
     ORGANIZATIONS,
-    BRANCHES,
+    BRANCHES, LIMITS_ADD,
     PURCHASES,
     PURCHASE_REFERENCES,
     PURCHASE_PRODUCTS_AND_SERVICES,
@@ -44,7 +44,7 @@ const Fz44Links: NavLink[] = [
                 {
                     id: crypto.randomUUID(),
                     title: i18next.t('create-limits'),
-                    href: '/',
+                    href: LIMITS_ADD,
                     isHighlighted: true,
                 },
                 {

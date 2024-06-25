@@ -1,10 +1,11 @@
 import { DataTable } from '@/components/data-table'
 import { userColumns } from './components/users-columns'
 import { useTranslation } from 'react-i18next'
-import { TableActions } from '@/components/table-actions'
 import { useGetAllUsers } from './api/use-get-all-users'
 import { USERS, USER_MANAGE } from '@/shared/router/routes'
 import { DebouncedInput } from '@/components/debounced-input'
+import { ErrorAlert } from '@/components/error-alert'
+import { TableActions } from '@/components/table-actions'
 import { placeholderQuery } from '@/shared/constants'
 import { useState } from 'react'
 import { RouterButton } from '@/components/router-button'
@@ -21,7 +22,7 @@ export const UsersModule = () => {
     const { data: users = { count: 0, data: [] }, isLoading, isError } = useGetAllUsers(usersQuery)
 
     if (isError) {
-        return <p>{t('error.default')}</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (

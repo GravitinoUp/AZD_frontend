@@ -1,14 +1,15 @@
-import { DataTable } from '@/components/data-table'
-import { roleColumns } from './components/roles-columns'
-import { useTranslation } from 'react-i18next'
-import { TableActions } from '@/components/table-actions'
 import PlusRoundedIcon from '@/assets/icons/plus-rounded.svg'
-import { ROLES, ROLE_MANAGE } from '@/shared/router/routes'
+import { DataTable } from '@/components/data-table'
 import { DebouncedInput } from '@/components/debounced-input'
-import { useGetAllRoles } from './api/use-get-all-roles'
-import { Link } from 'react-router-dom'
+import { ErrorAlert } from '@/components/error-alert'
+import { TableActions } from '@/components/table-actions'
 import { placeholderQuery } from '@/shared/constants'
+import { ROLE_MANAGE, ROLES } from '@/shared/router/routes'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { useGetAllRoles } from './api/use-get-all-roles'
+import { roleColumns } from './components/roles-columns'
 
 const routes = [
     { route: '/', label: 'Главная' },
@@ -22,7 +23,7 @@ export const RolesModule = () => {
     const { data: roles = { count: 0, data: [] }, isLoading, isError } = useGetAllRoles(rolesQuery)
 
     if (isError) {
-        return <p>{t('error.default')}</p>
+        return <ErrorAlert className="mx-auto" />
     }
 
     return (
