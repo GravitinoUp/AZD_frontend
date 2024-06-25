@@ -71,7 +71,7 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                     name="manufacturer_guarantee"
                     render={({ field }) => <InputField label={t('manufacturer-guarantee')} {...field} />}
                 />
-                <FormField
+                {/* <FormField
                     control={form.control}
                     name="start_date"
                     render={({ field }) => <InputField type="date" label={t('start-date')} {...field} />}
@@ -79,8 +79,8 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                 <FormField
                     control={form.control}
                     name="end_date"
-                    render={({ field }) => <InputField type="date" label={t('end-date')} required {...field} />}
-                />
+                    render={({ field }) => <InputField type="date" label={t('end-date')} {...field} />}
+                /> */}
                 <FormField
                     control={form.control}
                     name="application_enforcement"

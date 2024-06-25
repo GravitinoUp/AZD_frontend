@@ -16,7 +16,7 @@ export const TechnicalSpecificationTab = ({ form }: { form: UseFormReturn<Purcha
         },
         {
             value: 'products',
-            label: t('products'),
+            label: t('technical-specification-products'),
             content: <ProductsTab form={form} />,
         },
     ]

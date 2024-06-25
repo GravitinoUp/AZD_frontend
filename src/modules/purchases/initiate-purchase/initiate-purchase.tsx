@@ -20,6 +20,12 @@ import { formatShortDate } from '@/shared/lib/format-short-date'
 import { useUpdatePurchase } from './api/use-update-purchase'
 import { useGetStartMaxPrice } from './api/use-get-start-max-price'
 
+export const fileSchema = z.object({
+    id: z.string(),
+    fileURL: z.string().optional(),
+    file: z.instanceof(File).optional(),
+})
+
 export const propertySchema = z.object({
     property_name: z.string(),
     property_value: z.string(),
@@ -41,19 +47,17 @@ const purchaseSchema = z
     .object({
         step: z.number(),
         purchase_uuid: z.string().optional(),
-        purchase_name: z.string().min(1, i18next.t('error.required')), // required step 1
-        purchase_type_id: z.number().min(1, i18next.t('error.required')), // required step 1
-        delivery_address: z.string().min(1, i18next.t('error.required')), // required step 1
-        quality_guarantee_period: z.string().min(1, i18next.t('error.required')), // required step 1
-        currency_code: z.string().min(1, i18next.t('error.required')), // required step 1
-        end_date: z.string().min(1, i18next.t('error.required')), // required step 1
+        purchase_name: z.string().optional(), // required step 1
+        purchase_type_id: z.number().optional(), // required step 1
+        delivery_address: z.string().optional(), // required step 1
+        quality_guarantee_period: z.string().optional(), // required step 1
+        currency_code: z.string().optional(), // required step 1
         is_organization_fund: z.boolean(), // TODO required step 1
         is_unilateral_refusal: z.boolean(), // TODO required step 1
         manufacturer_guarantee: z.string().optional(), // optional step 1
         application_enforcement: z.string().optional(), // optional step 1
         contract_enforcement: z.string().optional(), // optional step 1
         warranty_obligations_enforcement: z.string().optional(), // optional step 1
-        start_date: z.string().optional(), // optional step 1
         additional_info: z.string().optional(), // optional step 1
         technical_specification: z.string().optional(), // required step 2
         products: z.array(productSchema).optional(), // required step 2
@@ -64,13 +68,16 @@ const purchaseSchema = z
         end_application_date: z.string().optional(),
         executor_date: z.string().optional(),
         end_price: z.number().optional(), // TODO step 4
-        document: z.instanceof(File).optional(), // TODO step 5
+        documents: z.array(fileSchema), // TODO step 5
+        start_date: z.string().optional(), // TODO
+        end_date: z.string().optional(), // TODO
         purchase_identification_code: z.string().optional(),
         contract_identification_code: z.string().optional(),
         executor_uuid: z.string().optional(),
     })
     .superRefine((values, ctx) => {
-        if (values.step === 0 || values.step === 5) {
+        if (values.step === 5) {
+            // STEP 0
             if (values.manufacturer_guarantee && !Number(values.manufacturer_guarantee)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -103,7 +110,8 @@ const purchaseSchema = z
                     message: i18next.t('error.number.format'),
                 })
             }
-        } else if (values.step === 1 || values.step === 5) {
+
+            // STEP 1
             if (!values.technical_specification) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -112,7 +120,8 @@ const purchaseSchema = z
                     message: i18next.t('error.required'),
                 })
             }
-        } else if (values.step === 2 || values.step === 5) {
+
+            // STEP 2
             if (!values.commercial_offer_text) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -129,7 +138,8 @@ const purchaseSchema = z
                     message: i18next.t('error.min.select', { min: 3 }),
                 })
             }
-        } else if (values.step === 3 || values.step === 5) {
+
+            // STEP 3
             for (const value in values.commercial_offers) {
                 const element = values.commercial_offers[value]
 
@@ -162,7 +172,14 @@ export const InitiatePurchase = () => {
             ? {
                   step: 0,
                   ...purchase,
-                  quality_guarantee_period: String(purchase.quality_guarantee_period),
+                  purchase_name: purchase.purchase_name ?? '',
+                  delivery_address: purchase.delivery_address ?? '',
+                  currency_code: purchase.currency_code ?? '',
+                  is_organization_fund: purchase.is_organization_fund ?? false,
+                  is_unilateral_refusal: purchase.is_unilateral_refusal ?? false,
+                  quality_guarantee_period: purchase.quality_guarantee_period
+                      ? String(purchase.quality_guarantee_period)
+                      : '',
                   manufacturer_guarantee: purchase.manufacturer_guarantee
                       ? String(purchase.manufacturer_guarantee)
                       : '',
@@ -170,21 +187,15 @@ export const InitiatePurchase = () => {
                       ? String(purchase.application_enforcement)
                       : '',
                   contract_enforcement: purchase.contract_enforcement ? String(purchase.contract_enforcement) : '',
-                  warranty_obligations_enforcement: purchase.warranty_obligations_enforcement
-                      ? purchase.warranty_obligations_enforcement
-                      : '',
-                  start_date: purchase.start_date ? formatShortDate(purchase.end_date) : '',
-                  end_date: formatShortDate(purchase.end_date),
-                  purchase_identification_code: purchase.purchase_identification_code
-                      ? purchase.purchase_identification_code
-                      : '',
-                  contract_identification_code: purchase.contract_identification_code
-                      ? purchase.contract_identification_code
-                      : '',
-                  additional_info: purchase.additional_info ? purchase.additional_info : '',
-                  end_application_date: purchase.end_application_date ? purchase.end_application_date : '',
-                  executor_date: purchase.executor_date ? purchase.executor_date : '',
-                  start_max_price: purchase.start_max_price ? purchase.start_max_price : 0,
+                  warranty_obligations_enforcement: purchase.warranty_obligations_enforcement ?? '',
+                  start_date: purchase.start_date ? formatShortDate(purchase.start_date) : '',
+                  end_date: purchase.end_date ? formatShortDate(purchase.end_date) : '',
+                  purchase_identification_code: purchase.purchase_identification_code ?? '',
+                  contract_identification_code: purchase.contract_identification_code ?? '',
+                  additional_info: purchase.additional_info ?? '',
+                  end_application_date: purchase.end_application_date ?? '',
+                  executor_date: purchase.executor_date ?? '',
+                  start_max_price: purchase.start_max_price ?? 0,
                   end_price: purchase.end_price ? purchase.end_price : 0,
                   need_update: true,
               }
@@ -204,6 +215,9 @@ export const InitiatePurchase = () => {
                   commercial_offers: [],
                   start_max_price: 0,
                   need_update: true,
+                  is_organization_fund: false,
+                  is_unilateral_refusal: false,
+                  documents: [],
               },
     })
 

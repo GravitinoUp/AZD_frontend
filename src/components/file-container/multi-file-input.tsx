@@ -2,6 +2,7 @@ import React, { ChangeEvent, Dispatch, Fragment, SetStateAction, useRef, useStat
 import { useTranslation } from 'react-i18next'
 import UploadIcon from '@/assets/icons/upload.svg'
 import { cn } from '@/shared/lib/cn'
+import { Button } from '@/ui/button'
 
 export interface FileData {
     id: string
@@ -12,9 +13,16 @@ export interface FileData {
 interface MultiFileInputProps {
     setSelectedFiles: Dispatch<SetStateAction<FileData[]>>
     disabled?: boolean
+    fileType?: string
+    uploadIcon?: React.ReactNode
 }
 
-export const MultiFileInput = ({ setSelectedFiles, disabled }: MultiFileInputProps) => {
+export const MultiFileInput = ({
+    setSelectedFiles,
+    disabled,
+    fileType = '*/*',
+    uploadIcon = <UploadIcon />,
+}: MultiFileInputProps) => {
     const { t } = useTranslation()
     const inputRef = useRef<HTMLInputElement>(null)
     const [dragActive, setDragActive] = useState<boolean>(false)
@@ -63,7 +71,7 @@ export const MultiFileInput = ({ setSelectedFiles, disabled }: MultiFileInputPro
         <Fragment>
             <div
                 className={cn(
-                    'mt-8 flex h-[120px] select-none flex-col items-center justify-center rounded-xl border-[1.5px] border-dashed border-[#C6C9CC] bg-muted px-2',
+                    'flex-center h-[240px] w-full rounded-[10px] border-[1.5px] border-dashed border-secondary-border bg-[#F2F3F7]',
                     disabled ? 'cursor-default opacity-45' : 'cursor-pointer'
                 )}
                 onClick={handleAddClick}
@@ -72,26 +80,21 @@ export const MultiFileInput = ({ setSelectedFiles, disabled }: MultiFileInputPro
                 onDrop={handleDrop}
             >
                 <input
-                    className="hidden"
+                    style={{ display: 'none' }}
                     ref={inputRef}
                     type="file"
-                    accept="image/*"
-                    multiple
+                    accept={fileType}
                     onChange={handleFileChange}
-                    disabled={disabled}
                 />
                 <div
                     className={cn(
-                        'pointer-events-none flex flex-col items-center gap-1.5 text-center',
+                        'pointer-events-none flex max-w-[270px] select-none flex-col items-center gap-5',
                         dragActive && 'invisible'
                     )}
                 >
-                    <UploadIcon />
-                    <p>
-                        {t('files.import.drag')}
-                        <span className="font-semibold text-primary underline">{t('file.import.click')}</span>{' '}
-                        {t('file.download')}
-                    </p>
+                    {uploadIcon}
+                    <Button className="h-[50px] w-full">{t('action.attach.document')}</Button>
+                    <p className="text-[#BFC4CE]">{t('attach.document.description')}</p>
                 </div>
             </div>
         </Fragment>
