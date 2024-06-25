@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Result } from '@/types/fetch'
 import { Purchase, PurchasePayload } from '@/types/purchase'
 import { useMutation } from '@tanstack/react-query'
@@ -10,6 +11,6 @@ const initiatePurchase = async (body: PurchasePayload) => {
 
 export const useInitiatePurchase = () =>
     useMutation({
-        mutationKey: ['purchases'],
+        mutationKey: [ApiKeys.Purchases],
         mutationFn: initiatePurchase,
     })

@@ -12,12 +12,13 @@ import { TechnicalSpecificationTab } from './technical-specification-tab'
 import { TabListBreadcrumbs } from '@/components/breadcrumbs'
 import { CommercialOffersTab } from './commercial-offers-tab'
 import { ContractProjectTab } from './contract-project-tab'
-import { NMCKTab } from './nmck-tab'
+import { StartMaxPriceTab } from './start-max-price-tab'
 import { useInitiatePurchase } from './api/use-initiate-purchase'
 import { useErrorToast } from '@/shared/hooks/use-error-toast'
 import { Purchase } from '@/types/purchase'
 import { formatShortDate } from '@/shared/lib/format-short-date'
 import { useUpdatePurchase } from './api/use-update-purchase'
+import { useGetStartMaxPrice } from './api/use-get-start-max-price'
 
 export const propertySchema = z.object({
     property_name: z.string(),
@@ -58,9 +59,10 @@ const purchaseSchema = z
         products: z.array(productSchema).optional(), // required step 2
         commercial_offer_text: z.string().optional(), // required step 3
         commercial_offers: z.array(commercialOfferSchema), // required step 3 4 (MIN 3)
+        need_update: z.boolean(), // step 4
+        start_max_price: z.number().optional(), // optional step 4
         end_application_date: z.string().optional(),
         executor_date: z.string().optional(),
-        start_max_price: z.number().optional(), // TODO step 4
         end_price: z.number().optional(), // TODO step 4
         document: z.instanceof(File).optional(), // TODO step 5
         purchase_identification_code: z.string().optional(),
@@ -130,7 +132,6 @@ const purchaseSchema = z
         } else if (values.step === 3 || values.step === 5) {
             for (const value in values.commercial_offers) {
                 const element = values.commercial_offers[value]
-                console.log(!element.price && !Number(element.price))
 
                 if (!element.price || !Number(element.price)) {
                     ctx.addIssue({
@@ -185,6 +186,7 @@ export const InitiatePurchase = () => {
                   executor_date: purchase.executor_date ? purchase.executor_date : '',
                   start_max_price: purchase.start_max_price ? purchase.start_max_price : 0,
                   end_price: purchase.end_price ? purchase.end_price : 0,
+                  need_update: true,
               }
             : {
                   step: 0,
@@ -200,6 +202,8 @@ export const InitiatePurchase = () => {
                   end_date: '',
                   products: [],
                   commercial_offers: [],
+                  start_max_price: 0,
+                  need_update: true,
               },
     })
 
@@ -224,7 +228,7 @@ export const InitiatePurchase = () => {
         {
             value: 'nmck',
             label: i18next.t('nmck'),
-            content: <NMCKTab form={form} />,
+            content: <StartMaxPriceTab form={form} />,
         },
         {
             value: 'contract-project',
@@ -253,10 +257,17 @@ export const InitiatePurchase = () => {
         isSuccess: purchaseUpdateSuccess,
     } = useUpdatePurchase()
 
+    const {
+        mutate: getStartMaxPrice,
+        data: startMaxPrice,
+        isPending: startMaxPricePending,
+        isSuccess: startMaxPriceSuccess,
+        error: startMaxPriceError,
+    } = useGetStartMaxPrice()
+
     const handleSubmit = (data: z.infer<typeof purchaseSchema>) => {
-        if (!purchase) {
-            // CREATE
-            if (currentStep === 0) {
+        if (currentStep === 0) {
+            if (!purchase) {
                 initiatePurchase({
                     executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
                     purchase_name: data.purchase_name,
@@ -276,20 +287,7 @@ export const InitiatePurchase = () => {
                         ? data.warranty_obligations_enforcement
                         : undefined,
                 })
-                // TODO create purchase
-            } else if (currentStep === 1) {
-                // TODO add technical specification and products
-            } else if (currentStep === 2) {
-                // TODO add organizations
-            } else if (currentStep === 3) {
-                // TODO calculate NMCK
-            } else if (currentStep !== 5) {
-                setCurrentTab(tabsData[currentStep + 1].value)
-                form.setValue('step', currentStep + 1)
-            }
-        } else {
-            // UPDATE
-            if (currentStep === 0) {
+            } else {
                 updatePurchase({
                     executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
                     purchase_uuid: data.purchase_uuid,
@@ -302,17 +300,43 @@ export const InitiatePurchase = () => {
                         : undefined,
                     currency_code: data.currency_code,
                     end_date: data.end_date,
-                    is_organization_fund: data.is_organization_fund,
-                    is_unilateral_refusal: data.is_unilateral_refusal,
                     application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
                     contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
                     warranty_obligations_enforcement: data.warranty_obligations_enforcement
                         ? data.warranty_obligations_enforcement
                         : undefined,
+                    is_organization_fund: data.is_organization_fund,
+                    is_unilateral_refusal: data.is_unilateral_refusal,
                 })
             }
+        } else if (currentStep === 1) {
+            updatePurchase({
+                purchase_uuid: data.purchase_uuid,
+            })
+        } else if (currentStep === 2) {
+            // TODO add organizations
+        } else if (currentStep === 3) {
+            if (!data.need_update) {
+                setCurrentTab(tabsData[currentStep + 1].value)
+                form.setValue('step', currentStep + 1)
+            } else {
+                const commercialValues = data.commercial_offers.map((value) => Number(value.price))
+                getStartMaxPrice({ prices: commercialValues, formula: 'min' })
+            }
+        } else if (currentStep === 4) {
+            // TODO contract project
+        } else if (currentStep !== 5) {
+            setCurrentTab(tabsData[currentStep + 1].value)
+            form.setValue('step', currentStep + 1)
         }
     }
+
+    useEffect(() => {
+        if (startMaxPriceSuccess) {
+            form.setValue('start_max_price', startMaxPrice)
+            form.setValue('need_update', false)
+        }
+    }, [startMaxPriceSuccess])
 
     useEffect(() => {
         if (purchaseInitiateSuccess || purchaseUpdateSuccess) {
@@ -325,7 +349,7 @@ export const InitiatePurchase = () => {
         }
     }, [purchaseInitiateSuccess, purchaseUpdateSuccess])
 
-    useErrorToast(purchaseInitiateError || purchaseUpdateError)
+    useErrorToast(purchaseInitiateError || purchaseUpdateError || startMaxPriceError)
 
     return (
         <div className="mx-auto w-[95%]">
@@ -341,7 +365,10 @@ export const InitiatePurchase = () => {
                         currentStep={currentStep}
                     />
                     <div className="flex-center mt-16 select-none gap-3">
-                        <Button className="h-12 w-[200px] gap-4" loading={purchaseInitiating || purchaseUpdating}>
+                        <Button
+                            className="h-12 w-[200px] gap-4"
+                            loading={purchaseInitiating || purchaseUpdating || startMaxPricePending}
+                        >
                             <PlusCircleIcon />
                             {t('action.next')}
                         </Button>

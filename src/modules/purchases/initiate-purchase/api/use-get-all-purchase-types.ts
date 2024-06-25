@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Data, Payload } from '@/types/fetch'
 import { PurchaseType, PurchaseTypeSort } from '@/types/purchase'
 import { useQuery } from '@tanstack/react-query'
@@ -10,7 +11,7 @@ const getAllPurchaseTypes = async (body: Payload<PurchaseType, PurchaseTypeSort>
 
 export const useGetAllPurchaseTypes = (body: Payload<PurchaseType, PurchaseTypeSort>) =>
     useQuery({
-        queryKey: ['purchase-types', body],
+        queryKey: [ApiKeys.PurchaseTypes, body],
         queryFn: () => getAllPurchaseTypes(body),
         select: (data) => data.data,
     })
