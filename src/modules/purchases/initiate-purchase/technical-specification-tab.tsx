@@ -1,9 +1,9 @@
 import { UseFormReturn } from 'react-hook-form'
-import { PurchaseSchema } from '../initiate-purchase'
+import { PurchaseSchema } from './initiate-purchase'
 import { useTranslation } from 'react-i18next'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'
-import { RichTextEditorTab } from './rich-text-editor-tab'
-import { ProductsTab } from './products/products-tab'
+import { RichTextEditorTab } from './technical-specification/rich-text-editor-tab'
+import { ProductsTab } from './technical-specification/products/products-tab'
 
 export const TechnicalSpecificationTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) => {
     const { t } = useTranslation()

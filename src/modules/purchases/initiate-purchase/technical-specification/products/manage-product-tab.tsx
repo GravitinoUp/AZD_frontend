@@ -6,6 +6,7 @@ import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
 import { LucideTrash2, Plus } from 'lucide-react'
 import { productSchema } from '../../initiate-purchase'
+import MinusIcon from '@/assets/icons/minus.svg'
 
 interface ManageProductTabProps {
     selectedProduct?: z.infer<typeof productSchema> | false
@@ -114,8 +115,8 @@ export const ManageProductTab = ({ selectedProduct, onSubmit, onCancel }: Manage
                                             required
                                         />
                                         <InputField
-                                            label={t('property-measurement')}
-                                            placeholder={t('property-measurement')}
+                                            label={t('measurement')}
+                                            placeholder={t('measurement')}
                                             value={property.property_measurement}
                                             onChange={(e) => {
                                                 if (field.value) {
@@ -129,9 +130,9 @@ export const ManageProductTab = ({ selectedProduct, onSubmit, onCancel }: Manage
                                         />
                                     </div>
                                     <Button
-                                        className="h-8 min-h-8 w-8 min-w-8"
-                                        size="icon"
+                                        className="h-8 min-h-8 w-8 min-w-8 border border-table bg-muted hover:bg-muted/50"
                                         type="button"
+                                        size="icon"
                                         onClick={() => {
                                             if (field.value) {
                                                 const newArray = [...field.value]
@@ -141,7 +142,7 @@ export const ManageProductTab = ({ selectedProduct, onSubmit, onCancel }: Manage
                                             }
                                         }}
                                     >
-                                        <LucideTrash2 size={18} />
+                                        <MinusIcon />
                                     </Button>
                                 </div>
                             ))}

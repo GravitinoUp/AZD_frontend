@@ -47,6 +47,7 @@ export const ProductsTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }) =
                                 }
 
                                 setCurrentTab('product-list')
+                                setSelectedProduct(false)
                             }}
                         />
                     )}

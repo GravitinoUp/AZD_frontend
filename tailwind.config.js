@@ -60,6 +60,7 @@ module.exports = {
             },
             boxShadow: {
                 custom: '0px 2px 5px 0px #00000033',
+                product: '0px 2px 10px 0 rgba(0, 0, 0, 0.05)',
             },
             borderRadius: {
                 lg: 'var(--radius)',
