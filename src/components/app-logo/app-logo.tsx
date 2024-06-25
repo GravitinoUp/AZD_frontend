@@ -14,14 +14,12 @@ export const AppLogo = ({ variant = 'light', expanded }: AppLogoProps) => {
     return (
         <div className="flex-center mt-4 gap-3">
             {variant === 'light' ? <Logo /> : <LogoBlack />}
-            {expanded ? (
+            {expanded && (
                 <span
                     className={cn('w-[200px] whitespace-nowrap text-xl font-bold', variant === 'light' && 'text-white')}
                 >
                     {t('app-name')}
                 </span>
-            ) : (
-                void 0
             )}
         </div>
     )

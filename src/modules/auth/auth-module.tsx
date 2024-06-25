@@ -14,7 +14,7 @@ import { AxiosError } from 'axios'
 import { ErrorResponse } from '@/types/fetch'
 import { AppLogo } from '@/components/app-logo'
 import { Watermark } from '@/components/watermark'
-import { LOGIN_IMAGES } from '@/shared/constants'
+import { COOKIE_LIFETIME, LOGIN_IMAGES } from '@/shared/constants'
 import { Eye, EyeOff } from 'lucide-react'
 
 const authSchema = z.object({
@@ -28,6 +28,8 @@ export const AuthModule = () => {
 
     const [passwordShown, setPasswordShown] = useState(false)
     const [bgImage, setBgImage] = useState('')
+
+    const EyeIcon = passwordShown ? Eye : EyeOff
 
     const form = useForm({
         schema: authSchema,
@@ -51,7 +53,7 @@ export const AuthModule = () => {
 
     useEffect(() => {
         if (authSuccess) {
-            setCookieValue('accessToken', authData.accessToken, '43200')
+            setCookieValue('accessToken', authData.accessToken, COOKIE_LIFETIME)
             setCookieValue('refreshToken', authData.refreshToken, '')
 
             navigate('/', { replace: true })
@@ -110,11 +112,7 @@ export const AuthModule = () => {
                                                 className="h-12 rounded-l-none rounded-r-xl px-4"
                                                 onClick={() => setPasswordShown(!passwordShown)}
                                             >
-                                                {passwordShown ? (
-                                                    <Eye size={20} strokeWidth={2.4} color="#3F434A" />
-                                                ) : (
-                                                    <EyeOff size={20} strokeWidth={2.4} color="#3F434A" />
-                                                )}
+                                                <EyeIcon size={20} strokeWidth={2.4} color="#3F434A" />
                                             </Button>
                                         }
                                         {...field}

@@ -39,6 +39,8 @@ export const RegisterModule = () => {
     const [passwordShown, setPasswordShown] = useState(false)
     const [bgImage, setBgImage] = useState('')
 
+    const EyeIcon = passwordShown ? Eye : EyeOff
+
     const form = useForm({
         schema: registerSchema,
         defaultValues: {
@@ -207,11 +209,7 @@ export const RegisterModule = () => {
                                                 className="h-12 rounded-l-none rounded-r-xl px-4"
                                                 onClick={() => setPasswordShown(!passwordShown)}
                                             >
-                                                {passwordShown ? (
-                                                    <Eye size={20} strokeWidth={2.4} color="#3F434A" />
-                                                ) : (
-                                                    <EyeOff size={20} strokeWidth={2.4} color="#3F434A" />
-                                                )}
+                                                <EyeIcon size={20} strokeWidth={2.4} color="#3F434A" />
                                             </Button>
                                         }
                                         {...field}

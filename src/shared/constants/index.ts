@@ -11,3 +11,5 @@ export const LOGIN_IMAGES = [
     'src/assets/images/auth/auth-image-8.jpg',
     'src/assets/images/auth/auth-image-9.jpg',
 ]
+
+export const COOKIE_LIFETIME = '43200'
