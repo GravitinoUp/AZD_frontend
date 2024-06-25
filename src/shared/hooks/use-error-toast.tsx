@@ -16,8 +16,6 @@ export const useErrorToast = (error?: Error | null, repeatFn?: () => void) => {
             const axiosError = error as AxiosError
             const errorResponse = axiosError.response?.data as ErrorResponse
 
-            console.log(errorResponse)
-
             toast({
                 variant: 'destructive',
                 title: t('error.title'),

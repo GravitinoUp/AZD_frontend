@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Limit } from '@/types/limits.ts'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
@@ -10,6 +11,6 @@ const getLimitById = async (id: string | number) => {
 
 export const useLimit = (id: string | number) =>
     useQuery({
-        queryKey: ['limits', id],
+        queryKey: [ApiKeys.Limits, id],
         queryFn: () => getLimitById(id),
     })

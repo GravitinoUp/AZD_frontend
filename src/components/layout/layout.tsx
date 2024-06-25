@@ -1,4 +1,5 @@
 import { SideBar } from '@/modules/sidebar'
+import { useRefresh } from '@/shared/hooks/use-refresh'
 import { cn } from '@/shared/lib/cn.ts'
 import { Toaster } from '@/ui/toaster.tsx'
 import { useState } from 'react'
@@ -6,6 +7,8 @@ import { Outlet } from 'react-router-dom'
 
 export const Layout = () => {
     const [sidebarExpanded, setSidebarExpanded] = useState(false)
+
+    useRefresh()
 
     return (
         <>

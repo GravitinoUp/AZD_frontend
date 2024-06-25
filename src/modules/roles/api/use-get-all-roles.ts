@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Data, Payload } from '@/types/fetch'
 import { Role, RoleSort } from '@/types/user'
 import { useQuery } from '@tanstack/react-query'
@@ -10,6 +11,6 @@ const getAllRoles = async (body: Payload<Role, RoleSort>) => {
 
 export const useGetAllRoles = (body: Payload<Role, RoleSort>) =>
     useQuery({
-        queryKey: ['roles', body],
+        queryKey: [ApiKeys.Roles, body],
         queryFn: () => getAllRoles(body),
     })
