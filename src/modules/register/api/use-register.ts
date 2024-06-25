@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Result } from '@/types/fetch'
 import { User, UserPayload } from '@/types/user'
 import { useMutation } from '@tanstack/react-query'
@@ -10,6 +11,6 @@ const register = async (body: UserPayload) => {
 
 export const useRegister = () =>
     useMutation({
-        mutationKey: ['users'],
+        mutationKey: [ApiKeys.Users],
         mutationFn: register,
     })

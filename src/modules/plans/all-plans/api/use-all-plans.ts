@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { placeholderQuery } from '@/shared/constants'
 import { Data } from '@/types/fetch.ts'
 import { Plan } from '@/types/plans.ts'
@@ -14,6 +15,6 @@ const getAllPlans = async () => {
 
 export const useAllPlans = () =>
     useQuery({
-        queryKey: ['plans'],
+        queryKey: [ApiKeys.Plans],
         queryFn: getAllPlans,
     })

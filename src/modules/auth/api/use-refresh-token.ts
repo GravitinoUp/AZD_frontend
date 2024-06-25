@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { RefreshPayload } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
 
@@ -9,6 +10,6 @@ const refreshToken = async (body: RefreshPayload) => {
 
 export const useRefreshToken = () =>
     useMutation({
-        mutationKey: ['auth'],
+        mutationKey: [ApiKeys.Auth],
         mutationFn: refreshToken,
     })

@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { AuthPayload, JWT } from '@/types/auth'
 import { useMutation } from '@tanstack/react-query'
 
@@ -9,6 +10,6 @@ const auth = async (body: AuthPayload) => {
 
 export const useAuth = () =>
     useMutation({
-        mutationKey: ['auth'],
+        mutationKey: [ApiKeys.Auth],
         mutationFn: auth,
     })
