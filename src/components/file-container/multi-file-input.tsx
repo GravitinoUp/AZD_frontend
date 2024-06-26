@@ -11,13 +11,15 @@ export interface FileData {
 }
 
 interface MultiFileInputProps {
-    setSelectedFiles: Dispatch<SetStateAction<FileData[]>>
+    selectedFiles: FileData[]
+    setSelectedFiles: (files: FileData[]) => void
     disabled?: boolean
     fileType?: string
     uploadIcon?: React.ReactNode
 }
 
 export const MultiFileInput = ({
+    selectedFiles,
     setSelectedFiles,
     disabled,
     fileType = '*/*',
@@ -37,7 +39,7 @@ export const MultiFileInput = ({
             })
         })
 
-        setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles])
+        setSelectedFiles([...selectedFiles, ...newFiles])
     }
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -74,17 +76,17 @@ export const MultiFileInput = ({
                     'flex-center h-[240px] w-full rounded-[10px] border-[1.5px] border-dashed border-secondary-border bg-[#F2F3F7]',
                     disabled ? 'cursor-default opacity-45' : 'cursor-pointer'
                 )}
-                onClick={handleAddClick}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
+                onClick={!disabled ? handleAddClick : undefined}
+                onDragOver={!disabled ? handleDragOver : undefined}
+                onDragLeave={!disabled ? handleDragLeave : undefined}
+                onDrop={!disabled ? handleDrop : undefined}
             >
                 <input
                     style={{ display: 'none' }}
                     ref={inputRef}
                     type="file"
                     accept={fileType}
-                    onChange={handleFileChange}
+                    onChange={!disabled ? handleFileChange : undefined}
                 />
                 <div
                     className={cn(

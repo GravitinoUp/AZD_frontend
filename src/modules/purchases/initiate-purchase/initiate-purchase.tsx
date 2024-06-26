@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { Tabs, TabsContent } from '@/ui/tabs'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { GeneralInfoTab } from './general-info-tab'
 import { Form, useForm } from '@/components/form'
 import i18next from 'i18next'
@@ -19,6 +19,7 @@ import { Purchase } from '@/types/purchase'
 import { formatShortDate } from '@/shared/lib/format-short-date'
 import { useUpdatePurchase } from './api/use-update-purchase'
 import { useGetStartMaxPrice } from './api/use-get-start-max-price'
+import { ContractExecutionTab } from './contract-execution-tab'
 
 export const fileSchema = z.object({
     id: z.string(),
@@ -47,36 +48,36 @@ const purchaseSchema = z
     .object({
         step: z.number(),
         purchase_uuid: z.string().optional(),
-        purchase_name: z.string().optional(), // required step 1
-        purchase_type_id: z.number().optional(), // required step 1
-        delivery_address: z.string().optional(), // required step 1
-        quality_guarantee_period: z.string().optional(), // required step 1
-        currency_code: z.string().optional(), // required step 1
-        is_organization_fund: z.boolean(), // TODO required step 1
-        is_unilateral_refusal: z.boolean(), // TODO required step 1
-        manufacturer_guarantee: z.string().optional(), // optional step 1
-        application_enforcement: z.string().optional(), // optional step 1
-        contract_enforcement: z.string().optional(), // optional step 1
-        warranty_obligations_enforcement: z.string().optional(), // optional step 1
-        additional_info: z.string().optional(), // optional step 1
-        technical_specification: z.string().optional(), // required step 2
-        products: z.array(productSchema).optional(), // required step 2
-        commercial_offer_text: z.string().optional(), // required step 3
-        commercial_offers: z.array(commercialOfferSchema), // required step 3 4 (MIN 3)
-        need_update: z.boolean(), // step 4
-        start_max_price: z.number().optional(), // optional step 4
+        purchase_name: z.string().optional(), // required step 0
+        purchase_type_id: z.number().optional(), // required step 0
+        delivery_address: z.string().optional(), // required step 0
+        quality_guarantee_period: z.string().optional(), // required step 0
+        currency_code: z.string().optional(), // required step 0
+        is_organization_fund: z.boolean(), // TODO required step 0
+        is_unilateral_refusal: z.boolean(), // TODO required step 0
+        manufacturer_guarantee: z.string().optional(), // optional step 0
+        application_enforcement: z.string().optional(), // optional step 0
+        contract_enforcement: z.string().optional(), // optional step 0
+        warranty_obligations_enforcement: z.string().optional(), // optional step 0
+        additional_info: z.string().optional(), // optional step 0
+        technical_specification: z.string().optional(), // required step 1
+        products: z.array(productSchema).optional(), // required step 1
+        commercial_offer_text: z.string().optional(), // required step 2
+        commercial_offers: z.array(commercialOfferSchema), // required step 2 3 (MIN 3)
+        need_update: z.boolean(), // step 3
+        start_max_price: z.number().optional(), // optional step 3
         end_application_date: z.string().optional(),
         executor_date: z.string().optional(),
-        end_price: z.number().optional(), // TODO step 4
-        documents: z.array(fileSchema), // TODO step 5
-        start_date: z.string().optional(), // TODO
-        end_date: z.string().optional(), // TODO
+        end_price: z.number().optional(), // TODO step 3
+        documents: z.array(fileSchema), // TODO step 4
+        start_date: z.string().optional(), // step 5
+        end_date: z.string().optional(), // step 5
+        executor_uuid: z.string().optional(), // step 5
         purchase_identification_code: z.string().optional(),
         contract_identification_code: z.string().optional(),
-        executor_uuid: z.string().optional(),
     })
     .superRefine((values, ctx) => {
-        if (values.step === 5) {
+        if (values.step === 4) {
             // STEP 0
             if (values.manufacturer_guarantee && !Number(values.manufacturer_guarantee)) {
                 ctx.addIssue({
@@ -152,6 +153,33 @@ const purchaseSchema = z
                     })
                 }
             }
+        } else if (values.step === 5) {
+            if (!values.start_date) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['start_date'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+
+            if (!values.end_date) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['end_date'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+
+            if (!values.executor_uuid) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['executor_uuid'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
         }
     })
 
@@ -201,23 +229,14 @@ export const InitiatePurchase = () => {
               }
             : {
                   step: 0,
-                  purchase_name: '',
                   purchase_type_id: 0,
-                  delivery_address: '',
-                  contract_enforcement: '',
-                  quality_guarantee_period: '',
-                  manufacturer_guarantee: '',
-                  warranty_obligations_enforcement: '',
-                  additional_info: '',
-                  currency_code: '',
-                  end_date: '',
                   products: [],
                   commercial_offers: [],
+                  documents: [],
                   start_max_price: 0,
-                  need_update: true,
                   is_organization_fund: false,
                   is_unilateral_refusal: false,
-                  documents: [],
+                  need_update: true,
               },
     })
 
@@ -248,6 +267,11 @@ export const InitiatePurchase = () => {
             value: 'contract-project',
             label: i18next.t('contract-project'),
             content: <ContractProjectTab form={form} />,
+        },
+        {
+            value: 'contract-execution',
+            label: i18next.t('contract-execution'),
+            content: <ContractExecutionTab form={form} />,
         },
         {
             value: 'done',
@@ -283,16 +307,16 @@ export const InitiatePurchase = () => {
         if (currentStep === 0) {
             if (!purchase) {
                 initiatePurchase({
-                    executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
                     purchase_name: data.purchase_name,
-                    purchase_type_id: data.purchase_type_id,
+                    purchase_type_id: data.purchase_type_id !== 0 ? data.purchase_type_id : undefined,
                     delivery_address: data.delivery_address,
-                    quality_guarantee_period: Number(data.quality_guarantee_period),
+                    quality_guarantee_period: data.quality_guarantee_period
+                        ? Number(data.quality_guarantee_period)
+                        : undefined,
                     manufacturer_guarantee: data.manufacturer_guarantee
                         ? Number(data.manufacturer_guarantee)
                         : undefined,
                     currency_code: data.currency_code,
-                    end_date: data.end_date,
                     is_organization_fund: data.is_organization_fund,
                     is_unilateral_refusal: data.is_unilateral_refusal,
                     application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
@@ -303,7 +327,6 @@ export const InitiatePurchase = () => {
                 })
             } else {
                 updatePurchase({
-                    executor_uuid: 'df33e1fe-664d-4bd1-bf14-12e8cf99e5ac', // TODO remove
                     purchase_uuid: data.purchase_uuid,
                     purchase_name: data.purchase_name,
                     purchase_type_id: data.purchase_type_id,
@@ -324,22 +347,32 @@ export const InitiatePurchase = () => {
                 })
             }
         } else if (currentStep === 1) {
+            // TODO send technical specification
             updatePurchase({
                 purchase_uuid: data.purchase_uuid,
             })
         } else if (currentStep === 2) {
-            // TODO add organizations
+            // TODO send commercial offers
         } else if (currentStep === 3) {
             if (!data.need_update) {
-                setCurrentTab(tabsData[currentStep + 1].value)
-                form.setValue('step', currentStep + 1)
+                updatePurchase({
+                    purchase_uuid: data.purchase_uuid,
+                    start_max_price: data.start_max_price,
+                })
             } else {
                 const commercialValues = data.commercial_offers.map((value) => Number(value.price))
                 getStartMaxPrice({ prices: commercialValues, formula: 'min' })
             }
         } else if (currentStep === 4) {
             // TODO contract project
-        } else if (currentStep !== 5) {
+        } else if (currentStep === 5) {
+            updatePurchase({
+                purchase_uuid: data.purchase_uuid,
+                start_date: data.start_date,
+                end_date: data.end_date,
+                executor_uuid: data.executor_uuid,
+            })
+        } else if (currentStep !== 6) {
             setCurrentTab(tabsData[currentStep + 1].value)
             form.setValue('step', currentStep + 1)
         }
@@ -353,17 +386,28 @@ export const InitiatePurchase = () => {
     }, [startMaxPriceSuccess])
 
     useEffect(() => {
-        if (purchaseInitiateSuccess || purchaseUpdateSuccess) {
+        if (purchaseInitiateSuccess) {
             setCurrentTab(tabsData[currentStep + 1].value)
             form.setValue('step', currentStep + 1)
-
-            if (purchaseInitiateSuccess) {
-                form.setValue('purchase_uuid', createdPurchase.data?.purchase_uuid)
-            }
+            form.setValue('purchase_uuid', createdPurchase.data?.purchase_uuid)
         }
-    }, [purchaseInitiateSuccess, purchaseUpdateSuccess])
+    }, [purchaseInitiateSuccess])
 
-    useErrorToast(purchaseInitiateError || purchaseUpdateError || startMaxPriceError)
+    useEffect(() => {
+        if (purchaseInitiateSuccess) {
+            setCurrentTab(tabsData[currentStep + 1].value)
+            form.setValue('step', currentStep + 1)
+        }
+    }, [purchaseUpdateSuccess])
+
+    useErrorToast(purchaseInitiateError)
+    useErrorToast(purchaseUpdateError)
+    useErrorToast(startMaxPriceError)
+
+    const nextButtonText = useMemo(
+        () => (currentStep !== 4 ? t('action.save.and.next') : t('action.complete')),
+        [currentStep]
+    )
 
     return (
         <div className="mx-auto w-[95%]">
@@ -378,19 +422,19 @@ export const InitiatePurchase = () => {
                         }}
                         currentStep={currentStep}
                     />
-                    <div className="flex-center mt-16 select-none gap-3">
+                    <div className="flex-center mt-16 select-none flex-wrap gap-3">
                         <Button
-                            className="h-12 w-[200px] gap-4"
+                            className="h-12 gap-4"
                             loading={purchaseInitiating || purchaseUpdating || startMaxPricePending}
                         >
                             <PlusCircleIcon />
-                            {t('action.next')}
+                            {nextButtonText}
                         </Button>
                         <Button
                             className="h-12 w-[200px] bg-secondary"
                             variant="outline"
                             type="button"
-                            disabled={currentStep > 4}
+                            disabled={currentStep > 3}
                             onClick={() => {
                                 setCurrentTab(tabsData[currentStep + 1].value)
                                 form.setValue('step', currentStep + 1)

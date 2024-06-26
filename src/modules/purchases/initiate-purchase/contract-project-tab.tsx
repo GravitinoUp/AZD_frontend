@@ -19,7 +19,11 @@ export const ContractProjectTab = ({ form }: { form: UseFormReturn<PurchaseSchem
                     render={({ field }) => (
                         <FormItem className="flex flex-col items-start">
                             <FormLabel>{t('action.attach.document')}</FormLabel>
-                            <MultiFileInput setSelectedFiles={field.onChange} />
+                            <MultiFileInput
+                                disabled={field.value.length > 4}
+                                selectedFiles={field.value}
+                                setSelectedFiles={field.onChange}
+                            />
                             {field.value.map(
                                 (value, index) =>
                                     value.file && (

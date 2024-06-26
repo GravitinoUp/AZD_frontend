@@ -19,7 +19,7 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
         isSuccess: purchaseTypesSuccess,
         error: purchaseTypesError,
     } = useGetAllPurchaseTypes(placeholderQuery)
-    const formattedRoles = purchaseTypes.map((value) => ({
+    const formattedPurchases = purchaseTypes.map((value) => ({
         value: value.purchase_type_id,
         label: value.purchase_type_name,
     }))
@@ -44,7 +44,7 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                                 <CommandSelect
                                     selectedValue={field.value ? field.value : 0}
                                     setSelectedValue={(value) => field.onChange(value !== '' ? value : 0)}
-                                    items={formattedRoles}
+                                    items={formattedPurchases}
                                 />
                             )}
                             <FormMessage />
@@ -71,16 +71,6 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                     name="manufacturer_guarantee"
                     render={({ field }) => <InputField label={t('manufacturer-guarantee')} {...field} />}
                 />
-                {/* <FormField
-                    control={form.control}
-                    name="start_date"
-                    render={({ field }) => <InputField type="date" label={t('start-date')} {...field} />}
-                />
-                <FormField
-                    control={form.control}
-                    name="end_date"
-                    render={({ field }) => <InputField type="date" label={t('end-date')} {...field} />}
-                /> */}
                 <FormField
                     control={form.control}
                     name="application_enforcement"
