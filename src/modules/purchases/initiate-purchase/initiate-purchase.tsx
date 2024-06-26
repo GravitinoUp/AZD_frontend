@@ -305,7 +305,7 @@ export const InitiatePurchase = () => {
 
     const handleSubmit = (data: z.infer<typeof purchaseSchema>) => {
         if (currentStep === 0) {
-            if (!purchase) {
+            if (!data.purchase_uuid) {
                 initiatePurchase({
                     purchase_name: data.purchase_name,
                     purchase_type_id: data.purchase_type_id !== 0 ? data.purchase_type_id : undefined,
