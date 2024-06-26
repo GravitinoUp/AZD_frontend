@@ -77,8 +77,15 @@ const purchaseSchema = z
         contract_identification_code: z.string().optional(),
     })
     .superRefine((values, ctx) => {
-        if (values.step === 4) {
-            // STEP 0
+        if (values.step === 0 || values.step === 4) {
+            if (values.quality_guarantee_period && !Number(values.quality_guarantee_period)) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['quality_guarantee_period'],
+                    fatal: true,
+                    message: i18next.t('error.number.format'),
+                })
+            }
             if (values.manufacturer_guarantee && !Number(values.manufacturer_guarantee)) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -111,7 +118,9 @@ const purchaseSchema = z
                     message: i18next.t('error.number.format'),
                 })
             }
+        }
 
+        if (values.step === 4) {
             // STEP 1
             if (!values.technical_specification) {
                 ctx.addIssue({
@@ -199,33 +208,44 @@ export const InitiatePurchase = () => {
         defaultValues: purchase
             ? {
                   step: 0,
-                  ...purchase,
-                  purchase_name: purchase.purchase_name ?? '',
-                  delivery_address: purchase.delivery_address ?? '',
-                  currency_code: purchase.currency_code ?? '',
-                  is_organization_fund: purchase.is_organization_fund ?? false,
-                  is_unilateral_refusal: purchase.is_unilateral_refusal ?? false,
+                  purchase_uuid: purchase.purchase_uuid,
+                  purchase_name: purchase.purchase_name ?? undefined,
+                  purchase_type_id: purchase.purchase_type ? purchase.purchase_type.purchase_type_id : 0,
+                  delivery_address: purchase.delivery_address ?? undefined,
                   quality_guarantee_period: purchase.quality_guarantee_period
                       ? String(purchase.quality_guarantee_period)
                       : '',
+                  currency_code: purchase.currency_code ?? undefined,
+                  is_organization_fund: purchase.is_organization_fund ?? false,
+                  is_unilateral_refusal: purchase.is_unilateral_refusal ?? false,
                   manufacturer_guarantee: purchase.manufacturer_guarantee
                       ? String(purchase.manufacturer_guarantee)
                       : '',
                   application_enforcement: purchase.application_enforcement
                       ? String(purchase.application_enforcement)
                       : '',
-                  contract_enforcement: purchase.contract_enforcement ? String(purchase.contract_enforcement) : '',
-                  warranty_obligations_enforcement: purchase.warranty_obligations_enforcement ?? '',
+                  contract_enforcement: purchase.contract_enforcement
+                      ? String(purchase.contract_enforcement)
+                      : undefined,
+                  warranty_obligations_enforcement: purchase.warranty_obligations_enforcement ?? undefined,
+                  additional_info: purchase.additional_info ?? undefined,
+                  technical_specification: undefined,
+                  products: [],
+                  commercial_offer_text: undefined,
+                  commercial_offers: [],
+                  need_update: true,
+                  start_max_price: purchase.start_max_price ?? 0,
+                  end_application_date: purchase.end_application_date
+                      ? formatShortDate(purchase.end_application_date)
+                      : '',
+                  executor_date: purchase.executor_date ? formatShortDate(purchase.executor_date) : '',
+                  end_price: purchase.end_price ?? 0,
+                  documents: [],
                   start_date: purchase.start_date ? formatShortDate(purchase.start_date) : '',
                   end_date: purchase.end_date ? formatShortDate(purchase.end_date) : '',
-                  purchase_identification_code: purchase.purchase_identification_code ?? '',
-                  contract_identification_code: purchase.contract_identification_code ?? '',
-                  additional_info: purchase.additional_info ?? '',
-                  end_application_date: purchase.end_application_date ?? '',
-                  executor_date: purchase.executor_date ?? '',
-                  start_max_price: purchase.start_max_price ?? 0,
-                  end_price: purchase.end_price ? purchase.end_price : 0,
-                  need_update: true,
+                  executor_uuid: purchase.executor ? purchase.executor.organization_uuid : '',
+                  purchase_identification_code: purchase.purchase_identification_code ?? undefined,
+                  contract_identification_code: purchase.contract_identification_code ?? undefined,
               }
             : {
                   step: 0,
@@ -310,38 +330,31 @@ export const InitiatePurchase = () => {
                     purchase_name: data.purchase_name,
                     purchase_type_id: data.purchase_type_id !== 0 ? data.purchase_type_id : undefined,
                     delivery_address: data.delivery_address,
-                    quality_guarantee_period: data.quality_guarantee_period
-                        ? Number(data.quality_guarantee_period)
-                        : undefined,
-                    manufacturer_guarantee: data.manufacturer_guarantee
-                        ? Number(data.manufacturer_guarantee)
-                        : undefined,
-                    currency_code: data.currency_code,
+                    quality_guarantee_period: data.quality_guarantee_period ? Number(data.quality_guarantee_period) : 0,
+                    manufacturer_guarantee: data.manufacturer_guarantee ? Number(data.manufacturer_guarantee) : 0,
+                    currency_code: data.currency_code !== '' ? data.currency_code : undefined,
                     is_organization_fund: data.is_organization_fund,
                     is_unilateral_refusal: data.is_unilateral_refusal,
-                    application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
-                    contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
+                    application_enforcement: data.application_enforcement ? data.application_enforcement : '',
+                    contract_enforcement: data.contract_enforcement ? data.contract_enforcement : '',
                     warranty_obligations_enforcement: data.warranty_obligations_enforcement
                         ? data.warranty_obligations_enforcement
-                        : undefined,
+                        : '',
                 })
             } else {
                 updatePurchase({
                     purchase_uuid: data.purchase_uuid,
                     purchase_name: data.purchase_name,
-                    purchase_type_id: data.purchase_type_id,
+                    purchase_type_id: data.purchase_type_id !== 0 ? data.purchase_type_id : undefined,
                     delivery_address: data.delivery_address,
-                    quality_guarantee_period: Number(data.quality_guarantee_period),
-                    manufacturer_guarantee: data.manufacturer_guarantee
-                        ? Number(data.manufacturer_guarantee)
-                        : undefined,
-                    currency_code: data.currency_code,
-                    end_date: data.end_date,
-                    application_enforcement: data.application_enforcement ? data.application_enforcement : undefined,
-                    contract_enforcement: data.contract_enforcement ? data.contract_enforcement : undefined,
+                    quality_guarantee_period: data.quality_guarantee_period ? Number(data.quality_guarantee_period) : 0,
+                    manufacturer_guarantee: data.manufacturer_guarantee ? Number(data.manufacturer_guarantee) : 0,
+                    currency_code: data.currency_code !== '' ? data.currency_code : undefined,
+                    application_enforcement: data.application_enforcement ? data.application_enforcement : '0',
+                    contract_enforcement: data.contract_enforcement ? data.contract_enforcement : '0',
                     warranty_obligations_enforcement: data.warranty_obligations_enforcement
                         ? data.warranty_obligations_enforcement
-                        : undefined,
+                        : '0',
                     is_organization_fund: data.is_organization_fund,
                     is_unilateral_refusal: data.is_unilateral_refusal,
                 })
@@ -394,7 +407,7 @@ export const InitiatePurchase = () => {
     }, [purchaseInitiateSuccess])
 
     useEffect(() => {
-        if (purchaseInitiateSuccess) {
+        if (purchaseUpdateSuccess) {
             setCurrentTab(tabsData[currentStep + 1].value)
             form.setValue('step', currentStep + 1)
         }
