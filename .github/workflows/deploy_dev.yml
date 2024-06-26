@@ -29,7 +29,8 @@ jobs:
           url: https://vault.devops.gravitino.ru
           token: ${{ secrets.VAULT_GITHUB_SECRET }}
           secrets: |
-            secret/azd-frontend/dev VITE_BASE_URL | VITE_BASE_URL
+            secret/azd-frontend/dev VITE_BASE_URL | VITE_BASE_URL ;
+            secret/azd-frontend/dev VITE_API | VITE_API
 
       - name: Build Docker image
         run: |
