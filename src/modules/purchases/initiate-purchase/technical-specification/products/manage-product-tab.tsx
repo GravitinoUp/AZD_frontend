@@ -60,7 +60,7 @@ export const ManageProductTab = ({ selectedProduct, onSubmit, onCancel }: Manage
                 render={({ field }) => (
                     <>
                         <div className="flex-center gap-2">
-                            <p className="my-10 font-bold">{t('properties')}</p>
+                            <p className="my-10 font-bold">{t('technical-properties')}</p>
                             <Button
                                 className="h-8 min-h-8 w-8 min-w-8"
                                 size="icon"
