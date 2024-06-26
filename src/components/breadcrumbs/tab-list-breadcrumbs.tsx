@@ -13,14 +13,17 @@ interface TabListBreadcrumbsProps {
 }
 
 export const TabListBreadcrumbs = ({ tabsData, onTabClick, currentStep }: TabListBreadcrumbsProps) => (
-    <TabsList className="my-14 w-full select-none items-start self-center">
+    <TabsList className="mt-14 h-full w-full select-none flex-col items-start self-center md:flex-row">
         {tabsData.map(({ value, label }, index) => (
             <div
                 key={value}
-                className={cn('flex flex-col gap-1', index !== tabsData.length - 1 && 'w-full')}
+                className={cn(
+                    'flex flex-row items-center gap-1 md:flex-col md:items-start',
+                    index !== tabsData.length - 1 && 'w-full'
+                )}
                 onClick={() => onTabClick(value, index)}
             >
-                <div className="flex items-center">
+                <div className="flex items-center md:w-full">
                     <div
                         className={cn(
                             'flex-center min-h-8 min-w-8 rounded-full border-2 border-[#F3F3F3]',
@@ -35,7 +38,12 @@ export const TabListBreadcrumbs = ({ tabsData, onTabClick, currentStep }: TabLis
                         />
                     </div>
                     {index !== tabsData.length - 1 && (
-                        <div className={cn('h-[6px] w-full', currentStep > index ? 'bg-primary' : 'bg-white')} />
+                        <div
+                            className={cn(
+                                'hidden h-[6px] w-full md:block',
+                                currentStep > index ? 'bg-primary' : 'bg-white'
+                            )}
+                        />
                     )}
                 </div>
                 <p className="text-start font-semibold">{label}</p>
