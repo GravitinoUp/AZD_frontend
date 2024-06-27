@@ -5,6 +5,7 @@ import { setCookieValue } from '../lib/set-cookie-value'
 import { COOKIE_LIFETIME } from '../constants'
 import { AUTH, REGISTER } from '../router/routes'
 import { useRefreshToken } from '@/modules/auth/api/use-refresh-token'
+import { apiRequest } from '../api'
 
 export const useRefresh = () => {
     const navigate = useNavigate()
@@ -32,6 +33,7 @@ export const useRefresh = () => {
     useEffect(() => {
         if (refreshSuccess) {
             setCookieValue('accessToken', newAccessToken, COOKIE_LIFETIME)
+            apiRequest.defaults.headers.Authorization = `Bearer ${newAccessToken}`
 
             if (pathname === AUTH || pathname === REGISTER) {
                 navigate('/', { replace: true })
