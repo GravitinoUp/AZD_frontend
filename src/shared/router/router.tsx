@@ -22,7 +22,7 @@ import {
     ORGANIZATIONS,
     PLANS,
     PROPERTIES,
-    PROPERTIES_MANAGE,
+    PROPERTY_MANAGE,
     REGISTER,
     ROLE_MANAGE,
     ROLES,
@@ -188,7 +188,7 @@ export const router = createBrowserRouter([
                 ),
             },
             {
-                path: PROPERTIES_MANAGE,
+                path: PROPERTY_MANAGE,
                 element: (
                     <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>

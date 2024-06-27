@@ -1,5 +1,5 @@
 import { RouterButton } from '@/components/router-button'
-import { PROPERTIES_MANAGE } from '@/shared/router/routes'
+import { PROPERTY_MANAGE } from '@/shared/router/routes'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/ui/tabs'
 import AllOrganizationsIcon from '@/assets/icons/all-organizations.svg'
 import BranchesIcon from '@/assets/icons/branches.svg'
@@ -22,7 +22,7 @@ const PropertiesPage = () => {
             <div className="bordered-space" />
             <div className="flex-center mt-20 gap-4">
                 <h1 className="page-title">{t('manage-properties')}</h1>
-                <RouterButton to={PROPERTIES_MANAGE} state={{ entity: currentTab }} />
+                <RouterButton to={PROPERTY_MANAGE} state={{ entity: currentTab }} />
             </div>
             <Tabs value={currentTab} onValueChange={setCurrentTab} className="mt-7">
                 <div className="border-b-2 border-b-tabs-content pb-[3px]">

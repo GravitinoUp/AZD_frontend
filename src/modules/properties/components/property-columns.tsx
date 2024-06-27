@@ -13,7 +13,15 @@ export const propertyColumns: ColumnDef<Property>[] = [
         header: i18next.t('name'),
     },
     {
-        accessorKey: 'entity_name',
-        header: i18next.t('entity'),
+        accessorKey: 'values',
+        header: i18next.t('values'),
+        cell: ({ row }) => {
+            const result = row.original.values.reduce((acc, item) => `${acc}, ${item.property_value}`, '')
+            return <p>{result.substring(2, result.length)}</p>
+        },
     },
+    // {
+    //     id: 'actions',
+    //     cell: ({ row }) => <PropertyActions property={row.original} />,
+    // },
 ]
