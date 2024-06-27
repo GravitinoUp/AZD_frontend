@@ -131,5 +131,8 @@
   "provide.description": "Внимательно заполните все поля ниже",
   "has.account": "Уже есть аккаунт?",
   "no.account": "У вас ещё нет аккаунта?",
-  "watermark": "© 2024 Сделано в Гравитино. All Rights Reserved."
+  "watermark": "© 2024 Сделано в Гравитино. All Rights Reserved.",
+  "entity": "Сущность",
+  "add-property": "Добавление характеристики",
+  "manage-property": "Управление характеристикой"
 }

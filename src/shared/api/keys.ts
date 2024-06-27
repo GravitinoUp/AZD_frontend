@@ -9,4 +9,5 @@ export enum ApiKeys {
     Roles = 'roles',
     People = 'people',
     Permissions = 'permissions',
+    Properties = 'properties',
 }
