@@ -22,8 +22,8 @@ interface CommandMultiSelectProps<T> extends ButtonProps {
 export function CommandMultiSelect<T>({
     selectedValues,
     setSelectedValues,
-    placeholder = i18next.t('multiselect.placeholder.default'),
-    disabledPlaceholder = i18next.t('multiselect.placeholder.default'),
+    placeholder = i18next.t('placeholder.multi.select'),
+    disabledPlaceholder = i18next.t('placeholder.multi.select'),
     disabled = false,
     items,
     className,
@@ -67,7 +67,7 @@ export function CommandMultiSelect<T>({
                     role="combobox"
                     aria-expanded={popoverOpen}
                     className={cn(
-                        'flex h-auto min-h-10 w-full justify-between whitespace-normal rounded-2xl text-left [&>span]:line-clamp-1',
+                        'flex h-12 w-full justify-between whitespace-normal rounded-md text-left [&>span]:line-clamp-1',
                         className
                     )}
                 >
@@ -80,7 +80,7 @@ export function CommandMultiSelect<T>({
                     <CommandInput
                         value={inputValue}
                         onValueChange={setInputValue}
-                        placeholder={canAddMore ? t('add.more') : t('placeholder.search')}
+                        placeholder={canAddMore ? t('add-more') : t('placeholder.search')}
                         onKeyDown={handleKeyDown}
                     />
                     <CommandEmpty>{t('nothing.found')}</CommandEmpty>
@@ -96,7 +96,7 @@ export function CommandMultiSelect<T>({
                                                 setSelectedValues([])
                                             }}
                                         >
-                                            {t('multiselect.unselect.all')}
+                                            {t('action.unselect.all')}
                                             <Check className="ml-2 h-4 w-4 opacity-0" />
                                         </CommandItem>
                                     ) : (
@@ -107,7 +107,7 @@ export function CommandMultiSelect<T>({
                                                 setSelectedValues(items.map((item) => item.value))
                                             }}
                                         >
-                                            {t('multiselect.select.all')}
+                                            {t('action.select.all')}
                                             <Check className="ml-2 h-4 w-4 opacity-0" />
                                         </CommandItem>
                                     ))}
@@ -159,6 +159,9 @@ export function CommandMultiSelect<T>({
                             <ScrollArea.Corner />
                         </ScrollArea.Root>
                     </CommandGroup>
+                    {canAddMore && (
+                        <p className="mb-3 px-2 text-center text-sm text-primary/50">{t('add-more-description')}</p>
+                    )}
                 </Command>
             </PopoverContent>
         </Popover>
