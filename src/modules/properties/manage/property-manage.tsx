@@ -90,7 +90,12 @@ export const PropertyManage = () => {
                 control={form.control}
                 name="property_values"
                 render={({ field }) => (
-                    <CommandMultiSelect selectedValues={field.value} setSelectedValues={field.onChange} items={[]} />
+                    <CommandMultiSelect
+                        selectedValues={field.value}
+                        setSelectedValues={field.onChange}
+                        items={[]}
+                        canAddMore
+                    />
                 )}
             />
         </ManageLayout>
