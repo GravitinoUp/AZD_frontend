@@ -19,7 +19,7 @@ export const purchaseColumns: ColumnDef<Purchase>[] = [
     },
     {
         accessorKey: 'purchase_type.purchase_type_name',
-        header: i18next.t('purchase-type'),
+        header: i18next.t('purchase-type-id'),
     },
     {
         id: 'actions',

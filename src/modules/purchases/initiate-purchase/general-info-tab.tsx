@@ -30,14 +30,14 @@ export const GeneralInfoTab = ({ form }: { form: UseFormReturn<PurchaseSchema> }
                 <FormField
                     control={form.control}
                     name="purchase_name"
-                    render={({ field }) => <InputField label={t('name')} required {...field} />}
+                    render={({ field }) => <InputField label={t('purchase-name')} required {...field} />}
                 />
                 <FormField
                     control={form.control}
                     name="purchase_type_id"
                     render={({ field }) => (
                         <FormItem className="flex flex-45 flex-col items-start space-y-2">
-                            <FormLabel className="label-required">{t('purchase-type')}</FormLabel>
+                            <FormLabel className="label-required">{t('purchase-type-id')}</FormLabel>
                             {purchaseTypesFetching && <Skeleton className="h-12 w-full" />}
                             {purchaseTypesError && <ErrorAlert />}
                             {purchaseTypesSuccess && !purchaseTypesFetching && (

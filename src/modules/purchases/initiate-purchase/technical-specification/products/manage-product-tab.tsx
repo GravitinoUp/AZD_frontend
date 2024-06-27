@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { FormField } from '@/ui/form'
 import { InputField } from '@/components/input-field'
 import { Button } from '@/ui/button'
-import { LucideTrash2, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { productSchema } from '../../initiate-purchase'
 import MinusIcon from '@/assets/icons/minus.svg'
 

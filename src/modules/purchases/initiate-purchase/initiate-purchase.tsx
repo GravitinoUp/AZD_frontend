@@ -20,6 +20,7 @@ import { formatShortDate } from '@/shared/lib/format-short-date'
 import { useUpdatePurchase } from './api/use-update-purchase'
 import { useGetStartMaxPrice } from './api/use-get-start-max-price'
 import { ContractExecutionTab } from './contract-execution-tab'
+import { PublishToEISTab } from './publish-to-eis-tab'
 
 export const fileSchema = z.object({
     id: z.string(),
@@ -121,6 +122,48 @@ const purchaseSchema = z
         }
 
         if (values.step === 4) {
+            // STEP 0
+            if (!values.purchase_name) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['purchase_name'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.purchase_type_id || values.purchase_type_id === 0) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['purchase_type_id'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.delivery_address) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['delivery_address'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.currency_code) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['currency_code'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.quality_guarantee_period || !Number(values.quality_guarantee_period)) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['quality_guarantee_period'],
+                    fatal: true,
+                    message: i18next.t('error.number.format'),
+                })
+            }
+
             // STEP 1
             if (!values.technical_specification) {
                 ctx.addIssue({
@@ -162,7 +205,7 @@ const purchaseSchema = z
                     })
                 }
             }
-        } else if (values.step === 5) {
+        } else if (values.step === 6) {
             if (!values.start_date) {
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -284,6 +327,11 @@ export const InitiatePurchase = () => {
             content: <StartMaxPriceTab form={form} />,
         },
         {
+            value: 'publish-purchase',
+            label: i18next.t('publication-in-EIS'),
+            content: <PublishToEISTab form={form} />,
+        },
+        {
             value: 'contract-project',
             label: i18next.t('contract-project'),
             content: <ContractProjectTab form={form} />,
@@ -379,13 +427,15 @@ export const InitiatePurchase = () => {
         } else if (currentStep === 4) {
             // TODO contract project
         } else if (currentStep === 5) {
+            // TODO publish to EIS
+        } else if (currentStep === 6) {
             updatePurchase({
                 purchase_uuid: data.purchase_uuid,
                 start_date: data.start_date,
                 end_date: data.end_date,
                 executor_uuid: data.executor_uuid,
             })
-        } else if (currentStep !== 6) {
+        } else if (currentStep !== 7) {
             setCurrentTab(tabsData[currentStep + 1].value)
             form.setValue('step', currentStep + 1)
         }
@@ -418,7 +468,7 @@ export const InitiatePurchase = () => {
     useErrorToast(startMaxPriceError)
 
     const nextButtonText = useMemo(
-        () => (currentStep !== 4 ? t('action.save.and.next') : t('action.complete')),
+        () => (currentStep !== 4 ? t('action.save.and.next') : t('action.publish')),
         [currentStep]
     )
 

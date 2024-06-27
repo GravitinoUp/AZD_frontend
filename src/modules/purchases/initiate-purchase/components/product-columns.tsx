@@ -16,27 +16,27 @@ export const productColumns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: 'code',
-        header: 'CODE',
+        header: i18next.t('product-code'),
         cell: InputCell,
     },
     {
         accessorKey: 'property_name',
-        header: 'PROPERTY NAME',
+        header: i18next.t('property-name'),
         cell: InputCell,
     },
     {
         accessorKey: 'property_value',
-        header: 'PROPERTY VALUE',
+        header: i18next.t('property-value'),
         cell: InputCell,
     },
     {
         accessorKey: 'property_measurement',
-        header: 'PROPERTY MEASUREMENT',
+        header: i18next.t('measurement'),
         cell: InputCell,
     },
     {
         accessorKey: 'product_count',
-        header: 'COUNT',
+        header: i18next.t('count'),
         cell: InputCell,
     },
 ]
