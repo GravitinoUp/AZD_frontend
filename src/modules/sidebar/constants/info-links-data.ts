@@ -5,6 +5,7 @@ import MailIcon from '@/assets/icons/navigation/mail.svg'
 import NotificationsIcon from '@/assets/icons/navigation/notifications.svg'
 import RulesIcon from '@/assets/icons/navigation/rules.svg'
 import i18next from '@/shared/i18n/i18n.ts'
+import { HANDBOOK } from '@/shared/router/routes'
 
 interface SubLink {
     id: string
@@ -28,10 +29,15 @@ export const infoLinks: InfoLink[] = [
     {
         id: crypto.randomUUID(),
         title: i18next.t('handbook'),
-        href: '/',
+        href: HANDBOOK,
         icon: HandbookIcon,
         isCollapsible: true,
         subLinks: [
+            {
+                id: crypto.randomUUID(),
+                title: i18next.t('all-handbook'),
+                href: HANDBOOK,
+            },
             {
                 id: crypto.randomUUID(),
                 title: i18next.t('КБК'),

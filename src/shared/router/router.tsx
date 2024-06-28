@@ -17,6 +17,7 @@ import {
     AUTH,
     BRANCH_MANAGE,
     BRANCHES,
+    HANDBOOK,
     LIMITS,
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
@@ -36,6 +37,7 @@ import { AllOrganizations, Branches } from '@/modules/organizations'
 import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
 import { AuthPage } from '@/pages/auth'
 import { RegisterPage } from '@/pages/register'
+import { HandbookPage } from '@/pages/handbook'
 
 export const router = createBrowserRouter([
     {
@@ -172,6 +174,10 @@ export const router = createBrowserRouter([
                         </Suspense>
                     </ErrorBoundary>
                 ),
+            },
+            {
+                path: HANDBOOK,
+                element: <HandbookPage />,
             },
         ],
     },
