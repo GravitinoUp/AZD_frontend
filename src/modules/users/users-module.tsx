@@ -9,10 +9,11 @@ import { TableActions } from '@/components/table-actions'
 import { placeholderQuery } from '@/shared/constants'
 import { useState } from 'react'
 import { RouterButton } from '@/components/router-button'
+import i18next from 'i18next'
 
 const routes = [
-    { route: '/', label: 'Главная' },
-    { route: USERS, label: 'Пользователи' },
+    { route: '/', label: i18next.t('home') },
+    { route: USERS, label: i18next.t('users') },
 ]
 
 export const UsersModule = () => {

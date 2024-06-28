@@ -8,10 +8,11 @@ import { useEffect, useState } from 'react'
 import { useGetAllBranches } from './api/use-get-all-branches'
 import { branchColumns } from './components/branch-columns'
 import { useOrganizationsPageTitle } from '@/shared/context/organizations-page-title'
+import i18next from 'i18next'
 
 const routes = [
-    { route: '/', label: 'Главная' },
-    { route: BRANCHES, label: 'Филиалы' },
+    { route: '/', label: i18next.t('home') },
+    { route: BRANCHES, label: i18next.t('branches') },
 ]
 
 export const Branches = () => {

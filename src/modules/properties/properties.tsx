@@ -8,10 +8,11 @@ import { useState } from 'react'
 import { placeholderQuery } from '@/shared/constants'
 import { useGetAllProperties } from './api/use-get-all-properties'
 import { propertyColumns } from './components/property-columns'
+import i18next from 'i18next'
 
 const routes = [
-    { route: '/', label: 'Главная' },
-    { route: PROPERTIES, label: 'Характеристики' },
+    { route: '/', label: i18next.t('home') },
+    { route: PROPERTIES, label: i18next.t('properties.title') },
 ]
 
 export const Properties = ({ entity }: { entity: Entity }) => {
