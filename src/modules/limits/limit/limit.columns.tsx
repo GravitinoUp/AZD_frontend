@@ -1,3 +1,4 @@
+import i18next from '@/shared/i18n/i18n.ts'
 import { Limit } from '@/types/limits.ts'
 import { Skeleton } from '@/ui/skeleton.tsx'
 import { ColumnDef } from '@tanstack/react-table'
@@ -33,28 +34,28 @@ export const getLimitColumns = (currentYear?: number): ColumnDef<Limit>[] => [
         header: 'Код по бюджетной классификации Российской Федерации',
         columns: [
             {
-                header: 'Раздел',
+                header: i18next.t('section'),
                 accessorKey: 'kbk.kbk_section.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },
             },
             {
-                header: 'Подраздел',
+                header: i18next.t('subsection'),
                 accessorKey: 'kbk.kbk_subsection.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },
             },
             {
-                header: 'Целевая статья',
+                header: i18next.t('target-article'),
                 accessorKey: 'kbk.kbk_target_article.kbk_type',
                 meta: {
                     rowSpan: 2,
                 },
             },
             {
-                header: 'Вид расходов',
+                header: i18next.t('expenses-type'),
                 accessorKey: 'kbk.kbk_expenses_type.kbk_type',
                 meta: {
                     rowSpan: 2,
@@ -95,7 +96,7 @@ export const getLimitColumns = (currentYear?: number): ColumnDef<Limit>[] => [
                         accessorKey: 'current_year_currency_value',
                     },
                     {
-                        header: 'Код валюты по ОКВ',
+                        header: i18next.t('limit-currency-code'),
                         accessorKey: 'current_year_currency_code',
                     },
                 ],
@@ -118,7 +119,7 @@ export const getLimitColumns = (currentYear?: number): ColumnDef<Limit>[] => [
                         accessorKey: 'first_year_currency_value',
                     },
                     {
-                        header: 'Код валюты по ОКВ',
+                        header: i18next.t('limit-currency-code'),
                         accessorKey: 'first_year_currency_code',
                     },
                 ],
@@ -141,7 +142,7 @@ export const getLimitColumns = (currentYear?: number): ColumnDef<Limit>[] => [
                         accessorKey: 'second_year_currency_value',
                     },
                     {
-                        header: 'Код валюты по ОКВ',
+                        header: i18next.t('limit-currency-code'),
                         accessorKey: 'second_year_currency_code',
                     },
                 ],
