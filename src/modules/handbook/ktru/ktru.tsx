@@ -28,7 +28,7 @@ export const KTRUModule = () => {
 
     return (
         <div className="mx-auto w-[95%]">
-            <h1 className="mt-20 text-3xl font-bold">{t('okpd')}</h1>
+            <h1 className="mt-20 text-3xl font-bold">{t('ktru')}</h1>
             <TableActions routes={routes} onExportClick={() => void 0} onImportClick={() => void 0} />
             <DebouncedInput
                 className="my-6"
