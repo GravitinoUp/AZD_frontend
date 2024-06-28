@@ -2,22 +2,29 @@ import { ErrorAlert } from '@/components/error-alert'
 import { ErrorBoundary } from '@/components/error-boundary'
 import { Layout } from '@/components/layout'
 import { PageLoader, TablePageLoader } from '@/components/loaders'
-import { AllLimits, Limit } from '@/modules/limits'
+import { AllLimits, Limit, LimitAdd } from '@/modules/limits'
+import { AllOrganizations, Branches } from '@/modules/organizations'
 import { AllPlans, Plan } from '@/modules/plans'
+import { AuthPage } from '@/pages/auth'
 import { ErrorPage } from '@/pages/error-page/error-page.tsx'
 import { HomePage } from '@/pages/home'
 import { LimitsPageLayout } from '@/pages/limits'
+import { OrganizationsPageLazy } from '@/pages/organizations'
+import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
 import { PlansPage } from '@/pages/plans'
+import { RegisterPage } from '@/pages/register'
 import { RolesPageLazy } from '@/pages/roles'
 import { RoleManagePageLazy } from '@/pages/roles/manage'
 import { UsersPageLazy } from '@/pages/users'
 import { UserManagePageLazy } from '@/pages/users/manage'
 import { LimitTitleProvider } from '@/shared/context/limits-page-title.tsx'
+import { PlansTitleProvider } from '@/shared/context/plans-page-title.tsx'
 import {
     AUTH,
     BRANCH_MANAGE,
     BRANCHES,
     LIMITS,
+    LIMITS_ADD,
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
     PLANS,
@@ -27,15 +34,9 @@ import {
     USER_MANAGE,
     USERS,
 } from '@/shared/router/routes.ts'
-import { PlansTitleProvider } from '@/shared/context/plans-page-title.tsx'
 import { Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { OrganizationsPageTitleProvider } from '../context/organizations-page-title'
-import { OrganizationsPageLazy } from '@/pages/organizations'
-import { AllOrganizations, Branches } from '@/modules/organizations'
-import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
-import { AuthPage } from '@/pages/auth'
-import { RegisterPage } from '@/pages/register'
 
 export const router = createBrowserRouter([
     {
@@ -130,6 +131,10 @@ export const router = createBrowserRouter([
                         element: <Limit />,
                     },
                 ],
+            },
+            {
+                path: LIMITS_ADD,
+                element: <LimitAdd />,
             },
             {
                 path: ORGANIZATIONS,

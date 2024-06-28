@@ -8,6 +8,7 @@
   "create-limits": "Создать лимиты",
   "all-limits": "Все лимиты",
   "limit-add": "Добавление лимита",
+  "limit": "Лимит",
   "plans": "Планы-графики",
   "init-plan": "Инициировать план-график",
   "all-plans": "Все планы-графики",
@@ -72,7 +73,9 @@
     "password.length": "Пароль должен содержать не меньше 6 символов",
     "password.mismatch": "Пароли не совпадают",
     "email.format": "Email должен быть в формате email@example.ru",
-    "required": "Поле должно быть заполнено"
+    "required": "Поле должно быть заполнено",
+    "branches": "Филиалы не загрузились, попробуйте позднее.",
+    "codes": "Коды валют не загрузились, попробуйте позднее."
   },
   "placeholder": {
     "select": "Выберите значение из выпадающего списка"
@@ -131,5 +134,16 @@
   "provide.description": "Внимательно заполните все поля ниже",
   "has.account": "Уже есть аккаунт?",
   "no.account": "У вас ещё нет аккаунта?",
-  "watermark": "© 2024 Сделано в Гравитино. All Rights Reserved."
+  "watermark": "© 2024 Сделано в Гравитино. All Rights Reserved.",
+  "field-name": "Наименование показателя",
+  "line-code": "Код строки",
+  "KOSGU": "КОСГУ",
+  "limit-value-placeholder": "В рублях (рублевом эквиваленте)",
+  "limit-currency-placeholder": "В валюте",
+  "limit-currency-code": "Код валюты по ОКВ",
+  "target-article": "Целевая статья",
+  "expenses-type": "Вид расходов",
+  "section": "Раздел",
+  "subsection": "Подраздел",
+  "incorrect-format": "Некорректный формат"
 }

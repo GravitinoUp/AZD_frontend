@@ -1,31 +1,4 @@
-interface KBK {
-    kbk_uuid: string
-    kbk_name: string
-    kbk_section_uuid: string
-    kbk_section?: {
-        kbk_value_uuid: string
-        kbk_type: string
-        kbk_value: string
-    }
-    kbk_subsection_uuid: string
-    kbk_subsection?: {
-        kbk_value_uuid: string
-        kbk_type: string
-        kbk_value: string
-    }
-    kbk_target_article_uuid: string
-    kbk_target_article?: {
-        kbk_value_uuid: string
-        kbk_type: string
-        kbk_value: string
-    }
-    kbk_expenses_type_uuid: string
-    kbk_expenses_type?: {
-        kbk_value_uuid: string
-        kbk_type: string
-        kbk_value: string
-    }
-}
+import { KBK } from '@/types/kbk.ts'
 
 interface Kosgu {
     kosgu_uuid: string
@@ -60,4 +33,24 @@ export interface Limit {
     second_year_rub_value: number
     second_year_currency_value?: number
     second_year_currency_code?: string
+}
+
+export interface NewLimitBody {
+    limit_name: string
+    line_code: string
+    kbk_values: {
+        kbk_name: string
+        kbk_section: string
+        kbk_subsection: string
+        kbk_target_article: string
+        kbk_expenses_type: string
+    }
+    kosgu_code: string
+    years: Array<{
+        limit_value_year: number
+        rub_value: number
+        currency_value?: number
+        currency_code?: string
+    }>
+    branch_uuid: string
 }

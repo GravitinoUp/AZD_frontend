@@ -3,10 +3,12 @@ import { SheetInput } from '@/components/sheet-input'
 import { useLimit } from '@/modules/limits/limit/api/use-limit.ts'
 import { getCurrentYear } from '@/shared/lib/get-current-year.ts'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 
 export const LimitInfoTab = () => {
     const { id = '' } = useParams()
+    const { t } = useTranslation()
     const { data: limit, isError, isSuccess } = useLimit(id)
 
     const currentYear = useMemo(() => {
@@ -26,8 +28,14 @@ export const LimitInfoTab = () => {
             <div className="info-wrapper flex gap-10">
                 <div className="flex flex-col gap-3">
                     <SheetInput label="Наименование показателя" initialValue={limit.limit_name} />
-                    <SheetInput label="Целевая статья" initialValue={limit?.kbk?.kbk_target_article?.kbk_type || ''} />
-                    <SheetInput label="Вид расходов" initialValue={limit?.kbk?.kbk_expenses_type?.kbk_type || ''} />
+                    <SheetInput
+                        label={t('target-article')}
+                        initialValue={limit?.kbk?.kbk_target_article?.kbk_type || ''}
+                    />
+                    <SheetInput
+                        label={t('expenses-type')}
+                        initialValue={limit?.kbk?.kbk_expenses_type?.kbk_type || ''}
+                    />
                     <SheetInput
                         label="Код аналитического показателя (КОСГУ)"
                         initialValue={limit?.kosgu?.kosgu_code || ''}
@@ -35,8 +43,8 @@ export const LimitInfoTab = () => {
                 </div>
                 <div className="flex flex-col gap-3">
                     <SheetInput label="Код строки" initialValue={limit.line_code} />
-                    <SheetInput label="Раздел" initialValue={limit?.kbk?.kbk_section?.kbk_type || ''} />
-                    <SheetInput label="Подраздел" initialValue={limit?.kbk?.kbk_subsection?.kbk_type || ''} />
+                    <SheetInput label={t('section')} initialValue={limit?.kbk?.kbk_section?.kbk_type || ''} />
+                    <SheetInput label={t('subsection')} initialValue={limit?.kbk?.kbk_subsection?.kbk_type || ''} />
                 </div>
             </div>
             <div className="info-wrapper mt-8">
@@ -53,7 +61,7 @@ export const LimitInfoTab = () => {
                 />
                 <SheetInput
                     className="flex items-center justify-between"
-                    label="Код валюты по ОКВ"
+                    label={t('limit-currency-code')}
                     initialValue={String(limit?.current_year_currency_code) || ''}
                 />
             </div>
@@ -73,7 +81,7 @@ export const LimitInfoTab = () => {
                 />
                 <SheetInput
                     className="flex items-center justify-between"
-                    label="Код валюты по ОКВ"
+                    label={t('limit-currency-code')}
                     initialValue={String(limit?.first_year_currency_code) || ''}
                 />
             </div>
@@ -93,7 +101,7 @@ export const LimitInfoTab = () => {
                 />
                 <SheetInput
                     className="flex items-center justify-between"
-                    label="Код валюты по ОКВ"
+                    label={t('limit-currency-code')}
                     initialValue={String(limit?.second_year_currency_code) || ''}
                 />
             </div>

@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
+import { ErrorResponse } from '@/types/fetch'
 import { ToastAction } from '@/ui/toast'
 import { useToast } from '@/ui/use-toast'
 import { AxiosError } from 'axios'
-import { ErrorResponse } from '@/types/fetch'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const ERROR_DURATION = 3000
 
