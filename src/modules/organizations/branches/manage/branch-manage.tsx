@@ -13,10 +13,13 @@ import { ManageActions } from '@/components/manage-actions'
 import { Branch } from '@/types/branch'
 import { useUpdateBranch } from './api/use-update-branch'
 import { useCreateBranch } from './api/use-create-branch'
+import { propertiesSchema } from '@/modules/properties/constants'
+import { PropertyField } from '@/components/property-select'
 
 const branchSchema = z.object({
     branch_name: z.string().min(1, i18next.t('error.required')),
     branch_address: z.string().min(1, i18next.t('error.required')),
+    property_values: z.array(propertiesSchema),
 })
 
 export const BranchManage = () => {
@@ -31,10 +34,12 @@ export const BranchManage = () => {
         defaultValues: branch
             ? {
                   ...branch,
+                  property_values: [],
               }
             : {
                   branch_name: '',
                   branch_address: '',
+                  property_values: [],
               },
     })
 
@@ -54,9 +59,13 @@ export const BranchManage = () => {
 
     const handleSubmit = (data: z.infer<typeof branchSchema>) => {
         if (branch) {
-            updateBranch({ ...data, branch_uuid: branch.branch_uuid })
+            updateBranch({
+                ...data,
+                branch_uuid: branch.branch_uuid,
+                property_values: data.property_values.map((property) => property.value),
+            })
         } else {
-            createBranch(data)
+            createBranch({ ...data, property_values: data.property_values.map((property) => property.value) })
         }
     }
 
@@ -85,6 +94,17 @@ export const BranchManage = () => {
                 control={form.control}
                 name="branch_address"
                 render={({ field }) => <InputField label={t('address')} required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="property_values"
+                render={({ field }) => (
+                    <PropertyField
+                        entity="branch"
+                        selectedProperties={field.value}
+                        setSelectedProperties={field.onChange}
+                    />
+                )}
             />
         </ManageLayout>
     )

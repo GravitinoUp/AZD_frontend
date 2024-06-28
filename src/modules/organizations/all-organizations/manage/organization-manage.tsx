@@ -20,6 +20,8 @@ import { useGetAllPeople } from '@/modules/users/api/use-get-all-people'
 import { formatInitials } from '@/shared/lib/format-initials'
 import { placeholderQuery } from '@/shared/constants'
 import { useGetAllOrganizationTypes } from '../api/use-get-all-organization-types'
+import { propertiesSchema } from '@/modules/properties/constants'
+import { PropertyField } from '@/components/property-select'
 
 const organizationSchema = z.object({
     organization_type_id: z.number().min(1, i18next.t('error.required')),
@@ -40,6 +42,7 @@ const organizationSchema = z.object({
     email: z.string().optional(),
     additional_info: z.string().optional(),
     web_site: z.string().optional(),
+    property_values: z.array(propertiesSchema),
 })
 
 export const OrganizationManage = () => {
@@ -60,6 +63,7 @@ export const OrganizationManage = () => {
                   email: organization.email ? organization.email : undefined,
                   additional_info: organization.additional_info ? organization.additional_info : undefined,
                   web_site: organization.web_site ? organization.web_site : undefined,
+                  property_values: [],
               }
             : {
                   organization_type_id: 0,
@@ -76,6 +80,7 @@ export const OrganizationManage = () => {
                   kpp: '',
                   okpo: '',
                   region: '',
+                  property_values: [],
               },
     })
 
@@ -117,9 +122,9 @@ export const OrganizationManage = () => {
 
     const handleSubmit = (data: z.infer<typeof organizationSchema>) => {
         if (organization) {
-            updateOrganization(data)
+            updateOrganization({ ...data, property_values: data.property_values.map((property) => property.value) })
         } else {
-            createOrganization(data)
+            createOrganization({ ...data, property_values: data.property_values.map((property) => property.value) })
         }
     }
 
@@ -259,6 +264,17 @@ export const OrganizationManage = () => {
                 control={form.control}
                 name="web_site"
                 render={({ field }) => <InputField label={t('web.site')} {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="property_values"
+                render={({ field }) => (
+                    <PropertyField
+                        entity="organization"
+                        selectedProperties={field.value}
+                        setSelectedProperties={field.onChange}
+                    />
+                )}
             />
         </ManageLayout>
     )

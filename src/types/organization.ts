@@ -43,6 +43,7 @@ export interface OrganizationPayload {
     email?: string
     additional_info?: string
     web_site?: string
+    property_values?: string[]
 }
 
 export type OrganizationSort = Partial<Record<keyof Organization, SortOptions>>

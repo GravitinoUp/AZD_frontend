@@ -22,6 +22,7 @@ export interface UserPayload {
     email: string
     phone?: string
     password: string
+    property_values?: string[]
 }
 
 export interface UserStatusPayload {
@@ -50,6 +51,7 @@ export interface RolePayload {
     role_id: number
     role_name: string
     permission_ids: string[]
+    property_values?: string[]
 }
 
 export type RoleSort = Partial<Record<keyof Role, SortOptions>>

@@ -81,7 +81,9 @@ export const PropertySelect = ({
                 }
             />
             <Button
+                className="h-8 min-h-8 w-8 min-w-8 border border-table bg-muted"
                 variant="ghost"
+                size="icon"
                 type="button"
                 onClick={() => {
                     const updatedArray = selectedProperties.filter((v) => v.property !== selectedProperty.property)
