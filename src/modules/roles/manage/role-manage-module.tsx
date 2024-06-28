@@ -21,6 +21,7 @@ import { Checkbox } from '@/ui/checkbox'
 import { DebouncedInput } from '@/components/debounced-input'
 import { propertiesSchema } from '@/modules/properties/constants'
 import { PropertyField } from '@/components/property-select'
+import { getProperties } from '@/shared/lib/get-properties'
 
 const roleSchema = z.object({
     role_name: z.string().min(1, i18next.t('error.required')),
@@ -43,7 +44,7 @@ export const RoleManageModule = () => {
                   permission_ids: role.role_permissions
                       ? role.role_permissions.map((value) => value.permission_id)
                       : [],
-                  property_values: [],
+                  property_values: getProperties(role.properties),
               }
             : { role_name: '', permission_ids: [], property_values: [] },
     })

@@ -21,6 +21,7 @@ import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { useGetAllRoles } from '@/modules/roles/api/use-get-all-roles'
 import { PropertyField } from '@/components/property-select'
 import { propertiesSchema } from '@/modules/properties/constants'
+import { getProperties } from '@/shared/lib/get-properties'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -59,7 +60,7 @@ export const UserManageModule = () => {
                   role_id: user.role.role_id,
                   email: user.email,
                   password: '',
-                  property_values: [], //TODO
+                  property_values: getProperties(user.properties),
               }
             : {
                   last_name: '',

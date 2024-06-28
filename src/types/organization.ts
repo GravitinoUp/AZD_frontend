@@ -1,4 +1,5 @@
 import { SortOptions } from './fetch'
+import { PropertyValue } from './property'
 import { Person } from './user'
 
 export interface Organization {
@@ -21,6 +22,7 @@ export interface Organization {
     email: string | null
     additional_info: string | null
     web_site: string | null
+    properties?: PropertyValue[]
 }
 
 export interface OrganizationPayload {

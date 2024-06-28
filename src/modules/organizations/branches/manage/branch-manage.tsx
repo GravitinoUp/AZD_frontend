@@ -15,6 +15,7 @@ import { useUpdateBranch } from './api/use-update-branch'
 import { useCreateBranch } from './api/use-create-branch'
 import { propertiesSchema } from '@/modules/properties/constants'
 import { PropertyField } from '@/components/property-select'
+import { getProperties } from '@/shared/lib/get-properties'
 
 const branchSchema = z.object({
     branch_name: z.string().min(1, i18next.t('error.required')),
@@ -34,7 +35,7 @@ export const BranchManage = () => {
         defaultValues: branch
             ? {
                   ...branch,
-                  property_values: [],
+                  property_values: getProperties(branch.properties),
               }
             : {
                   branch_name: '',

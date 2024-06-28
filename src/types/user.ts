@@ -1,4 +1,5 @@
 import { SortOptions } from './fetch'
+import { PropertyValue } from './property'
 import { RolePermission } from './role-permission'
 
 export interface User {
@@ -8,6 +9,7 @@ export interface User {
     phone: string | null
     role: Role
     person: Person
+    properties?: PropertyValue[]
 }
 
 export type UserSort = Partial<Record<keyof User, SortOptions>>
@@ -45,6 +47,7 @@ export interface Role {
     role_id: number
     role_name: string
     role_permissions: RolePermission[]
+    properties?: PropertyValue[]
 }
 
 export interface RolePayload {

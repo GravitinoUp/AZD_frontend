@@ -22,6 +22,7 @@ import { placeholderQuery } from '@/shared/constants'
 import { useGetAllOrganizationTypes } from '../api/use-get-all-organization-types'
 import { propertiesSchema } from '@/modules/properties/constants'
 import { PropertyField } from '@/components/property-select'
+import { getProperties } from '@/shared/lib/get-properties'
 
 const organizationSchema = z.object({
     organization_type_id: z.number().min(1, i18next.t('error.required')),
@@ -63,7 +64,7 @@ export const OrganizationManage = () => {
                   email: organization.email ? organization.email : undefined,
                   additional_info: organization.additional_info ? organization.additional_info : undefined,
                   web_site: organization.web_site ? organization.web_site : undefined,
-                  property_values: [],
+                  property_values: getProperties(organization.properties),
               }
             : {
                   organization_type_id: 0,
