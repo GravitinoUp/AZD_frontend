@@ -1,1 +1,6 @@
 export { Handbook } from './handbook'
+export { KBKModule } from './kbk/kbk'
+export { OKPDModule } from './okpd/okpd'
+export { KTRUModule } from './ktru/ktru'
+export { OKEIModule } from './okei/okei'
+export { KOSGUModule } from './kosgu/kosgu'

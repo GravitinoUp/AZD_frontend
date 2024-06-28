@@ -5,7 +5,7 @@ import MailIcon from '@/assets/icons/navigation/mail.svg'
 import NotificationsIcon from '@/assets/icons/navigation/notifications.svg'
 import RulesIcon from '@/assets/icons/navigation/rules.svg'
 import i18next from '@/shared/i18n/i18n.ts'
-import { HANDBOOK } from '@/shared/router/routes'
+import { HANDBOOK, KBK, KOSGU, KTRU, OKEI, OKPD } from '@/shared/router/routes'
 
 interface SubLink {
     id: string
@@ -35,33 +35,28 @@ export const infoLinks: InfoLink[] = [
         subLinks: [
             {
                 id: crypto.randomUUID(),
-                title: i18next.t('all-handbook'),
-                href: HANDBOOK,
+                title: i18next.t('kbk'),
+                href: KBK,
             },
             {
                 id: crypto.randomUUID(),
-                title: i18next.t('КБК'),
-                href: '/',
+                title: i18next.t('okpd'),
+                href: OKPD,
             },
             {
                 id: crypto.randomUUID(),
-                title: i18next.t('ОКПД2'),
-                href: '/',
+                title: i18next.t('ktru'),
+                href: KTRU,
             },
             {
                 id: crypto.randomUUID(),
-                title: i18next.t('КТРУ'),
-                href: '/',
+                title: i18next.t('okei'),
+                href: OKEI,
             },
             {
                 id: crypto.randomUUID(),
-                title: i18next.t('Нормирование'),
-                href: '/',
-            },
-            {
-                id: crypto.randomUUID(),
-                title: i18next.t('Целевые-статьи'),
-                href: '/',
+                title: i18next.t('kosgu'),
+                href: KOSGU,
             },
         ],
     },

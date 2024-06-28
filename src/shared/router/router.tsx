@@ -18,7 +18,12 @@ import {
     BRANCH_MANAGE,
     BRANCHES,
     HANDBOOK,
+    KBK,
+    KOSGU,
+    KTRU,
     LIMITS,
+    OKEI,
+    OKPD,
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
     PLANS,
@@ -37,7 +42,7 @@ import { AllOrganizations, Branches } from '@/modules/organizations'
 import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
 import { AuthPage } from '@/pages/auth'
 import { RegisterPage } from '@/pages/register'
-import { HandbookPage } from '@/pages/handbook'
+import { HandbookPage, KBKPage, KOSGUPage, KTRUPage, OKEIPage, OKPDPage } from '@/pages/handbook'
 
 export const router = createBrowserRouter([
     {
@@ -178,6 +183,26 @@ export const router = createBrowserRouter([
             {
                 path: HANDBOOK,
                 element: <HandbookPage />,
+            },
+            {
+                path: KBK,
+                element: <KBKPage />,
+            },
+            {
+                path: OKPD,
+                element: <OKPDPage />,
+            },
+            {
+                path: KTRU,
+                element: <KTRUPage />,
+            },
+            {
+                path: OKEI,
+                element: <OKEIPage />,
+            },
+            {
+                path: KOSGU,
+                element: <KOSGUPage />,
             },
         ],
     },

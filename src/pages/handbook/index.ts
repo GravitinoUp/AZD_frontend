@@ -1,1 +1,6 @@
 export { HandbookPage } from './handbook-page'
+export { KBKPage } from './kbk-page'
+export { OKPDPage } from './okpd-page'
+export { KTRUPage } from './ktru-page'
+export { OKEIPage } from './okei-page'
+export { KOSGUPage } from './kosgu-page'
