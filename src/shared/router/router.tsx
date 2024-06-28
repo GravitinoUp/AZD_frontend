@@ -21,6 +21,8 @@ import {
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
     PLANS,
+    PROPERTIES,
+    PROPERTY_MANAGE,
     REGISTER,
     ROLE_MANAGE,
     ROLES,
@@ -36,6 +38,8 @@ import { AllOrganizations, Branches } from '@/modules/organizations'
 import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
 import { AuthPage } from '@/pages/auth'
 import { RegisterPage } from '@/pages/register'
+import { PropertiesPageLazy } from '@/pages/properties'
+import { PropertyManagePageLazy } from '@/pages/properties/manage'
 
 export const router = createBrowserRouter([
     {
@@ -169,6 +173,26 @@ export const router = createBrowserRouter([
                     <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
                         <Suspense fallback={<PageLoader className="h-[100vh]" />}>
                             <BranchManagePageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
+            },
+            {
+                path: PROPERTIES,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <PropertiesPageLazy />
+                        </Suspense>
+                    </ErrorBoundary>
+                ),
+            },
+            {
+                path: PROPERTY_MANAGE,
+                element: (
+                    <ErrorBoundary fallback={<ErrorAlert className="mx-auto mt-[50vh]" />}>
+                        <Suspense fallback={<PageLoader className="h-[100vh]" />}>
+                            <PropertyManagePageLazy />
                         </Suspense>
                     </ErrorBoundary>
                 ),

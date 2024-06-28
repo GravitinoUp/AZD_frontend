@@ -19,6 +19,9 @@ import { ManageLayout } from '@/components/layout'
 import { Button } from '@/ui/button'
 import PlusCircleIcon from '@/assets/icons/plus-circle.svg'
 import { useGetAllRoles } from '@/modules/roles/api/use-get-all-roles'
+import { PropertyField } from '@/components/property-select'
+import { propertiesSchema } from '@/modules/properties/constants'
+import { getProperties } from '@/shared/lib/get-properties'
 
 const userSchema = z.object({
     last_name: z.string().min(1, i18next.t('error.required')),
@@ -30,6 +33,7 @@ const userSchema = z.object({
     phone: z.string().optional(),
     email: z.string().email(i18next.t('error.email.format')),
     password: z.string().min(6, i18next.t('error.password.length')),
+    property_values: z.array(propertiesSchema),
 })
 
 export const UserManageModule = () => {
@@ -56,6 +60,7 @@ export const UserManageModule = () => {
                   role_id: user.role.role_id,
                   email: user.email,
                   password: '',
+                  property_values: getProperties(user.properties),
               }
             : {
                   last_name: '',
@@ -64,6 +69,7 @@ export const UserManageModule = () => {
                   role_id: 1,
                   email: '',
                   password: '',
+                  property_values: [],
               },
     })
 
@@ -92,9 +98,9 @@ export const UserManageModule = () => {
 
     const handleSubmit = (data: z.infer<typeof userSchema>) => {
         if (user) {
-            updateUser(data)
+            updateUser({ ...data, property_values: data.property_values.map((property) => property.value) })
         } else {
-            createUser(data)
+            createUser({ ...data, property_values: data.property_values.map((property) => property.value) })
         }
     }
 
@@ -190,6 +196,17 @@ export const UserManageModule = () => {
                 control={form.control}
                 name="password"
                 render={({ field }) => <InputField label={t('password')} required {...field} />}
+            />
+            <FormField
+                control={form.control}
+                name="property_values"
+                render={({ field }) => (
+                    <PropertyField
+                        entity="users"
+                        selectedProperties={field.value}
+                        setSelectedProperties={field.onChange}
+                    />
+                )}
             />
         </ManageLayout>
     )

@@ -19,10 +19,14 @@ import { Skeleton } from '@/ui/skeleton'
 import { ErrorAlert } from '@/components/error-alert'
 import { Checkbox } from '@/ui/checkbox'
 import { DebouncedInput } from '@/components/debounced-input'
+import { propertiesSchema } from '@/modules/properties/constants'
+import { PropertyField } from '@/components/property-select'
+import { getProperties } from '@/shared/lib/get-properties'
 
 const roleSchema = z.object({
     role_name: z.string().min(1, i18next.t('error.required')),
     permission_ids: z.array(z.string()),
+    property_values: z.array(propertiesSchema),
 })
 
 export const RoleManageModule = () => {
@@ -40,8 +44,9 @@ export const RoleManageModule = () => {
                   permission_ids: role.role_permissions
                       ? role.role_permissions.map((value) => value.permission_id)
                       : [],
+                  property_values: getProperties(role.properties),
               }
-            : { role_name: '', permission_ids: [] },
+            : { role_name: '', permission_ids: [], property_values: [] },
     })
 
     const [permissionQuery, setPermissionQuery] = useState('')
@@ -74,9 +79,13 @@ export const RoleManageModule = () => {
 
     const handleSubmit = (data: z.infer<typeof roleSchema>) => {
         if (role) {
-            updateRole({ ...data, role_id: role.role_id })
+            updateRole({
+                ...data,
+                role_id: role.role_id,
+                property_values: data.property_values.map((property) => property.value),
+            })
         } else {
-            createRole({ ...data })
+            createRole({ ...data, property_values: data.property_values.map((property) => property.value) })
         }
     }
 
@@ -150,6 +159,17 @@ export const RoleManageModule = () => {
                             </div>
                         )}
                     </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="property_values"
+                render={({ field }) => (
+                    <PropertyField
+                        entity="roles"
+                        selectedProperties={field.value}
+                        setSelectedProperties={field.onChange}
+                    />
                 )}
             />
         </ManageLayout>

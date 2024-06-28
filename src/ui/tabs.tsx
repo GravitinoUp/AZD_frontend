@@ -1,7 +1,6 @@
 import { cn } from '@/shared/lib/cn'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 
 const Tabs = TabsPrimitive.Root
 

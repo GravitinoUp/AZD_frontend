@@ -8,10 +8,11 @@ import { DebouncedInput } from '@/components/debounced-input'
 import { placeholderQuery } from '@/shared/constants'
 import { useEffect, useState } from 'react'
 import { useOrganizationsPageTitle } from '@/shared/context/organizations-page-title'
+import i18next from 'i18next'
 
 const routes = [
-    { route: '/', label: 'Главная' },
-    { route: ORGANIZATIONS, label: 'Организации' },
+    { route: '/', label: i18next.t('home') },
+    { route: ORGANIZATIONS, label: i18next.t('organizations') },
 ]
 
 export const AllOrganizations = () => {

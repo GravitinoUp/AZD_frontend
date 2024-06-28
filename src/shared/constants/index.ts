@@ -13,3 +13,10 @@ export const LOGIN_IMAGES = [
 ]
 
 export const COOKIE_LIFETIME = '43200'
+
+export const entities = ['users', 'branch', 'organization', 'purchase', 'plan', 'roles'] as const
+
+export const cookieValues = {
+    accessToken: 'accessToken',
+    refreshToken: 'refreshToken',
+}

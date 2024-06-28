@@ -10,10 +10,11 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { useGetAllRoles } from './api/use-get-all-roles'
 import { roleColumns } from './components/roles-columns'
+import i18next from 'i18next'
 
 const routes = [
-    { route: '/', label: 'Главная' },
-    { route: ROLES, label: 'Роли' },
+    { route: '/', label: i18next.t('home') },
+    { route: ROLES, label: i18next.t('roles-and-permissions') },
 ]
 
 export const RolesModule = () => {

@@ -14,7 +14,7 @@ import { AxiosError } from 'axios'
 import { ErrorResponse } from '@/types/fetch'
 import { AppLogo } from '@/components/app-logo'
 import { Watermark } from '@/components/watermark'
-import { COOKIE_LIFETIME, LOGIN_IMAGES } from '@/shared/constants'
+import { COOKIE_LIFETIME, LOGIN_IMAGES, cookieValues } from '@/shared/constants'
 import { Eye, EyeOff } from 'lucide-react'
 
 const authSchema = z.object({
@@ -53,8 +53,8 @@ export const AuthModule = () => {
 
     useEffect(() => {
         if (authSuccess) {
-            setCookieValue('accessToken', authData.accessToken, COOKIE_LIFETIME)
-            setCookieValue('refreshToken', authData.refreshToken, '')
+            setCookieValue(cookieValues.accessToken, authData.accessToken, COOKIE_LIFETIME)
+            setCookieValue(cookieValues.refreshToken, authData.refreshToken, '')
 
             navigate('/', { replace: true })
         }
