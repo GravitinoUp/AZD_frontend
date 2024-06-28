@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Data, Payload } from '@/types/fetch.ts'
 import { User, UserSort } from '@/types/user.ts'
 import { useQuery } from '@tanstack/react-query'
@@ -10,6 +11,6 @@ const getAllUsers = async (body: Payload<User, UserSort>) => {
 
 export const useGetAllUsers = (body: Payload<User, UserSort>) =>
     useQuery({
-        queryKey: ['users', body],
+        queryKey: [ApiKeys.Users, body],
         queryFn: () => getAllUsers(body),
     })

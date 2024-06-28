@@ -1,15 +1,16 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Result } from '@/types/fetch'
-import { Role, RoleUpdatePayload } from '@/types/user'
+import { Role, RolePayload } from '@/types/user'
 import { useMutation } from '@tanstack/react-query'
 
-const updateRole = async (body: RoleUpdatePayload) => {
+const updateRole = async (body: RolePayload) => {
     const response = await apiRequest.patch('/roles', body)
     return response.data as Result<Role>
 }
 
 export const useUpdateRole = () =>
     useMutation({
-        mutationKey: ['roles'],
+        mutationKey: [ApiKeys.Roles],
         mutationFn: updateRole,
     })

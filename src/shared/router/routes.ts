@@ -1,3 +1,5 @@
+export const AUTH = '/auth'
+export const REGISTER = '/register'
 export const DASHBOARD = '/dashboard'
 export const USERS = '/users'
 export const USER_MANAGE = '/users/manage'

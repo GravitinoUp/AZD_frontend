@@ -14,12 +14,14 @@ import { UsersPageLazy } from '@/pages/users'
 import { UserManagePageLazy } from '@/pages/users/manage'
 import { LimitTitleProvider } from '@/shared/context/limits-page-title.tsx'
 import {
+    AUTH,
     BRANCH_MANAGE,
     BRANCHES,
     LIMITS,
     ORGANIZATION_MANAGE,
     ORGANIZATIONS,
     PLANS,
+    REGISTER,
     ROLE_MANAGE,
     ROLES,
     USER_MANAGE,
@@ -32,8 +34,18 @@ import { OrganizationsPageTitleProvider } from '../context/organizations-page-ti
 import { OrganizationsPageLazy } from '@/pages/organizations'
 import { AllOrganizations, Branches } from '@/modules/organizations'
 import { BranchManagePageLazy, OrganizationManagePageLazy } from '@/pages/organizations/manage'
+import { AuthPage } from '@/pages/auth'
+import { RegisterPage } from '@/pages/register'
 
 export const router = createBrowserRouter([
+    {
+        path: AUTH,
+        element: <AuthPage />,
+    },
+    {
+        path: REGISTER,
+        element: <RegisterPage />,
+    },
     {
         path: '/',
         element: <Layout />,

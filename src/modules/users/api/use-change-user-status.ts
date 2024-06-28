@@ -1,4 +1,5 @@
 import { apiRequest } from '@/shared/api'
+import { ApiKeys } from '@/shared/api/keys'
 import { Result } from '@/types/fetch.ts'
 import { User, UserStatusPayload } from '@/types/user.ts'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -12,7 +13,7 @@ export const useChangeUserStatus = () => {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationKey: ['users'],
+        mutationKey: [ApiKeys.Users],
         mutationFn: changeUserStatus,
         onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
     })

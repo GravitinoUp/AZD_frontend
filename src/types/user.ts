@@ -17,7 +17,7 @@ export interface UserPayload {
     last_name: string
     first_name: string
     patronymic?: string
-    post: string
+    post?: string
     legal_basis_uuid?: string
     email: string
     phone?: string
