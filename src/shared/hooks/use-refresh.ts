@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { getJWTtokens } from '../lib/get-jwt-tokens'
 import { setCookieValue } from '../lib/set-cookie-value'
-import { COOKIE_LIFETIME } from '../constants'
+import { COOKIE_LIFETIME, cookieValues } from '../constants'
 import { AUTH, REGISTER } from '../router/routes'
 import { useRefreshToken } from '@/modules/auth/api/use-refresh-token'
 import { apiRequest } from '../api'
@@ -32,7 +32,7 @@ export const useRefresh = () => {
 
     useEffect(() => {
         if (refreshSuccess) {
-            setCookieValue('accessToken', newAccessToken, COOKIE_LIFETIME)
+            setCookieValue(cookieValues.accessToken, newAccessToken, COOKIE_LIFETIME)
             apiRequest.defaults.headers.Authorization = `Bearer ${newAccessToken}`
 
             if (pathname === AUTH || pathname === REGISTER) {
