@@ -10,7 +10,7 @@ import i18next from 'i18next'
 import { z } from 'zod'
 import { TechnicalSpecificationTab } from './technical-specification-tab'
 import { TabListBreadcrumbs } from '@/components/breadcrumbs'
-import { CommercialOffersTab } from './commercial-offers-tab'
+import { CommercialOffersTab } from './commercial-offers/commercial-offers-tab'
 import { ContractProjectTab } from './contract-project-tab'
 import { StartMaxPriceTab } from './start-max-price-tab'
 import { useInitiatePurchase } from './api/use-initiate-purchase'
@@ -21,6 +21,7 @@ import { useUpdatePurchase } from './api/use-update-purchase'
 import { useGetStartMaxPrice } from './api/use-get-start-max-price'
 import { ContractExecutionTab } from './contract-execution-tab'
 import { PublishToEISTab } from './publish-to-eis-tab'
+import { useGetCommercialOffers } from './commercial-offers/api/use-get-commercial-offers'
 
 export const fileSchema = z.object({
     id: z.string(),
@@ -43,7 +44,12 @@ export const productSchema = z.object({
     product_measurement: z.string(),
 })
 
-const commercialOfferSchema = z.object({ organization_uuid: z.string(), short_name: z.string(), price: z.string() })
+const commercialOfferSchema = z.object({
+    commercial_offer_uuid: z.string().optional(),
+    organization_uuid: z.string(),
+    short_name: z.string(),
+    price: z.string(),
+})
 
 const purchaseSchema = z
     .object({
@@ -352,6 +358,8 @@ export const InitiatePurchase = () => {
         },
     ]
 
+    const { data: commercialOfferList = [], isSuccess: commecrialOffersSuccess } = useGetCommercialOffers(purchaseUUID)
+
     const {
         mutate: initiatePurchase,
         data: createdPurchase,
@@ -501,6 +509,24 @@ export const InitiatePurchase = () => {
             }
         })
     }, [currentTab])
+
+    useEffect(() => {
+        if (commecrialOffersSuccess) {
+            if (commercialOfferList.length > 0) {
+                form.setValue('commercial_offer_text', commercialOfferList[0].commercial_offer_text)
+            }
+
+            form.setValue(
+                'commercial_offers',
+                commercialOfferList.map((value) => ({
+                    commercial_offer_uuid: value.commercial_offer_uuid,
+                    organization_uuid: value.organization.organization_uuid,
+                    short_name: value.organization.short_name,
+                    price: String(value.sum),
+                }))
+            )
+        }
+    }, [commecrialOffersSuccess])
 
     useErrorToast(purchaseInitiateError)
     useErrorToast(purchaseUpdateError)

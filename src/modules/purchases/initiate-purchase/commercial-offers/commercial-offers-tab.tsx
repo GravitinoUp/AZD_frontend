@@ -1,5 +1,5 @@
 import { UseFormReturn } from 'react-hook-form'
-import { PurchaseSchema } from './initiate-purchase'
+import { PurchaseSchema } from '../initiate-purchase'
 import { FormField, FormItem, FormLabel, FormMessage } from '@/ui/form'
 import { useTranslation } from 'react-i18next'
 import { TextareaField } from '@/components/input-field'

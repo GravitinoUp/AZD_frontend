@@ -11,4 +11,5 @@ export enum ApiKeys {
     Permissions = 'permissions',
     Purchases = 'purchases',
     PurchaseTypes = 'purchase-types',
+    CommercialOffers = 'commercial-offers',
 }
