@@ -121,6 +121,25 @@ const purchaseSchema = z
             }
         }
 
+        if (values.step === 2 || values.step === 4) {
+            if (!values.commercial_offer_text) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['commercial_offer_text'],
+                    fatal: true,
+                    message: i18next.t('error.required'),
+                })
+            }
+            if (!values.commercial_offers || values.commercial_offers.length < 3) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['commercial_offers'],
+                    fatal: true,
+                    message: i18next.t('error.min.select', { min: 3 }),
+                })
+            }
+        }
+
         if (values.step === 4) {
             // STEP 0
             if (!values.purchase_name) {
@@ -171,24 +190,6 @@ const purchaseSchema = z
                     path: ['technical_specification'],
                     fatal: true,
                     message: i18next.t('error.required'),
-                })
-            }
-
-            // STEP 2
-            if (!values.commercial_offer_text) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['commercial_offer_text'],
-                    fatal: true,
-                    message: i18next.t('error.required'),
-                })
-            }
-            if (!values.commercial_offers || values.commercial_offers.length < 3) {
-                ctx.addIssue({
-                    code: z.ZodIssueCode.custom,
-                    path: ['commercial_offers'],
-                    fatal: true,
-                    message: i18next.t('error.min.select', { min: 3 }),
                 })
             }
 
@@ -304,6 +305,9 @@ export const InitiatePurchase = () => {
     })
 
     const currentStep = form.watch('step')
+    const purchaseIdentificationCode = form.watch('purchase_identification_code')
+    const commercialOffers = form.watch('commercial_offers')
+    const purchaseUUID = form.watch('purchase_uuid')
 
     const tabsData = [
         {
@@ -344,7 +348,7 @@ export const InitiatePurchase = () => {
         {
             value: 'done',
             label: i18next.t('done'),
-            content: 'Готово',
+            content: <div />,
         },
     ]
 
@@ -441,6 +445,35 @@ export const InitiatePurchase = () => {
         }
     }
 
+    const handleTabClick = (value: string, index: number) => {
+        if (currentStep === 0 && !purchaseUUID) {
+            initiatePurchase({})
+        } else if (
+            !(index === 3 && commercialOffers.length < 3) &&
+            !((index === 5 || index === 6 || index === 7) && !purchaseIdentificationCode)
+        ) {
+            setCurrentTab(value)
+        }
+    }
+
+    const handleSkip = () => {
+        if (currentStep === 0 && !purchaseUUID) {
+            initiatePurchase({})
+        } else if (currentStep === 2 && commercialOffers.length < 3) {
+            setCurrentTab(tabsData[currentStep + 2].value)
+        } else {
+            setCurrentTab(tabsData[currentStep + 1].value)
+        }
+    }
+
+    const handleBack = () => {
+        if (currentStep === 4 && commercialOffers.length < 3) {
+            setCurrentTab(tabsData[currentStep - 2].value)
+        } else {
+            setCurrentTab(tabsData[currentStep - 1].value)
+        }
+    }
+
     useEffect(() => {
         if (startMaxPriceSuccess) {
             form.setValue('start_max_price', startMaxPrice)
@@ -449,9 +482,8 @@ export const InitiatePurchase = () => {
     }, [startMaxPriceSuccess])
 
     useEffect(() => {
-        if (purchaseInitiateSuccess) {
+        if (purchaseInitiateSuccess && !purchaseUUID) {
             setCurrentTab(tabsData[currentStep + 1].value)
-            form.setValue('step', currentStep + 1)
             form.setValue('purchase_uuid', createdPurchase.data?.purchase_uuid)
         }
     }, [purchaseInitiateSuccess])
@@ -459,9 +491,16 @@ export const InitiatePurchase = () => {
     useEffect(() => {
         if (purchaseUpdateSuccess) {
             setCurrentTab(tabsData[currentStep + 1].value)
-            form.setValue('step', currentStep + 1)
         }
     }, [purchaseUpdateSuccess])
+
+    useEffect(() => {
+        tabsData.forEach((element, index) => {
+            if (element.value === currentTab) {
+                form.setValue('step', index)
+            }
+        })
+    }, [currentTab])
 
     useErrorToast(purchaseInitiateError)
     useErrorToast(purchaseUpdateError)
@@ -477,14 +516,7 @@ export const InitiatePurchase = () => {
             <h1 className="mt-20 text-3xl font-bold">{t('initiate-purchase')}</h1>
             <Form form={form} onSubmit={handleSubmit}>
                 <Tabs value={currentTab}>
-                    <TabListBreadcrumbs
-                        tabsData={tabsData}
-                        onTabClick={(value, index) => {
-                            form.setValue('step', index)
-                            setCurrentTab(value)
-                        }}
-                        currentStep={currentStep}
-                    />
+                    <TabListBreadcrumbs tabsData={tabsData} onTabClick={handleTabClick} currentStep={currentStep} />
                     <div className="flex-center mt-16 select-none flex-wrap gap-3">
                         <Button
                             className="h-12 gap-4"
@@ -498,10 +530,7 @@ export const InitiatePurchase = () => {
                             variant="outline"
                             type="button"
                             disabled={currentStep > 3}
-                            onClick={() => {
-                                setCurrentTab(tabsData[currentStep + 1].value)
-                                form.setValue('step', currentStep + 1)
-                            }}
+                            onClick={handleSkip}
                         >
                             {t('action.skip')}
                         </Button>
@@ -510,10 +539,7 @@ export const InitiatePurchase = () => {
                             variant="outline"
                             type="button"
                             disabled={currentStep === 0}
-                            onClick={() => {
-                                setCurrentTab(tabsData[currentStep - 1].value)
-                                form.setValue('step', currentStep - 1)
-                            }}
+                            onClick={handleBack}
                         >
                             {t('action.back')}
                         </Button>

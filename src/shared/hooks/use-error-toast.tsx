@@ -12,6 +12,8 @@ export const useErrorToast = (error?: Error | null, repeatFn?: () => void) => {
     const { t } = useTranslation()
 
     useEffect(() => {
+        console.log(error)
+
         if (error) {
             const axiosError = error as AxiosError
             const errorResponse = axiosError.response?.data as ErrorResponse
@@ -19,7 +21,7 @@ export const useErrorToast = (error?: Error | null, repeatFn?: () => void) => {
             toast({
                 variant: 'destructive',
                 title: t('error.title'),
-                description: errorResponse.message ? errorResponse.message : '',
+                description: errorResponse && errorResponse.message ? errorResponse.message : '',
                 duration: ERROR_DURATION,
                 action:
                     typeof repeatFn === 'undefined' ? (

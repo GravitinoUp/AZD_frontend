@@ -29,6 +29,7 @@ module.exports = {
                 },
                 destructive: {
                     DEFAULT: '#DE5A5A',
+                    light: '#FFEBEE',
                     foreground: 'hsl(var(--destructive-foreground))',
                 },
                 muted: {
